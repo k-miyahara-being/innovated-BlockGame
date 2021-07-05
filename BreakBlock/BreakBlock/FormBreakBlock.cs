@@ -17,5 +17,4 @@ namespace BreakBlock
             InitializeComponent();
         }
     }
-
 }
