@@ -32,8 +32,8 @@ namespace BreakBlock
 
             radius = 10;                //円の半径の初期設定
             pitch = radius / 2;         //移動の割合の初期設定(半径の半分)
-            directionX = 1;
-            directionY = 1;
+            directionX = -1;
+            directionY = -1;
 
             //ToDo発射角度の決定
             /*Random r = new Random();
