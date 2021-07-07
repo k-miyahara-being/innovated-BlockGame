@@ -13,7 +13,10 @@ namespace BreakBlock
     public partial class FormBreakBlock : Form
     {
         private Ball ball;          //ボールの宣言
+        private List<Block> blocks = new List<Block>();
         private Bitmap canvas;      //キャンバスの宣言
+
+
 
         //const int width = panel2.Width;
         //int height = panel2.Height;
@@ -27,10 +30,11 @@ namespace BreakBlock
 
         private void FormBreakBlock_Load(object sender, EventArgs e)
         {
-            //ブロックを表示する
+            
            
-            canvas = new Bitmap(panel2.Width, panel2.Height);
-            DrawBlock();
+            canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            InitializeBlock();
 
             ball = new Ball(pictureBox1, canvas, Brushes.Red);       //ボールクラスインスタンスの作成
             ball.PutCircle(160, 320);                               //ボールの位置
@@ -49,56 +53,42 @@ namespace BreakBlock
             
         }
 
-        //ブロックを表示する
-        private void DrawBlock()
+        private void InitializeBlock()
         {
-            
-
             //ブロックを4×3に整列する
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    using (Graphics g = Graphics.FromImage(canvas))
-                    {
+                    Block block;
+                    int x = 20 + j * 80;
+                    int y = 20 + i * 40;
+                    block = new Block(pictureBox1, canvas, x, y);
+                    block.DrawBlock();
 
-                        //LightBlueのブロックを描画
-                        g.FillRectangle(Brushes.LightBlue, 20 + j * 80, 20 + i * 40, 70, 30);
-                        //Panelコントロールに表示
-                        panel2.BackgroundImage = canvas;
-                        
-
-                    }
-
+                    blocks.Add(block);
                 }
             }
-                
-            
         }
 
-        private void DeleteBlock()
+        //画面の更新
+        private void Draw()
         {
-            int width = panel2.Width;
-            int height = panel2.Height;
-
-            Bitmap canvas = new Bitmap(width, height);
-
-            using (Graphics g = Graphics.FromImage(canvas))
+            
+            for (int i = 0; i < blocks.Count; i++)
             {
-
-                 //LightBlueのブロックを描画
-                 g.FillRectangle(Brushes.White, 20, 20, 70, 30);
-                 //Panelコントロールに表示
-                 panel2.BackgroundImage = canvas;
+                blocks[i].DrawBlock();
             }
 
 
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-            DeleteBlock();
+            blocks[1].DeleteBlock();
+            blocks.RemoveAt(1);
+            Draw();
         }
     }
 }
