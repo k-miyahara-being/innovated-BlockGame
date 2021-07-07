@@ -30,27 +30,22 @@ namespace BreakBlock
 
         private void FormBreakBlock_Load(object sender, EventArgs e)
         {
-            
-           
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
             InitializeBlock();
-
-            ball = new Ball(pictureBox1, canvas, Brushes.Red);       //ボールクラスインスタンスの作成
-            ball.PutCircle(160, 320);                               //ボールの位置
-            timer1.Start();                                         //タイマースタート
+            canvas = new Bitmap(350, 412);
+            ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
+            ball.PutCircle(160, 250);                               //ボールの位置
+                                                                    // timer1.Start();                                         //タイマースタート
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             ball.Move();
         }
-
-        
-
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            
+
         }
 
         private void InitializeBlock()
@@ -74,7 +69,7 @@ namespace BreakBlock
         //画面の更新
         private void Draw()
         {
-            
+
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].DrawBlock();
@@ -89,6 +84,13 @@ namespace BreakBlock
             blocks[1].DeleteBlock();
             blocks.RemoveAt(1);
             Draw();
+        }
+        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)  //スペースキーが押された際にボール発射
+        {
+            if (e.KeyData == Keys.Space)
+            {
+                timer1.Start();
+            }
         }
     }
 }

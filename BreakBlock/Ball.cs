@@ -32,8 +32,24 @@ namespace BreakBlock
 
             radius = 10;                //円の半径の初期設定
             pitch = radius / 2;         //移動の割合の初期設定(半径の半分)
-            directionX = -1;            //移動方向を-1で初期化
-            directionY = -1;            //移動方向を-1で初期化
+            directionX = 1;
+            directionY = 1;
+
+            //ToDo発射角度の決定
+            /*Random r = new Random();
+            int randomX = r.Next(-1, 1);
+            int randomY = r.Next(-1, 1);
+            if (randomX == 0 && randomY == 0)
+            {
+                directionX = 1;
+                directionY = ;
+            }
+            else
+            {
+                directionX = randomX;
+                directionY = randomY;
+            }*/
+
         }
 
         //指定した位置にボールを描く
@@ -51,7 +67,7 @@ namespace BreakBlock
                 pictureBox.Image = canvas;
             }
         }    
-        //指定した位置のボールを消す(白で描く)
+        //指定した位置のボールを消す(黒で描く)
          public void DeleteCircle()
             {
                 //初めて呼ばれて以前の値が無い時
