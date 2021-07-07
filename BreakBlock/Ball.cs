@@ -32,23 +32,22 @@ namespace BreakBlock
 
             radius = 10;                //円の半径の初期設定
             pitch = radius / 2;         //移動の割合の初期設定(半径の半分)
-            directionX = -1;
-            directionY = -1;
+            //directionX = -1;
+            //directionY = -1;
 
             //ToDo発射角度の決定
-            /*Random r = new Random();
-            int randomX = r.Next(-1, 1);
-            int randomY = r.Next(-1, 1);
-            if (randomX == 0 && randomY == 0)
+            Random r = new Random();
+            int randomX = r.Next(0, 100) % 2;
+            if (randomX == 0)
             {
-                directionX = 1;
-                directionY = ;
+                directionX = -1;
+                directionY = -1;
             }
             else
             {
-                directionX = randomX;
-                directionY = randomY;
-            }*/
+                directionX = 1;
+                directionY = -1;
+             }
 
         }
 
