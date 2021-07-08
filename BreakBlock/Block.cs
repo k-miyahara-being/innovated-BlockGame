@@ -27,12 +27,8 @@ namespace BreakBlock
             canvas = cv;                //描画するキャンバス
             positionX = x;
             positionY = y;
-
-
         }
 
-
-        
         //ブロックを表示する
         public void DrawBlock()
         {
@@ -50,15 +46,11 @@ namespace BreakBlock
         {
             using (Graphics g = Graphics.FromImage(canvas))
             {
-
                 //LightBlueのブロックを描画
                 g.FillRectangle(Brushes.Black, positionX, positionY, 70, 30);
                 //Panelコントロールに表示
                 pictureBox.Image = canvas;
-               
             }
-
-
         }
 
     }

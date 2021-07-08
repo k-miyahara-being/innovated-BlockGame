@@ -15,6 +15,7 @@ namespace BreakBlock
         private Ball ball;          //ボールの宣言
         private List<Block> blocks = new List<Block>();
         private Bitmap canvas;      //キャンバスの宣言
+        private int bar = 0;
 
 
 
@@ -32,16 +33,35 @@ namespace BreakBlock
         {
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
-            InitializeBlock();
+            DrawBar(bar);
+            InitializeBlock(); //ブロックの初期化
+   
             ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
-            ball.PutCircle(160, 250);                               //ボールの位置
-                                                                    // timer1.Start();                                         //タイマースタート
+            ball.PutCircle(160, 330);                               //ボールの位置
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             ball.Move();
         }
+
+        //スペースキーが押された際にボール発射
+        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Space)
+            {
+                timer1.Start();
+            }
+            e.Handled = true;
+
+            if(e.KeyData == Keys.F)
+            {
+                bar -= 5;
+                DrawBar(bar);
+            }
+        }
+
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
@@ -66,33 +86,39 @@ namespace BreakBlock
             }
         }
 
+        //バーの描画
+        private void DrawBar(int barX)
+        {
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.FillRectangle(Brushes.Yellow, 120 + barX, 350, 100, 10);
+                //コントロールに表示
+                pictureBox1.Image = canvas;
+            }
+        }
+
         //画面の更新
         private void Draw()
         {
-
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].DrawBlock();
             }
-
-
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        /*private void button1_Click(object sender, EventArgs e)
         {
             blocks[1].DeleteBlock();
             blocks.RemoveAt(1);
             Draw();
         }
-        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)  //スペースキーが押された際にボール発射
-      　{
-            if (e.KeyData == Keys.Space)
-            {
-                timer1.Start();
+        */
 
-            }
-            e.Handled = true;
-        }
+        
+
+        
+
+
     }
 }
