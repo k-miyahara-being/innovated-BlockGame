@@ -12,17 +12,12 @@ namespace BreakBlock
 {
     public partial class FormBreakBlock : Form
     {
-        private Ball ball;          //ボールの宣言
-        private List<Block> blocks = new List<Block>();
         private Bitmap canvas;      //キャンバスの宣言
-        private int bar = 0;
-
-
-
-        //const int width = panel2.Width;
-        //int height = panel2.Height;
-
-        //Bitmap canvas = new Bitmap(width, height);
+        private Ball ball;          //ボールの宣言
+        private List<Block> blocks = new List<Block>();　　//ブロックリストの生成
+        private Bar bar;　　　　　　//バーの宣言
+        private int barX = 120;     //バーのx座標
+        private bool PressedSpace = false;　　//スペースキーが押されたか？
 
         public FormBreakBlock()
         {
@@ -33,7 +28,9 @@ namespace BreakBlock
         {
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
-            DrawBar(bar);
+            bar = new Bar(pictureBox1, canvas);
+            bar.PutBar(barX);　　//バーを描画する
+            
             InitializeBlock(); //ブロックの初期化
    
             ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
@@ -41,30 +38,10 @@ namespace BreakBlock
 
         }
 
+        //弾が動く
         private void timer1_Tick(object sender, EventArgs e)
         {
             ball.Move();
-        }
-
-        //スペースキーが押された際にボール発射
-        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Space)
-            {
-                timer1.Start();
-            }
-            e.Handled = true;
-
-            if(e.KeyData == Keys.F)
-            {
-                bar -= 5;
-                DrawBar(bar);
-            }
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         //ブロックの初期化
@@ -86,15 +63,29 @@ namespace BreakBlock
             }
         }
 
-        //バーの描画
-        private void DrawBar(int barX)
+        
+        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)
         {
-            using (Graphics g = Graphics.FromImage(canvas))
+            if (e.KeyData == Keys.Space)　　//スペースキーが押された際にボール発射
             {
-                g.FillRectangle(Brushes.Yellow, 120 + barX, 350, 100, 10);
-                //コントロールに表示
-                pictureBox1.Image = canvas;
+                PressedSpace = true;
+                timer1.Start();
             }
+            e.Handled = true;
+
+            if (PressedSpace == true)　　//スペースキーが押されたとき
+            {
+                if (e.KeyData == Keys.J)　　//Jキーが押されたときバーが右に
+                {
+                    bar.MoveBar(+1);
+                }
+
+                if (e.KeyData == Keys.F)　　//Fキーが押されたときバーが左に
+                {
+                    bar.MoveBar(-1);
+                }
+            }
+
         }
 
         //画面の更新
@@ -104,9 +95,15 @@ namespace BreakBlock
             {
                 blocks[i].DrawBlock();
             }
+
         }
 
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        //消えたブロックをとリストから消去し、画面を更新する
         /*private void button1_Click(object sender, EventArgs e)
         {
             blocks[1].DeleteBlock();
@@ -116,9 +113,6 @@ namespace BreakBlock
         */
 
         
-
-        
-
 
     }
 }

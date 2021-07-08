@@ -10,14 +10,59 @@ namespace BreakBlock
 {
     class Bar
     {
-        private PictureBox pictureBox;   //描画するpictureBox
+        private PictureBox pictureBox;  //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
-        private int positionX;          //横位置(x座標)
-        private int previousX;          //以前の横位置(x座標)
-        private int directionX;         //移動方向(x座標)(+1 or -1)
+        private int positionX;          //位置(x座標)
+        private int positionY = 350;    //位置(y座標)
+        private int previousX;          //以前の位置(x座標)
+        private int directionX = +1;    //移動方向(x座標)(+1 or -1)
+        private int Bar_width = 90;　　 //バーの幅
+        private int Bar_Height = 10;　　//バーの高さ
         
         public Bar(PictureBox pb, Bitmap cv)
         {
+            pictureBox = pb;
+            canvas = cv;
+        }
+
+        //バーの描画
+        public void PutBar(int x)
+        {
+            positionX = x;
+
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.FillRectangle(Brushes.Yellow, positionX, positionY, Bar_width, Bar_Height);
+                //コントロールに表示
+                pictureBox.Image = canvas;
+            }
+        }
+
+        //バーの移動
+        public void MoveBar(int direction)
+        {
+            if (previousX == 0)
+            {
+                previousX = positionX;
+            }
+
+            //前の位置のバーを削除
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.FillRectangle(Brushes.Black, previousX, positionY, Bar_width, Bar_Height);
+                pictureBox.Image = canvas;
+            }
+
+            //移動方向が右か左か
+            directionX = direction;
+
+            //新しい移動先の計算
+            positionX = previousX + 5 * directionX;
+
+            PutBar(positionX);
+
+            //新しい位置を以前の値として記憶
+            previousX = positionX;
 
         }
 
