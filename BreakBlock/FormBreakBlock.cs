@@ -90,7 +90,7 @@ namespace BreakBlock
             }
         }
 
-        
+        //キーイベント
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Space)　　//スペースキーが押された際にボール発射
@@ -112,7 +112,6 @@ namespace BreakBlock
                     bar.MoveBar(-1);
                 }
             }
-
         }
 
         //画面の更新
@@ -122,7 +121,6 @@ namespace BreakBlock
             {
                 blocks[i].DrawBlock();
             }
-
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)

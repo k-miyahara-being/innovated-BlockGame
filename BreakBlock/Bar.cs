@@ -12,7 +12,7 @@ namespace BreakBlock
     {
         private PictureBox pictureBox;  //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
-        private int positionX;          //位置(x座標)
+        public static int barpositionX;          //位置(x座標)
         private int positionY = 350;    //位置(y座標)
         private int previousX;          //以前の位置(x座標)
         private int directionX = +1;    //移動方向(x座標)(+1 or -1)
@@ -28,11 +28,11 @@ namespace BreakBlock
         //バーの描画
         public void PutBar(int x)
         {
-            positionX = x;
+            barpositionX = x;
 
             using (Graphics g = Graphics.FromImage(canvas))
             {
-                g.FillRectangle(Brushes.Yellow, positionX, positionY, Bar_width, Bar_Height);
+                g.FillRectangle(Brushes.Yellow, barpositionX, positionY, Bar_width, Bar_Height);
                 //コントロールに表示
                 pictureBox.Image = canvas;
             }
@@ -43,7 +43,7 @@ namespace BreakBlock
         {
             if (previousX == 0)
             {
-                previousX = positionX;
+                previousX = barpositionX;
             }
 
             //前の位置のバーを削除
@@ -57,12 +57,12 @@ namespace BreakBlock
             directionX = direction;
 
             //新しい移動先の計算
-            positionX = previousX + 5 * directionX;
+            barpositionX = previousX + 5 * directionX;
 
-            PutBar(positionX);
+            PutBar(barpositionX);
 
             //新しい位置を以前の値として記憶
-            previousX = positionX;
+            previousX = barpositionX;
 
         }
 

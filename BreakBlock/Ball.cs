@@ -33,8 +33,6 @@ namespace BreakBlock
 
             radius = 10;                //円の半径の初期設定
             pitch = radius / 2;         //移動の割合の初期設定(半径の半分)
-            //directionX = -1;
-            //directionY = -1;
 
             //ToDo発射角度の決定
             Random r = new Random();
@@ -89,16 +87,19 @@ namespace BreakBlock
 
                 }
             } 
-         //指定したボールを動かす
+
+         //ボールを動かす
          public void Move()
-            {
-                //以前の表示を削除
-                DeleteCircle();
+         {
+
+            //以前の表示を削除
+            DeleteCircle();
 
                 //新しい移動先の計算
                 int x = positionX + pitch * directionX;
                 int y = positionY + pitch * directionY;
-                //壁で跳ね返る補正
+                
+            　　//壁で跳ね返る補正
                 if (x >= canvas.Width - radius * 2) //右端に来た場合の判定
                 {
                     directionX = -1;
@@ -115,6 +116,10 @@ namespace BreakBlock
                 {
                     directionY = 1;
                 }*/
+                if (x >= Bar.barpositionX && (x <= (Bar.barpositionX + 90 - radius * 2)) && (y >= (350 - radius * 2)) && y <= canvas.Height)
+                {
+                    directionY = -1; 
+                }
 
                 //跳ね返り補正fを反映した値で新しい位置を計算
                 positionX = x + directionX;
