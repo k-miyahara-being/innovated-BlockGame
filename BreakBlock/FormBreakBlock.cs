@@ -16,7 +16,7 @@ namespace BreakBlock
         private Ball ball;          //ボールの宣言
         private List<Block> blocks = new List<Block>();　　//ブロックリストの生成
         private Bar bar;　　　　　　//バーの宣言
-        private int barX = 120;     //バーのx座標
+        
         private bool PressedSpace = false;　　//スペースキーが押されたか？
 
         public FormBreakBlock()
@@ -26,22 +26,26 @@ namespace BreakBlock
 
         private void FormBreakBlock_Load(object sender, EventArgs e)
         {
+            
+
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
             bar = new Bar(pictureBox1, canvas);
-            bar.PutBar(barX);　　//バーを描画する
+            int barCenter = (pictureBox1.Width - bar.Bar_width) / 2;     //バーの初期位置x座標
+            bar.PutBar(barCenter);　　//バーを描画する
             
             InitializeBlock(); //ブロックの初期化
    
             ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
-            ball.PutCircle(160, 330);                               //ボールの位置
-
+            int ballCenter = (pictureBox1.Width / 2) - ball.radius;    //ボールの初期位置x座標
+            ball.PutCircle(ballCenter, 330);                               
         }
 
         //弾が動く
         private void timer1_Tick(object sender, EventArgs e)
         {
-            ball.Move();
+            Draw();
+            
             /*if (x <= 90 && x > 20 && y <= 130)
             {
                 ball.directionY = 1;
@@ -117,6 +121,8 @@ namespace BreakBlock
         //画面の更新
         private void Draw()
         {
+            ball.Move();
+            bar.MoveBar(0);
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].DrawBlock();

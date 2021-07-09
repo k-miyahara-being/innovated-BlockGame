@@ -20,7 +20,7 @@ namespace BreakBlock
         private int previousY;          //以前の縦位置(y座標)
         public int directionX;         //移動方向(x座標)(+1 or -1)
         public int directionY;         //移動方向(y座標)(+1 or -1)
-        private int radius;             //円の半径
+        public int radius;             //円の半径
         private Brush brushColor;       //塗りつぶす色
        
 
@@ -118,7 +118,7 @@ namespace BreakBlock
                 }*/
                 
                 //バーに衝突するとで跳ね返る
-                if (x >= Bar.barpositionX && (x <= (Bar.barpositionX + 90 - radius * 2)) && (y >= (350 - radius * 2)) && y <= canvas.Height)
+                if ((x >= (Bar.barpositionX - radius)) && (x <= (Bar.barpositionX + 90 - radius)) && (y >= (350 - radius * 2)) && y <= 350)
                 {
                     directionY = -1; 
                 }
