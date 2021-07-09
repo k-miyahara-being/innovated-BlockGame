@@ -128,7 +128,7 @@ namespace BreakBlock
 
         }
 
-        //消えたブロックをとリストから消去し、画面を更新する
+        //消えたブロックをリストから消去し、画面を更新する
         /*private void button1_Click(object sender, EventArgs e)
         {
             blocks[1].DeleteBlock();

@@ -116,6 +116,8 @@ namespace BreakBlock
                 {
                     directionY = 1;
                 }*/
+                
+                //バーに衝突するとで跳ね返る
                 if (x >= Bar.barpositionX && (x <= (Bar.barpositionX + 90 - radius * 2)) && (y >= (350 - radius * 2)) && y <= canvas.Height)
                 {
                     directionY = -1; 

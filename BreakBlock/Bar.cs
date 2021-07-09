@@ -59,6 +59,15 @@ namespace BreakBlock
             //新しい移動先の計算
             barpositionX = previousX + 5 * directionX;
 
+            //左右両端でバーが止まる
+            if(barpositionX <= 0)
+            {
+                barpositionX = 0;
+            }else if(barpositionX + Bar_width >= pictureBox.Width)
+            {
+                barpositionX = pictureBox.Width - Bar_width;
+            }
+
             PutBar(barpositionX);
 
             //新しい位置を以前の値として記憶
