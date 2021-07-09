@@ -13,10 +13,12 @@ namespace BreakBlock
     {
         private PictureBox pictureBox;  //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
-        private int positionX;　　　　　//位置(x座標)
-        private int positionY;　　　　　//位置(y座標)
+        //private int positionX;　　　　　//位置(x座標)
+        //private int positionY;　　　　　//位置(y座標)
         private int Block_width = 70;　 //ブロックの幅
         private int Block_height = 30;　//ブロックの高さ
+        public int blockPositionX;
+        public int blockPositionY;
 
         //private int top;
         //private int bottom;
@@ -27,8 +29,8 @@ namespace BreakBlock
         {
             pictureBox = pb;       
             canvas = cv;           
-            positionX = x;
-            positionY = y;
+            blockPositionX = x;
+            blockPositionY = y;
         }
 
         //ブロックを表示する
@@ -38,7 +40,7 @@ namespace BreakBlock
             {
 
                 //LightBlueのブロックを描画
-                g.FillRectangle(Brushes.LightBlue, positionX, positionY, Block_width, Block_height);
+                g.FillRectangle(Brushes.LightBlue, blockPositionX, blockPositionY, Block_width, Block_height);
                 //Panelコントロールに表示
                 pictureBox.Image = canvas;
             }
@@ -49,7 +51,7 @@ namespace BreakBlock
             using (Graphics g = Graphics.FromImage(canvas))
             {
                 //LightBlueのブロックを描画
-                g.FillRectangle(Brushes.Black, positionX, positionY, Block_width, Block_height);
+                g.FillRectangle(Brushes.Black, blockPositionX, blockPositionY, Block_width, Block_height);
                 //Panelコントロールに表示
                 pictureBox.Image = canvas;
             }

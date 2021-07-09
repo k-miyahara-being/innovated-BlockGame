@@ -14,14 +14,15 @@ namespace BreakBlock
 
         private PictureBox pictureBox;   //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
-        private int positionX;          //横位置(x座標)
-        private int positionY;          //縦位置(y座標)
+        public int positionX;          //横位置(x座標)
+        public int positionY;          //縦位置(y座標)
         private int previousX;          //以前の横位置(x座標)
         private int previousY;          //以前の縦位置(y座標)
-        private int directionX;         //移動方向(x座標)(+1 or -1)
-        private int directionY;         //移動方向(y座標)(+1 or -1)
+        public int directionX;         //移動方向(x座標)(+1 or -1)
+        public int directionY;         //移動方向(y座標)(+1 or -1)
         private int radius;             //円の半径
         private Brush brushColor;       //塗りつぶす色
+       
 
         //ボールコンストラクタ    
         public Ball(PictureBox pb, Bitmap cv, Brush cl)
@@ -45,7 +46,7 @@ namespace BreakBlock
             }
             else
             {
-                directionX = 1;
+                directionX = +1;
                 directionY = -1;
              }
 
@@ -84,7 +85,7 @@ namespace BreakBlock
                     //弾を黒で描く
                     g.FillEllipse(Brushes.Black, previousX, previousY, radius * 2, radius * 2);
 
-                pictureBox.Image = canvas;
+                     pictureBox.Image = canvas;
 
                 }
             } 
@@ -110,6 +111,10 @@ namespace BreakBlock
                 {
                     directionY = +1;
                 }
+                /*if (x <= 90 && x > 20 &&  y <= 130)
+                {
+                    directionY = 1;
+                }*/
 
                 //跳ね返り補正fを反映した値で新しい位置を計算
                 positionX = x + directionX;
@@ -122,8 +127,9 @@ namespace BreakBlock
                 previousX = positionX;
                 previousY = positionY;
 
-                
             }
+
+
         }
     }
 
