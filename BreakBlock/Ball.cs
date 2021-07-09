@@ -60,7 +60,7 @@ namespace BreakBlock
             using (Graphics g = Graphics.FromImage(canvas))
             {
                 //弾をbrushColorで指定された色で描く
-                g.FillEllipse(brushColor, x, y, radius * 2, radius * 2);
+                g.FillEllipse(brushColor, x - radius, y - radius, radius * 2, radius * 2);
 
                 pictureBox.Image = canvas;
             }
@@ -81,7 +81,7 @@ namespace BreakBlock
                 using (Graphics g = Graphics.FromImage(canvas))
                 {
                     //弾を黒で描く
-                    g.FillEllipse(Brushes.Black, previousX, previousY, radius * 2, radius * 2);
+                    g.FillEllipse(Brushes.Black, previousX - radius , previousY - radius, radius * 2, radius * 2);
 
                      pictureBox.Image = canvas;
 
@@ -89,7 +89,7 @@ namespace BreakBlock
             } 
 
          //ボールを動かす
-         public void Move()
+         public void Move(List<Block> blocks)
          {
 
             //以前の表示を削除
@@ -112,11 +112,30 @@ namespace BreakBlock
                 {
                     directionY = +1;
                 }
-                /*if (x <= 90 && x > 20 &&  y <= 130)
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                //上辺の処理
+                if (y >= blocks[i].top && x >= blocks[i].left && x <= blocks[i].right) 
                 {
-                    directionY = 1;
-                }*/
+                    //directionY *= -1;
+                }
+                //左辺の処理
+                if (x >= blocks[i].left && y >= blocks[i].bottom && y <= blocks[i].top)
+                {
+                    directionX *= -1;
+                }
+                //右辺の処理
+                if (x <= blocks[i].right && y >= blocks[i].bottom && y <= blocks[i].top)
+                {
+                    directionX *= -1;
+                }
+                //下辺の処理
+                if (y <= blocks[i].bottom && x >= blocks[i].left && x <= blocks[i].right)
+                {
+                    directionY *= -1;
+                }
                 
+            }
                 //バーに衝突するとで跳ね返る
                 if ((x >= (Bar.barpositionX - radius)) && (x <= (Bar.barpositionX + 90 - radius)) && (y >= (350 - radius * 2)) && y <= 350)
                 {

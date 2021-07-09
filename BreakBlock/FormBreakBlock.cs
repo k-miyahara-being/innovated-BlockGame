@@ -45,34 +45,6 @@ namespace BreakBlock
         private void timer1_Tick(object sender, EventArgs e)
         {
             Draw();
-            
-            /*if (x <= 90 && x > 20 && y <= 130)
-            {
-                ball.directionY = 1;
-
-            }*/
-            int x = blocks[0].blockPositionX;
-            int y = blocks[0].blockPositionY;
-            int ballX = ball.positionX;
-            int ballY = ball.positionY;
-            int dX = ball.directionX;
-            int dY = ball.directionY;
-            if (x <= ballX && ballX <= x + 70 && y <= ballY && ballY <= y + 30)　//上辺
-            {
-                ball.directionY = -1;
-            }
-            if (x == ballX && y<= ballY && ballY <= y +30) //左辺
-            {
-                ball.directionX = -1;
-            }
-            if (x + 70 == ballX && y <= ballY && ballY <= y + 30)　//右辺
-            {
-                ball.directionX = 1;
-            }
-            if (x <= ballX && ballX <= x + 70 && y <= ballY && ballY <= y +30) //下辺
-            {
-                ball.directionY = 1;
-            }
         }
 
         //ブロックの初期化
@@ -108,12 +80,12 @@ namespace BreakBlock
             {
                 if (e.KeyData == Keys.J)　　//Jキーが押されたときバーが右に
                 {
-                    bar.MoveBar(+1);
+                    bar.MoveBar(+5);
                 }
 
                 if (e.KeyData == Keys.F)　　//Fキーが押されたときバーが左に
                 {
-                    bar.MoveBar(-1);
+                    bar.MoveBar(-5);
                 }
             }
         }
@@ -121,7 +93,7 @@ namespace BreakBlock
         //画面の更新
         private void Draw()
         {
-            ball.Move();
+            ball.Move(blocks);
             bar.MoveBar(0);
             for (int i = 0; i < blocks.Count; i++)
             {

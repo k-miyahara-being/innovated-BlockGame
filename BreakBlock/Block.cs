@@ -20,10 +20,10 @@ namespace BreakBlock
         public int blockPositionX;
         public int blockPositionY;
 
-        //private int top;
-        //private int bottom;
-        //private int left;
-        //private int right;
+        public int top => blockPositionY;
+        public int bottom => blockPositionY + Block_height;
+        public int left => blockPositionX;
+        public int right => blockPositionX + Block_width;
 
         public Block(PictureBox pb, Bitmap cv, int x, int y)
         {
