@@ -98,9 +98,12 @@ namespace BreakBlock
                 //新しい移動先の計算
                 int x = positionX + pitch * directionX;
                 int y = positionY + pitch * directionY;
-                
-            　　//壁で跳ね返る補正
-                if (x >= canvas.Width - radius * 2) //右端に来た場合の判定
+
+           
+
+
+            //壁で跳ね返る補正
+            if (x >= canvas.Width - radius * 2) //右端に来た場合の判定
                 {
                     directionX = -1;
                 }
@@ -112,28 +115,39 @@ namespace BreakBlock
                 {
                     directionY = +1;
                 }
-            for (int i = 0; i < blocks.Count; i++)
-            {
-                //上辺の処理
-                if (y >= blocks[i].top && x >= blocks[i].left && x <= blocks[i].right) 
+                for (int i = 0; i < blocks.Count; i++)
                 {
-                    //directionY *= -1;
-                }
-                //左辺の処理
-                if (x >= blocks[i].left && y >= blocks[i].bottom && y <= blocks[i].top)
+                if (y >= blocks[i].top && y <= blocks[i].bottom && x >= blocks[i].left && x <= blocks[i].right)
                 {
-                    directionX *= -1;
+
+                    //下辺の処理
+                    if (directionY == -1 )
+                    {
+                        directionY *= -1;
+                        blocks[i].DeleteBlock();
+                        continue;
+                    }
+                    //左辺の処理
+                    if (directionX == 1) 
+                    {
+                        directionX *= -1;
+                        continue;
+                    }
+                    //右辺の処理
+                    if (directionX == -1) 
+                    {
+                        directionX *= -1;
+                        continue;
+                    }
+                    //上辺の処理
+                    if (directionY == 1)
+                    {
+                        directionY *= -1;
+                        blocks[i].DeleteBlock();
+                        continue;
+                    }
                 }
-                //右辺の処理
-                if (x <= blocks[i].right && y >= blocks[i].bottom && y <= blocks[i].top)
-                {
-                    directionX *= -1;
-                }
-                //下辺の処理
-                if (y <= blocks[i].bottom && x >= blocks[i].left && x <= blocks[i].right)
-                {
-                    directionY *= -1;
-                }
+                //ブロックを消す処理
                 
             }
                 //バーに衝突するとで跳ね返る
