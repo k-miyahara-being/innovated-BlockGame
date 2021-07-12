@@ -23,6 +23,7 @@ namespace BreakBlock
         public int radius;             //円の半径
         private Brush brushColor;       //塗りつぶす色
         public bool Bomb = false;  //弾が消えたか？
+        public int score = 0;
 
 
 
@@ -133,6 +134,8 @@ namespace BreakBlock
                         directionY *= -1;
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
+                        score += 10;
+                        pitch += 1;
                         continue;
                     }
                     //左辺の処理
@@ -141,6 +144,8 @@ namespace BreakBlock
                         directionX *= -1;
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
+                        score += 10;
+                        pitch += 1;
                         continue;
                     }
                     //右辺の処理
@@ -149,6 +154,8 @@ namespace BreakBlock
                         directionX *= -1;
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
+                        score += 10;
+                        pitch += 1;
                         continue;
                     }
                     //上辺の処理
@@ -157,11 +164,11 @@ namespace BreakBlock
                         directionY *= -1;
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
+                        score += 10;
+                        pitch += 1;
                         continue;
                     }
                 }
-                //ブロックを消す処理
-
             }
             //バーに衝突するとで跳ね返る
             if ((x >= Bar.barpositionX) && (x <= Bar.barpositionX + 90) && (y >= (350 - radius)) && (y <= 350 + radius))

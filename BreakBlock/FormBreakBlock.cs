@@ -23,8 +23,9 @@ namespace BreakBlock
         Label label0 = new Label();
         Label label1 = new Label();
         Label label2 = new Label();
-
-
+        Label textScore = new Label();
+        Label labelScore = new Label();
+        
 
         public FormBreakBlock()
         {
@@ -55,6 +56,24 @@ namespace BreakBlock
                 label1.Font = new Font("MS UI Gothic", 22);
                 panel1.Controls.Add(label1);
 
+                //"score："をプレイ画面に表示
+                textScore.Text = "score：";
+                textScore.Location = new Point(210, 380);
+                textScore.BackColor = Color.Black;
+                textScore.ForeColor = Color.White;
+                textScore.AutoSize = true;
+                textScore.Font = new Font("MS UI Gothic", 18);
+                pictureBox1.Controls.Add(textScore);
+
+                //スコア(数字)をプレイ画面に表示
+                labelScore.Text = "0";
+                labelScore.Location = new Point(280, 375);
+                labelScore.BackColor = Color.Black;
+                labelScore.ForeColor = Color.White;
+                labelScore.AutoSize = true;
+                labelScore.Font = new Font("MS UI Gothic", 25);
+                pictureBox1.Controls.Add(labelScore);
+
                 bar = new Bar(pictureBox1, canvas);
                 int barCenter = (pictureBox1.Width - bar.Bar_width) / 2;     //バーの初期位置x座標
                 bar.PutBar(barCenter);  //バーを描画する
@@ -66,6 +85,8 @@ namespace BreakBlock
                 ball.PutCircle(ballCenter, 340);
             }
         }
+
+       
 
         //弾が動く
         private void timer1_Tick(object sender, EventArgs e)
@@ -129,6 +150,15 @@ namespace BreakBlock
             {
                 blocks[i].DrawBlock();
             }
+            //スコア(数字)をプレイ画面に表示
+            labelScore.Text = ball.score.ToString();
+            labelScore.Location = new Point(280, 375);
+            labelScore.BackColor = Color.Black;
+            labelScore.ForeColor = Color.White;
+            labelScore.AutoSize = true;
+            labelScore.Font = new Font("MS UI Gothic", 25);
+            pictureBox1.Controls.Add(labelScore);
+
             GameOver();
         }
 
