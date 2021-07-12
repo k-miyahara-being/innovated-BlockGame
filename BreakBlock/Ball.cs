@@ -115,6 +115,8 @@ namespace BreakBlock
                 {
                     directionY = +1;
                 }
+
+                //ボールがブロックに当たった時の跳ね返り処理
                 for (int i = 0; i < blocks.Count; i++)
                 {
                 if (y >= blocks[i].top && y <= blocks[i].bottom && x >= blocks[i].left && x <= blocks[i].right)
@@ -125,18 +127,23 @@ namespace BreakBlock
                     {
                         directionY *= -1;
                         blocks[i].DeleteBlock();
+                        blocks.RemoveAt(i);
                         continue;
                     }
                     //左辺の処理
                     if (directionX == 1) 
                     {
                         directionX *= -1;
+                        blocks[i].DeleteBlock();
+                        blocks.RemoveAt(i);
                         continue;
                     }
                     //右辺の処理
                     if (directionX == -1) 
                     {
                         directionX *= -1;
+                        blocks[i].DeleteBlock();
+                        blocks.RemoveAt(i);
                         continue;
                     }
                     //上辺の処理
@@ -144,6 +151,7 @@ namespace BreakBlock
                     {
                         directionY *= -1;
                         blocks[i].DeleteBlock();
+                        blocks.RemoveAt(i);
                         continue;
                     }
                 }
