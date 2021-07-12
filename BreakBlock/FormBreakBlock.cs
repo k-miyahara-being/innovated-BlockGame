@@ -15,9 +15,16 @@ namespace BreakBlock
         private Bitmap canvas;      //キャンバスの宣言
         private Ball ball;          //ボールの宣言
         private List<Block> blocks = new List<Block>();　　//ブロックリストの生成
-        private Bar bar;　　　　　　//バーの宣言
-        
-        private bool PressedSpace = false;　　//スペースキーが押されたか？
+        private Bar bar;      //バーの宣言
+
+        private bool ClickedStart = false;    //スタートボタンが押されたか？
+        private bool PressedSpace = false;  //スペースキーが押されたか？
+
+        Label label0 = new Label();
+        Label label1 = new Label();
+        Label label2 = new Label();
+
+
 
         public FormBreakBlock()
         {
@@ -26,19 +33,38 @@ namespace BreakBlock
 
         private void FormBreakBlock_Load(object sender, EventArgs e)
         {
-            
-
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
-            bar = new Bar(pictureBox1, canvas);
-            int barCenter = (pictureBox1.Width - bar.Bar_width) / 2;     //バーの初期位置x座標
-            bar.PutBar(barCenter);　　//バーを描画する
-            
-            InitializeBlock(); //ブロックの初期化
-   
-            ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
-            int ballCenter = (pictureBox1.Width / 2) - ball.radius;    //ボールの初期位置x座標
-            ball.PutCircle(ballCenter, 330);                               
+            label0.Text = "スタートボタンをクリックしてください";　　//スタート画面のラベル設定
+            label0.Location = new Point(23, 15);
+            label0.AutoSize = true;
+            label0.Font = new Font("MS UI Gothic", 17);
+            panel1.Controls.Add(label0);
+        }
+
+        private void buttonStart_Click(object sender, EventArgs e)
+        {
+            ClickedStart = true;  
+            panel2.Controls.Remove(buttonStart);
+            if (ClickedStart == true)
+            {
+                panel1.Controls.Remove(label0);          //「スタートボタンをクリックしてください」を削除
+                label1.Text = "[Fキー] ⇦　　⇨ [Jキー]";　　//プレイ画面のラベル設定
+                label1.Location = new Point(38, 15);
+                label1.AutoSize = true;
+                label1.Font = new Font("MS UI Gothic", 22);
+                panel1.Controls.Add(label1);
+
+                bar = new Bar(pictureBox1, canvas);
+                int barCenter = (pictureBox1.Width - bar.Bar_width) / 2;     //バーの初期位置x座標
+                bar.PutBar(barCenter);  //バーを描画する
+
+                InitializeBlock(); //ブロックの初期化
+
+                ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
+                int ballCenter = (pictureBox1.Width / 2) - ball.radius;    //ボールの初期位置x座標
+                ball.PutCircle(ballCenter, 330);
+            }
         }
 
         //弾が動く
@@ -69,12 +95,16 @@ namespace BreakBlock
         //キーイベント
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == Keys.Space)　　//スペースキーが押された際にボール発射
+            if (ClickedStart == true)
             {
-                PressedSpace = true;
-                timer1.Start();
+                if (e.KeyData == Keys.Space)  //スペースキーが押された際にボール発射
+                {
+                    PressedSpace = true;
+                    timer1.Start();
+                }
             }
             e.Handled = true;
+            
 
             if (PressedSpace == true)　　//スペースキーが押されたとき
             {
@@ -99,12 +129,39 @@ namespace BreakBlock
             {
                 blocks[i].DrawBlock();
             }
+            GameOver();
         }
+
+        //ゲームオーバー画面
+        public void GameOver()
+        {
+            if (ball.Bomb == true)　　//弾が下端に到達したとき
+            {
+                using (Graphics g = Graphics.FromImage(canvas))
+                {
+                    g.Clear(BackColor);
+                    int centerX = canvas.Width / 2 - 100;
+                    int centerY = canvas.Height / 2 - 100;
+                    g.FillEllipse(Brushes.Blue, centerX, centerY, 200, 100);
+                }
+                panel1.Controls.Remove(label1);　　　//「[Fキー] ⇦　　⇨ [Jキー]」の削除
+                label2.Text = "コンティニューしますか？";  //ゲームオーバー画面のラベル設定
+                label2.Location = new Point(38, 15);
+                label2.AutoSize = true;
+                label2.Font = new Font("MS UI Gothic", 17);
+                panel1.Controls.Add(label2);
+
+            }
+        }
+
+
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
         }
+
+       
 
         //消えたブロックをリストから消去し、画面を更新する
         /*private void button1_Click(object sender, EventArgs e)
@@ -115,7 +172,7 @@ namespace BreakBlock
         }
         */
 
-        
-       
+
+
     }
 }

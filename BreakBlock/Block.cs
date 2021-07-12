@@ -38,7 +38,6 @@ namespace BreakBlock
         {
             using (Graphics g = Graphics.FromImage(canvas))
             {
-
                 //LightBlueのブロックを描画
                 g.FillRectangle(Brushes.LightBlue, blockPositionX, blockPositionY, Block_width, Block_height);
                 //Panelコントロールに表示
