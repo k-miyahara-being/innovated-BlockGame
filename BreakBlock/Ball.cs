@@ -124,7 +124,7 @@ namespace BreakBlock
             //ボールがブロックに当たった時の跳ね返り処理
             for (int i = 0; i < blocks.Count; i++)
             {
-                if (y >= blocks[i].top && y <= blocks[i].bottom && x >= blocks[i].left && x <= blocks[i].right)
+                if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
                 {
 
                     //下辺の処理
@@ -164,7 +164,7 @@ namespace BreakBlock
 
             }
             //バーに衝突するとで跳ね返る
-            if ((x >= (Bar.barpositionX - radius)) && (x <= (Bar.barpositionX + 90 - radius)) && (y >= (350 - radius * 2)) && y <= 350)
+            if ((x >= Bar.barpositionX) && (x <= Bar.barpositionX + 90) && (y >= (350 - radius)) && (y <= 350 + radius))
             {
                 directionY = -1;
             }

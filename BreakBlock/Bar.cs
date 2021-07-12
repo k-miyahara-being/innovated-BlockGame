@@ -57,7 +57,7 @@ namespace BreakBlock
             directionX = direction;
 
             //新しい移動先の計算
-            barpositionX = previousX + 10 * directionX;
+            barpositionX = previousX + 50 * directionX;
 
             //左右両端でバーが止まる
             if(barpositionX <= 0)

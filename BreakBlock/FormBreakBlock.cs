@@ -62,8 +62,8 @@ namespace BreakBlock
                 InitializeBlock(); //ブロックの初期化
 
                 ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
-                int ballCenter = (pictureBox1.Width / 2) - ball.radius;    //ボールの初期位置x座標
-                ball.PutCircle(ballCenter, 330);
+                int ballCenter = pictureBox1.Width / 2;    //ボールの初期位置x座標
+                ball.PutCircle(ballCenter, 340);
             }
         }
 
@@ -110,12 +110,12 @@ namespace BreakBlock
             {
                 if (e.KeyData == Keys.J)　　//Jキーが押されたときバーが右に
                 {
-                    bar.MoveBar(+5);
+                    bar.MoveBar(+1);
                 }
 
                 if (e.KeyData == Keys.F)　　//Fキーが押されたときバーが左に
                 {
-                    bar.MoveBar(-5);
+                    bar.MoveBar(-1);
                 }
             }
         }
