@@ -155,10 +155,11 @@ namespace BreakBlock
                 g.FillEllipse(cl1, centerX, centerY, 200, 100);
             }
 
-            labelPlay.Visible = false;       　 //「[Fキー] ⇦　　⇨ [Jキー]」の表示
-            buttonContinue.Visible = true;   //コンティニューボタンの表示
+            labelPlay.Visible = false;       　 //「[Fキー] ⇦　　⇨ [Jキー]」の非表示
             textScore.Visible = false;
             labelScore.Visible = false;
+            PressedSpace = false;
+
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
             buttonContinue.Visible = true;　　　//コンティニューボタンの表示
