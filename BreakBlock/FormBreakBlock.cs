@@ -204,6 +204,7 @@ namespace BreakBlock
             labelScore.Visible = false;
             ResultTextScore.Visible = false;
             ResultLabelScore.Visible = false;
+            labelScore.Text = "0";
             
         }
       
