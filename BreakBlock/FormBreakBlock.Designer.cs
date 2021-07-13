@@ -36,6 +36,10 @@ namespace BreakBlock
             this.labelStart = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelClear = new System.Windows.Forms.Label();
+            this.ResultLabelScore = new System.Windows.Forms.Label();
+            this.ResultTextScore = new System.Windows.Forms.Label();
+            this.labelScore = new System.Windows.Forms.Label();
+            this.textScore = new System.Windows.Forms.Label();
             this.buttonContinue = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -93,6 +97,10 @@ namespace BreakBlock
             // panel2
             // 
             this.panel2.Controls.Add(this.labelGameover);
+            this.panel2.Controls.Add(this.ResultLabelScore);
+            this.panel2.Controls.Add(this.ResultTextScore);
+            this.panel2.Controls.Add(this.labelScore);
+            this.panel2.Controls.Add(this.textScore);
             this.panel2.Controls.Add(this.buttonContinue);
             this.panel2.Controls.Add(this.buttonStart);
             this.panel2.Controls.Add(this.labelClear);
@@ -116,6 +124,53 @@ namespace BreakBlock
             this.labelClear.TabIndex = 3;
             this.labelClear.Text = "CLEAR";
             this.labelClear.Visible = false;
+            // ResultLabelScore
+            // 
+            this.ResultLabelScore.AutoSize = true;
+            this.ResultLabelScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.ResultLabelScore.ForeColor = System.Drawing.Color.White;
+            this.ResultLabelScore.Location = new System.Drawing.Point(327, 344);
+            this.ResultLabelScore.Name = "ResultLabelScore";
+            this.ResultLabelScore.Size = new System.Drawing.Size(32, 34);
+            this.ResultLabelScore.TabIndex = 6;
+            this.ResultLabelScore.Text = "0";
+            this.ResultLabelScore.Visible = false;
+            // 
+            // ResultTextScore
+            // 
+            this.ResultTextScore.AutoSize = true;
+            this.ResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.ResultTextScore.ForeColor = System.Drawing.Color.White;
+            this.ResultTextScore.Location = new System.Drawing.Point(209, 341);
+            this.ResultTextScore.Name = "ResultTextScore";
+            this.ResultTextScore.Size = new System.Drawing.Size(111, 34);
+            this.ResultTextScore.TabIndex = 5;
+            this.ResultTextScore.Text = "score：";
+            this.ResultTextScore.Visible = false;
+            // 
+            // labelScore
+            // 
+            this.labelScore.AutoSize = true;
+            this.labelScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.labelScore.ForeColor = System.Drawing.Color.White;
+            this.labelScore.Location = new System.Drawing.Point(503, 562);
+            this.labelScore.Name = "labelScore";
+            this.labelScore.Size = new System.Drawing.Size(32, 34);
+            this.labelScore.TabIndex = 4;
+            this.labelScore.Text = "0";
+            this.labelScore.Visible = false;
+            // 
+            // textScore
+            // 
+            this.textScore.AutoSize = true;
+            this.textScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.textScore.ForeColor = System.Drawing.Color.White;
+            this.textScore.Location = new System.Drawing.Point(380, 558);
+            this.textScore.Name = "textScore";
+            this.textScore.Size = new System.Drawing.Size(111, 34);
+            this.textScore.TabIndex = 3;
+            this.textScore.Text = "score：";
+            this.textScore.Visible = false;
             // 
             // buttonContinue
             // 
@@ -212,6 +267,10 @@ namespace BreakBlock
         private System.Windows.Forms.Button buttonContinue;
         private System.Windows.Forms.Label labelClear;
         private System.Windows.Forms.Label labelGameover;
+        private System.Windows.Forms.Label textScore;
+        private System.Windows.Forms.Label labelScore;
+        private System.Windows.Forms.Label ResultLabelScore;
+        private System.Windows.Forms.Label ResultTextScore;
     }
 }
 

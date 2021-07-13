@@ -21,9 +21,10 @@ namespace BreakBlock
         private bool PressedSpace = false;  //スペースキーが押されたか？
 
 
-        Label textScore = new Label();
-        Label labelScore = new Label();
         //Label labelfinish = new Label();
+        /*Label textScore = new Label();
+        Label labelScore = new Label();*/
+        Label labelfinish = new Label();
 
         public FormBreakBlock()
         {
@@ -43,10 +44,15 @@ namespace BreakBlock
                 buttonStart.Visible = false;　　//スタートボタンを非表示
                 labelStart.Visible = false;     //「スタートボタンをクリックしてください」を非表示
                 labelPlay.Visible = true;
+                textScore.Visible = true;       //[score：]を表示
+                labelScore.Visible = true;      //スコアの数字を表示
+                ResultTextScore.Visible = false;
+                ResultLabelScore.Visible = false;
+
                 
 
                 //"score："をプレイ画面に表示
-                textScore.Text = "score：";
+                /*textScore.Text = "score：";
                 textScore.Location = new Point(210, 380);
                 textScore.BackColor = Color.Black;
                 textScore.ForeColor = Color.White;
@@ -61,7 +67,7 @@ namespace BreakBlock
                 labelScore.ForeColor = Color.White;
                 labelScore.AutoSize = true;
                 labelScore.Font = new Font("MS UI Gothic", 25);
-                pictureBox1.Controls.Add(labelScore);
+                pictureBox1.Controls.Add(labelScore);*/
 
                 bar = new Bar(pictureBox1, canvas);
                 int barCenter = (pictureBox1.Width - bar.Bar_width) / 2;     //バーの初期位置x座標
@@ -139,12 +145,8 @@ namespace BreakBlock
             }
             //スコア(数字)をプレイ画面に表示
             labelScore.Text = ball.score.ToString();
-            labelScore.Location = new Point(280, 375);
-            labelScore.BackColor = Color.Black;
-            labelScore.ForeColor = Color.White;
-            labelScore.AutoSize = true;
-            labelScore.Font = new Font("MS UI Gothic", 25);
             pictureBox1.Controls.Add(labelScore);
+            ResultLabelScore.Text = ball.score.ToString();
 
             if (!blocks.Any())
             {
@@ -164,6 +166,7 @@ namespace BreakBlock
             {
                 Finish(Brushes.Blue);
             }
+            
         }
 
         //ゲーム終了画面
@@ -181,7 +184,11 @@ namespace BreakBlock
 
             labelPlay.Visible = false;       　 //「[Fキー] ⇦　　⇨ [Jキー]」の表示
             labelContinue.Visible = true;　 　　//「コンティニューしますか？」の表示
-            buttonContinue.Visible = true;　　　//コンティニューボタンの表示
+            buttonContinue.Visible = true;   //コンティニューボタンの表示
+            textScore.Visible = false;
+            labelScore.Visible = false;
+            ResultTextScore.Visible = true;
+            ResultLabelScore.Visible = true;
 
             if (cl1 == Brushes.Orange)　　　　　
             {
@@ -222,6 +229,11 @@ namespace BreakBlock
 
             labelStart.Visible = true;
             buttonStart.Visible = true;
+            textScore.Visible = false;
+            labelScore.Visible = false;
+            ResultTextScore.Visible = false;
+            ResultLabelScore.Visible = false;
+            
         }
       
 
