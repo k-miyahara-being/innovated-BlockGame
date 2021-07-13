@@ -31,12 +31,14 @@ namespace BreakBlock
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.labelContinue = new System.Windows.Forms.Label();
+            this.labelPlay = new System.Windows.Forms.Label();
+            this.labelStart = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonContinue = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.labelStart = new System.Windows.Forms.Label();
-            this.labelPlay = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -45,6 +47,7 @@ namespace BreakBlock
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.labelContinue);
             this.panel1.Controls.Add(this.labelPlay);
             this.panel1.Controls.Add(this.labelStart);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -53,8 +56,41 @@ namespace BreakBlock
             this.panel1.Size = new System.Drawing.Size(568, 82);
             this.panel1.TabIndex = 0;
             // 
+            // labelContinue
+            // 
+            this.labelContinue.AutoSize = true;
+            this.labelContinue.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelContinue.Location = new System.Drawing.Point(80, 25);
+            this.labelContinue.Name = "labelContinue";
+            this.labelContinue.Size = new System.Drawing.Size(344, 36);
+            this.labelContinue.TabIndex = 2;
+            this.labelContinue.Text = "コンティニューしますか？";
+            this.labelContinue.Visible = false;
+            // 
+            // labelPlay
+            // 
+            this.labelPlay.AutoSize = true;
+            this.labelPlay.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelPlay.Location = new System.Drawing.Point(85, 21);
+            this.labelPlay.Name = "labelPlay";
+            this.labelPlay.Size = new System.Drawing.Size(365, 40);
+            this.labelPlay.TabIndex = 1;
+            this.labelPlay.Text = "[Fキー] ⇦　　⇨ [Jキー]";
+            this.labelPlay.Visible = false;
+            // 
+            // labelStart
+            // 
+            this.labelStart.AutoSize = true;
+            this.labelStart.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelStart.Location = new System.Drawing.Point(55, 25);
+            this.labelStart.Name = "labelStart";
+            this.labelStart.Size = new System.Drawing.Size(421, 36);
+            this.labelStart.TabIndex = 0;
+            this.labelStart.Text = "スタートボタンを押してください";
+            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.buttonContinue);
             this.panel2.Controls.Add(this.buttonStart);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -63,6 +99,19 @@ namespace BreakBlock
             this.panel2.Size = new System.Drawing.Size(568, 618);
             this.panel2.TabIndex = 1;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // buttonContinue
+            // 
+            this.buttonContinue.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.buttonContinue.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonContinue.Location = new System.Drawing.Point(200, 489);
+            this.buttonContinue.Name = "buttonContinue";
+            this.buttonContinue.Size = new System.Drawing.Size(173, 40);
+            this.buttonContinue.TabIndex = 2;
+            this.buttonContinue.Text = "Continue";
+            this.buttonContinue.UseVisualStyleBackColor = false;
+            this.buttonContinue.Visible = false;
+            this.buttonContinue.Click += new System.EventHandler(this.buttonContinue_Click);
             // 
             // buttonStart
             // 
@@ -90,27 +139,6 @@ namespace BreakBlock
             // 
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // labelStart
-            // 
-            this.labelStart.AutoSize = true;
-            this.labelStart.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelStart.Location = new System.Drawing.Point(55, 25);
-            this.labelStart.Name = "labelStart";
-            this.labelStart.Size = new System.Drawing.Size(421, 36);
-            this.labelStart.TabIndex = 0;
-            this.labelStart.Text = "スタートボタンを押してください";
-            // 
-            // labelPlay
-            // 
-            this.labelPlay.AutoSize = true;
-            this.labelPlay.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelPlay.Location = new System.Drawing.Point(85, 21);
-            this.labelPlay.Name = "labelPlay";
-            this.labelPlay.Size = new System.Drawing.Size(365, 40);
-            this.labelPlay.TabIndex = 1;
-            this.labelPlay.Text = "[Fキー] ⇦　　⇨ [Jキー]";
-            this.labelPlay.Visible = false;
             // 
             // FormBreakBlock
             // 
@@ -149,6 +177,8 @@ namespace BreakBlock
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Label labelStart;
         private System.Windows.Forms.Label labelPlay;
+        private System.Windows.Forms.Label labelContinue;
+        private System.Windows.Forms.Button buttonContinue;
     }
 }
 
