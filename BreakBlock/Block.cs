@@ -13,8 +13,6 @@ namespace BreakBlock
     {
         private PictureBox pictureBox;  //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
-        //private int positionX;　　　　　//位置(x座標)
-        //private int positionY;　　　　　//位置(y座標)
         private int Block_width = 70;　 //ブロックの幅
         private int Block_height = 30;　//ブロックの高さ
         public int blockPositionX;

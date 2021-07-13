@@ -22,8 +22,9 @@ namespace BreakBlock
         public int directionY;         //移動方向(y座標)(+1 or -1)
         public int radius;             //円の半径
         private Brush brushColor;       //塗りつぶす色
-        public bool Bomb = false;  //弾が消えたか？
+
         public int score = 0;
+        public int finish = 0;         //0のときまだプレイ中、1のときクリア、2のときゲームオーバー
 
 
 
@@ -106,23 +107,22 @@ namespace BreakBlock
             int y = positionY + pitch * directionY;
 
 
-
-
             //壁で跳ね返る補正
-            if (x >= canvas.Width - radius * 2) //右端に来た場合の判定
+            if (x >= canvas.Width - radius) //右端に来た場合の判定
             {
                 directionX = -1;
             }
-            if (x <= 0) //左端に来た場合の判定
+            if (x <= radius) //左端に来た場合の判定
             {
                 directionX = +1;
             }
-            if (y <= 0) //上端に来た場合の判定
+            if (y <= radius) //上端に来た場合の判定
             {
                 directionY = +1;
             }
 
             //ボールがブロックに当たった時の跳ね返り処理
+            //ブロックを消す処理
             for (int i = 0; i < blocks.Count; i++)
             {
                 if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
@@ -191,7 +191,7 @@ namespace BreakBlock
             //下端に来たときゲームオーバー画面に移る
             if (y >= canvas.Height)
             {
-                Bomb = true;
+                finish = 2;
             }
 
             //跳ね返り補正fを反映した値で新しい位置を計算

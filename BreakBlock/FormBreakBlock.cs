@@ -20,13 +20,16 @@ namespace BreakBlock
         private bool ClickedStart = false;    //スタートボタンが押されたか？
         private bool PressedSpace = false;  //スペースキーが押されたか？
 
+
         Label label0 = new Label();
         Label label1 = new Label();
         Label label2 = new Label();
         Label textScore = new Label();
         Label labelScore = new Label();
-        
+        Label labelfinish = new Label();
 
+        Button buttonContinue = new Button();
+       
         public FormBreakBlock()
         {
             InitializeComponent();
@@ -46,7 +49,8 @@ namespace BreakBlock
         private void buttonStart_Click(object sender, EventArgs e)
         {
             ClickedStart = true;  
-            panel2.Controls.Remove(buttonStart);
+            //panel2.Controls.Remove(buttonStart);  //スタートボタンの削除
+            buttonStart.Visible = false;
             if (ClickedStart == true)
             {
                 panel1.Controls.Remove(label0);          //「スタートボタンをクリックしてください」を削除
@@ -85,8 +89,6 @@ namespace BreakBlock
                 ball.PutCircle(ballCenter, 340);
             }
         }
-
-       
 
         //弾が動く
         private void timer1_Tick(object sender, EventArgs e)
@@ -159,39 +161,100 @@ namespace BreakBlock
             labelScore.Font = new Font("MS UI Gothic", 25);
             pictureBox1.Controls.Add(labelScore);
 
-            GameOver();
+            if (!blocks.Any())
+            {
+                ball.finish = 1;
+            }
+            GameFinish();
         }
 
-        //ゲームオーバー画面
-        public void GameOver()
+        //クリアか？ゲームオーバーか？
+        private void GameFinish()
         {
-            if (ball.Bomb == true)　　//弾が下端に到達したとき
+            if (ball.finish == 1)　//ゲームクリア
             {
-                using (Graphics g = Graphics.FromImage(canvas))
-                {
-                    g.Clear(BackColor);
-                    int centerX = canvas.Width / 2 - 100;
-                    int centerY = canvas.Height / 2 - 100;
-                    g.FillEllipse(Brushes.Blue, centerX, centerY, 200, 100);
-                }
-                panel1.Controls.Remove(label1);　　　//「[Fキー] ⇦　　⇨ [Jキー]」の削除
-                label2.Text = "コンティニューしますか？";  //ゲームオーバー画面のラベル設定
-                label2.Location = new Point(38, 15);
-                label2.AutoSize = true;
-                label2.Font = new Font("MS UI Gothic", 17);
-                panel1.Controls.Add(label2);
-
+                Finish(Brushes.Orange, "CLEAR", 120, Color.Yellow);
+            }
+            else if (ball.finish == 2)　//ゲームオーバー
+            {
+                Finish(Brushes.Blue, "GAME OVER", 85, Color.LightBlue);
             }
         }
 
-
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        //ゲーム終了画面
+        private void Finish(Brush cl1, string comment, int labelx, Color cl2)
         {
+            timer1.Stop();
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.Clear(BackColor);
+                int centerX = canvas.Width / 2 - 100;
+                int centerY = canvas.Height / 2 - 100;
+                g.FillEllipse(cl1, centerX, centerY, 200, 100);
+            }
+
+            panel1.Controls.Remove(label1);   //「[Fキー] ⇦　　⇨ [Jキー]」の削除
+
+            labelfinish.Text = comment;                //終了コメントのラベル設定
+            labelfinish.Location = new Point(labelx, 140);
+            labelfinish.AutoSize = true;
+            labelfinish.Font = new Font("MS UI Gothic", 22);
+            labelfinish.BackColor = Color.Transparent;
+            labelfinish.ForeColor = cl2;
+            pictureBox1.Controls.Add(labelfinish);
+
+            label2.Text = "コンティニューしますか？";  //コンティニューラベル設定
+            label2.Location = new Point(50, 15);
+            label2.AutoSize = true;
+            label2.Font = new Font("MS UI Gothic", 17);
+            panel1.Controls.Add(label2);
+
+            buttonContinue.Text = "Continue";          //コンティニューボタン設定
+            buttonContinue.Location = new Point(120, 320);
+            buttonContinue.AutoSize = true;
+            buttonContinue.Font = new Font("MS UI Gothic", 16);
+            buttonContinue.BackColor = Color.LightGreen;
+            pictureBox1.Controls.Add(buttonContinue);
+            buttonContinue.Click += new EventHandler(buttonContinue_Click);
+
 
         }
 
-       
+
+        private void buttonContinue_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Controls.Remove(buttonContinue);
+            panel1.Controls.Remove(label2);
+            pictureBox1.Controls.Remove(labelfinish);
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.Clear(BackColor);
+            }
+            //panel2.Refresh();
+            pictureBox1.Image = canvas;
+
+            FormBreakBlock_Load(sender, e);
+            buttonStart.Visible = true;
+            PressedSpace = false;
+            
+        }
+
+        private void InithalizeAll()
+        {
+            buttonStart.Visible = true;
+            ClickedStart = false;
+            PressedSpace = false;
+            ball.finish = 0;
+            ball.score = 0;
+        }
+      
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
+
+
 
         //消えたブロックをリストから消去し、画面を更新する
         /*private void button1_Click(object sender, EventArgs e)
