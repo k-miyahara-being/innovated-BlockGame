@@ -31,20 +31,18 @@ namespace BreakBlock
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.labelContinue = new System.Windows.Forms.Label();
             this.labelPlay = new System.Windows.Forms.Label();
-            this.labelStart = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelClear = new System.Windows.Forms.Label();
             this.ResultLabelScore = new System.Windows.Forms.Label();
             this.ResultTextScore = new System.Windows.Forms.Label();
             this.labelScore = new System.Windows.Forms.Label();
             this.textScore = new System.Windows.Forms.Label();
+            this.labelGameover = new System.Windows.Forms.Label();
             this.buttonContinue = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.labelGameover = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -53,25 +51,12 @@ namespace BreakBlock
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.labelContinue);
             this.panel1.Controls.Add(this.labelPlay);
-            this.panel1.Controls.Add(this.labelStart);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 618);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(568, 82);
             this.panel1.TabIndex = 0;
-            // 
-            // labelContinue
-            // 
-            this.labelContinue.AutoSize = true;
-            this.labelContinue.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelContinue.Location = new System.Drawing.Point(80, 25);
-            this.labelContinue.Name = "labelContinue";
-            this.labelContinue.Size = new System.Drawing.Size(344, 36);
-            this.labelContinue.TabIndex = 2;
-            this.labelContinue.Text = "コンティニューしますか？";
-            this.labelContinue.Visible = false;
             // 
             // labelPlay
             // 
@@ -83,16 +68,6 @@ namespace BreakBlock
             this.labelPlay.TabIndex = 1;
             this.labelPlay.Text = "[Fキー] ⇦　　⇨ [Jキー]";
             this.labelPlay.Visible = false;
-            // 
-            // labelStart
-            // 
-            this.labelStart.AutoSize = true;
-            this.labelStart.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelStart.Location = new System.Drawing.Point(55, 25);
-            this.labelStart.Name = "labelStart";
-            this.labelStart.Size = new System.Drawing.Size(421, 36);
-            this.labelStart.TabIndex = 0;
-            this.labelStart.Text = "スタートボタンを押してください";
             // 
             // panel2
             // 
@@ -112,7 +87,7 @@ namespace BreakBlock
             this.panel2.TabIndex = 1;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
-            // labelClear
+            // labelGameover
             // 
             this.labelClear.AutoSize = true;
             this.labelClear.BackColor = System.Drawing.Color.Orange;
@@ -171,14 +146,24 @@ namespace BreakBlock
             this.textScore.TabIndex = 3;
             this.textScore.Text = "score：";
             this.textScore.Visible = false;
+            this.labelGameover.AutoSize = true;
+            this.labelGameover.BackColor = System.Drawing.Color.Blue;
+            this.labelGameover.Font = new System.Drawing.Font("MS UI Gothic", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelGameover.ForeColor = System.Drawing.Color.LightSteelBlue;
+            this.labelGameover.Location = new System.Drawing.Point(134, 210);
+            this.labelGameover.Name = "labelGameover";
+            this.labelGameover.Size = new System.Drawing.Size(261, 44);
+            this.labelGameover.TabIndex = 4;
+            this.labelGameover.Text = "GAME OVER";
+            this.labelGameover.Visible = false;
             // 
             // buttonContinue
             // 
             this.buttonContinue.BackColor = System.Drawing.Color.PaleTurquoise;
-            this.buttonContinue.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonContinue.Location = new System.Drawing.Point(200, 489);
+            this.buttonContinue.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonContinue.Location = new System.Drawing.Point(185, 489);
             this.buttonContinue.Name = "buttonContinue";
-            this.buttonContinue.Size = new System.Drawing.Size(173, 40);
+            this.buttonContinue.Size = new System.Drawing.Size(200, 50);
             this.buttonContinue.TabIndex = 2;
             this.buttonContinue.Text = "Continue";
             this.buttonContinue.UseVisualStyleBackColor = false;
@@ -196,6 +181,7 @@ namespace BreakBlock
             this.buttonStart.Text = "スタート";
             this.buttonStart.UseVisualStyleBackColor = false;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            
             // 
             // pictureBox1
             // 
@@ -211,19 +197,6 @@ namespace BreakBlock
             // 
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // labelGameover
-            // 
-            this.labelGameover.AutoSize = true;
-            this.labelGameover.BackColor = System.Drawing.Color.Blue;
-            this.labelGameover.Font = new System.Drawing.Font("MS UI Gothic", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelGameover.ForeColor = System.Drawing.Color.LightSteelBlue;
-            this.labelGameover.Location = new System.Drawing.Point(134, 210);
-            this.labelGameover.Name = "labelGameover";
-            this.labelGameover.Size = new System.Drawing.Size(261, 44);
-            this.labelGameover.TabIndex = 4;
-            this.labelGameover.Text = "GAME OVER";
-            this.labelGameover.Visible = false;
             // 
             // FormBreakBlock
             // 
@@ -261,9 +234,7 @@ namespace BreakBlock
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.Label labelStart;
         private System.Windows.Forms.Label labelPlay;
-        private System.Windows.Forms.Label labelContinue;
         private System.Windows.Forms.Button buttonContinue;
         private System.Windows.Forms.Label labelClear;
         private System.Windows.Forms.Label labelGameover;
