@@ -35,10 +35,12 @@ namespace BreakBlock
             this.labelPlay = new System.Windows.Forms.Label();
             this.labelStart = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.labelClear = new System.Windows.Forms.Label();
             this.buttonContinue = new System.Windows.Forms.Button();
             this.buttonStart = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.labelGameover = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -90,8 +92,10 @@ namespace BreakBlock
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.labelGameover);
             this.panel2.Controls.Add(this.buttonContinue);
             this.panel2.Controls.Add(this.buttonStart);
+            this.panel2.Controls.Add(this.labelClear);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -99,6 +103,19 @@ namespace BreakBlock
             this.panel2.Size = new System.Drawing.Size(568, 618);
             this.panel2.TabIndex = 1;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            // 
+            // labelClear
+            // 
+            this.labelClear.AutoSize = true;
+            this.labelClear.BackColor = System.Drawing.Color.Orange;
+            this.labelClear.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelClear.ForeColor = System.Drawing.Color.Yellow;
+            this.labelClear.Location = new System.Drawing.Point(195, 210);
+            this.labelClear.Name = "labelClear";
+            this.labelClear.Size = new System.Drawing.Size(165, 48);
+            this.labelClear.TabIndex = 3;
+            this.labelClear.Text = "CLEAR";
+            this.labelClear.Visible = false;
             // 
             // buttonContinue
             // 
@@ -140,6 +157,19 @@ namespace BreakBlock
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // labelGameover
+            // 
+            this.labelGameover.AutoSize = true;
+            this.labelGameover.BackColor = System.Drawing.Color.Blue;
+            this.labelGameover.Font = new System.Drawing.Font("MS UI Gothic", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelGameover.ForeColor = System.Drawing.Color.LightSteelBlue;
+            this.labelGameover.Location = new System.Drawing.Point(134, 210);
+            this.labelGameover.Name = "labelGameover";
+            this.labelGameover.Size = new System.Drawing.Size(261, 44);
+            this.labelGameover.TabIndex = 4;
+            this.labelGameover.Text = "GAME OVER";
+            this.labelGameover.Visible = false;
+            // 
             // FormBreakBlock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -162,6 +192,7 @@ namespace BreakBlock
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -179,6 +210,8 @@ namespace BreakBlock
         private System.Windows.Forms.Label labelPlay;
         private System.Windows.Forms.Label labelContinue;
         private System.Windows.Forms.Button buttonContinue;
+        private System.Windows.Forms.Label labelClear;
+        private System.Windows.Forms.Label labelGameover;
     }
 }
 

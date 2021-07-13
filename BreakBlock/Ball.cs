@@ -135,7 +135,7 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        pitch += 1;
+                        //pitch += 1;
                         continue;
                     }
                     //左辺の処理
@@ -145,7 +145,7 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        pitch += 1;
+                        //pitch += 1;
                         continue;
                     }
                     //右辺の処理
@@ -155,7 +155,7 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        pitch += 1;
+                        //pitch += 1;
                         continue;
                     }
                     //上辺の処理
@@ -165,7 +165,7 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        pitch += 1;
+                        //pitch += 1;
                         continue;
                     }
                 }

@@ -23,10 +23,8 @@ namespace BreakBlock
 
         Label textScore = new Label();
         Label labelScore = new Label();
-        Label labelfinish = new Label();
+        //Label labelfinish = new Label();
 
-        //Button buttonContinue = new Button();
-       
         public FormBreakBlock()
         {
             InitializeComponent();
@@ -41,7 +39,7 @@ namespace BreakBlock
         {
             ClickedStart = true;  
             if (ClickedStart == true)
-            {
+             {
                 buttonStart.Visible = false;　　//スタートボタンを非表示
                 labelStart.Visible = false;     //「スタートボタンをクリックしてください」を非表示
                 labelPlay.Visible = true;
@@ -160,20 +158,20 @@ namespace BreakBlock
         {
             if (ball.finish == 1)　//ゲームクリア
             {
-                Finish(Brushes.Orange, "CLEAR", 120, Color.Yellow);
+                Finish(Brushes.Orange);
             }
             else if (ball.finish == 2)　//ゲームオーバー
             {
-                Finish(Brushes.Blue, "GAME OVER", 85, Color.LightBlue);
+                Finish(Brushes.Blue);
             }
         }
 
         //ゲーム終了画面
-        private void Finish(Brush cl1, string comment, int labelx, Color cl2)
+        private void Finish(Brush cl1)
         {
             timer1.Stop();
-            
-            using (Graphics g = Graphics.FromImage(canvas))
+
+            using (Graphics g = Graphics.FromImage(canvas))   //楕円の描画
             {
                 g.Clear(BackColor);
                 int centerX = canvas.Width / 2 - 100;
@@ -181,44 +179,49 @@ namespace BreakBlock
                 g.FillEllipse(cl1, centerX, centerY, 200, 100);
             }
 
-            labelPlay.Visible = false;
-            labelContinue.Visible = true;
+            labelPlay.Visible = false;       　 //「[Fキー] ⇦　　⇨ [Jキー]」の表示
+            labelContinue.Visible = true;　 　　//「コンティニューしますか？」の表示
+            buttonContinue.Visible = true;　　　//コンティニューボタンの表示
 
-            labelfinish.Text = comment;                //終了コメントのラベル設定
-            labelfinish.Location = new Point(labelx, 140);
-            labelfinish.AutoSize = true;
-            labelfinish.Font = new Font("MS UI Gothic", 22);
-            labelfinish.BackColor = Color.Transparent;
-            labelfinish.ForeColor = cl2;
-            pictureBox1.Controls.Add(labelfinish);
-
-            buttonContinue.Visible = true;
+            if (cl1 == Brushes.Orange)　　　　　
+            {
+                labelClear.Visible = true;      //「CLEAR」の表示
+            }
+            else if(cl1 == Brushes.Blue)
+            {
+                labelGameover.Visible = true;　 //「GAME OVER」の表示
+            }
+            　　
 
         }
 
         private void buttonContinue_Click(object sender, EventArgs e)
         {
-            labelfinish.Visible = false;
-            buttonContinue.Visible = false;
+            
             using (Graphics g = Graphics.FromImage(canvas))
             {
                 g.Clear(BackColor);
             }
-            //panel2.Refresh();
             pictureBox1.Image = canvas;
 
-            FormBreakBlock_Load(sender, e);
             InithalizeAll();
-
         }
 
         private void InithalizeAll()
         {
-            buttonStart.Visible = true;
+            labelClear.Visible = false;
+            labelGameover.Visible = false;
+            labelContinue.Visible = false;
+            buttonContinue.Visible = false;
+
             ClickedStart = false;
             PressedSpace = false;
             ball.finish = 0;
             ball.score = 0;
+            blocks.Clear();
+
+            labelStart.Visible = true;
+            buttonStart.Visible = true;
         }
       
 
@@ -226,19 +229,6 @@ namespace BreakBlock
         {
             
         }
-
-       
-
-        //消えたブロックをリストから消去し、画面を更新する
-        /*private void button1_Click(object sender, EventArgs e)
-        {
-            blocks[1].DeleteBlock();
-            blocks.RemoveAt(1);
-            Draw();
-        }
-        */
-
-
 
     }
 }
