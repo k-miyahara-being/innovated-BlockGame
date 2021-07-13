@@ -35,6 +35,9 @@ namespace BreakBlock
             this.buttonStart = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.labelStart = new System.Windows.Forms.Label();
+            this.labelPlay = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -42,6 +45,8 @@ namespace BreakBlock
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.labelPlay);
+            this.panel1.Controls.Add(this.labelStart);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 618);
             this.panel1.Name = "panel1";
@@ -86,6 +91,27 @@ namespace BreakBlock
             this.timer1.Interval = 20;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // labelStart
+            // 
+            this.labelStart.AutoSize = true;
+            this.labelStart.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelStart.Location = new System.Drawing.Point(55, 25);
+            this.labelStart.Name = "labelStart";
+            this.labelStart.Size = new System.Drawing.Size(421, 36);
+            this.labelStart.TabIndex = 0;
+            this.labelStart.Text = "スタートボタンを押してください";
+            // 
+            // labelPlay
+            // 
+            this.labelPlay.AutoSize = true;
+            this.labelPlay.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.labelPlay.Location = new System.Drawing.Point(85, 21);
+            this.labelPlay.Name = "labelPlay";
+            this.labelPlay.Size = new System.Drawing.Size(365, 40);
+            this.labelPlay.TabIndex = 1;
+            this.labelPlay.Text = "[Fキー] ⇦　　⇨ [Jキー]";
+            this.labelPlay.Visible = false;
+            // 
             // FormBreakBlock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
@@ -105,6 +131,8 @@ namespace BreakBlock
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FormBreakBlock_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormBreakBlock_KeyDown);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -119,6 +147,8 @@ namespace BreakBlock
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.Label labelStart;
+        private System.Windows.Forms.Label labelPlay;
     }
 }
 

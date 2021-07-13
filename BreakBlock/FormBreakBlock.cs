@@ -21,12 +21,11 @@ namespace BreakBlock
         private bool PressedSpace = false;  //スペースキーが押されたか？
 
 
-        Label label0 = new Label();
         Label label1 = new Label();
         Label label2 = new Label();
         Label textScore = new Label();
         Label labelScore = new Label();
-        Label labelfinish = new Label();
+        //Label labelfinish = new Label();
 
         Button buttonContinue = new Button();
        
@@ -38,27 +37,17 @@ namespace BreakBlock
         private void FormBreakBlock_Load(object sender, EventArgs e)
         {
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-
-            label0.Text = "スタートボタンをクリックしてください";　　//スタート画面のラベル設定
-            label0.Location = new Point(23, 15);
-            label0.AutoSize = true;
-            label0.Font = new Font("MS UI Gothic", 17);
-            panel1.Controls.Add(label0);
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
             ClickedStart = true;  
-            //panel2.Controls.Remove(buttonStart);  //スタートボタンの削除
-            buttonStart.Visible = false;
             if (ClickedStart == true)
             {
-                panel1.Controls.Remove(label0);          //「スタートボタンをクリックしてください」を削除
-                label1.Text = "[Fキー] ⇦　　⇨ [Jキー]";　　//プレイ画面のラベル設定
-                label1.Location = new Point(38, 15);
-                label1.AutoSize = true;
-                label1.Font = new Font("MS UI Gothic", 22);
-                panel1.Controls.Add(label1);
+                buttonStart.Visible = false;　　//スタートボタンを非表示
+                labelStart.Visible = false;     //「スタートボタンをクリックしてください」を非表示
+                labelPlay.Visible = true;
+                
 
                 //"score："をプレイ画面に表示
                 textScore.Text = "score：";
@@ -185,6 +174,7 @@ namespace BreakBlock
         private void Finish(Brush cl1, string comment, int labelx, Color cl2)
         {
             timer1.Stop();
+            
             using (Graphics g = Graphics.FromImage(canvas))
             {
                 g.Clear(BackColor);
@@ -195,13 +185,13 @@ namespace BreakBlock
 
             panel1.Controls.Remove(label1);   //「[Fキー] ⇦　　⇨ [Jキー]」の削除
 
-            labelfinish.Text = comment;                //終了コメントのラベル設定
+            /*labelfinish.Text = comment;                //終了コメントのラベル設定
             labelfinish.Location = new Point(labelx, 140);
             labelfinish.AutoSize = true;
             labelfinish.Font = new Font("MS UI Gothic", 22);
             labelfinish.BackColor = Color.Transparent;
             labelfinish.ForeColor = cl2;
-            pictureBox1.Controls.Add(labelfinish);
+            pictureBox1.Controls.Add(labelfinish);*/
 
             label2.Text = "コンティニューしますか？";  //コンティニューラベル設定
             label2.Location = new Point(50, 15);
@@ -225,7 +215,7 @@ namespace BreakBlock
         {
             pictureBox1.Controls.Remove(buttonContinue);
             panel1.Controls.Remove(label2);
-            pictureBox1.Controls.Remove(labelfinish);
+            //pictureBox1.Controls.Remove(labelfinish);
             using (Graphics g = Graphics.FromImage(canvas))
             {
                 g.Clear(BackColor);
