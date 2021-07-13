@@ -11,6 +11,7 @@ namespace BreakBlock
     class Ball
     {
         public int pitch;     //移動の割合
+        private int hitNum ;  //跳ね返り回数の変数宣言
 
         private PictureBox pictureBox;   //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
@@ -90,7 +91,6 @@ namespace BreakBlock
                     g.FillEllipse(Brushes.Black, previousX - radius, previousY - radius, radius * 2, radius * 2);
 
                     pictureBox.Image = canvas;
-
                 }
             
         }
@@ -127,7 +127,7 @@ namespace BreakBlock
             {
                 if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
                 {
-
+                    Acceleration();
                     //下辺の処理
                     if (directionY == -1)
                     {
@@ -135,7 +135,6 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        //pitch += 0.5;
                         continue;
                     }
                     //左辺の処理
@@ -145,7 +144,6 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        //pitch += 0.5;
                         continue;
                     }
                     //右辺の処理
@@ -155,7 +153,6 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        //pitch += 0.5;
                         continue;
                     }
                     //上辺の処理
@@ -165,12 +162,11 @@ namespace BreakBlock
                         blocks[i].DeleteBlock();
                         blocks.RemoveAt(i);
                         score += 10;
-                        //pitch += 0.5;
                         continue;
                     }
-                    //速度の処理
                 }
             }
+       
             //バーに衝突するとで跳ね返る
             if ((x >= Bar.barpositionX) && (x <= Bar.barpositionX + 90) && (y >= (350 - radius)) && (y <= 350 + radius))
             {
@@ -206,6 +202,15 @@ namespace BreakBlock
             previousX = positionX;
             previousY = positionY;
 
+        }
+        private void Acceleration()
+        {
+            hitNum += 1;
+            if (hitNum == 2)
+            {
+                pitch += 1;
+                hitNum = 0;
+            }
         }
     }
 
