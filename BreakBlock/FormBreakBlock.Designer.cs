@@ -105,7 +105,7 @@ namespace BreakBlock
             this.ResultLabelScore.AutoSize = true;
             this.ResultLabelScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.ResultLabelScore.ForeColor = System.Drawing.Color.White;
-            this.ResultLabelScore.Location = new System.Drawing.Point(327, 344);
+            this.ResultLabelScore.Location = new System.Drawing.Point(322, 344);
             this.ResultLabelScore.Name = "ResultLabelScore";
             this.ResultLabelScore.Size = new System.Drawing.Size(32, 34);
             this.ResultLabelScore.TabIndex = 6;
@@ -117,7 +117,7 @@ namespace BreakBlock
             this.ResultTextScore.AutoSize = true;
             this.ResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.ResultTextScore.ForeColor = System.Drawing.Color.White;
-            this.ResultTextScore.Location = new System.Drawing.Point(209, 341);
+            this.ResultTextScore.Location = new System.Drawing.Point(201, 341);
             this.ResultTextScore.Name = "ResultTextScore";
             this.ResultTextScore.Size = new System.Drawing.Size(111, 34);
             this.ResultTextScore.TabIndex = 5;
