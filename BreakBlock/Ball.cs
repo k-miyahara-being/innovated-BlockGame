@@ -17,8 +17,8 @@ namespace BreakBlock
         private int previousY;         //以前の縦位置(y座標)
         public int positionX;          //横位置(x座標)
         public int positionY;          //縦位置(y座標)
-        public int directionX;         //移動方向(x座標)(+1 or -1)
-        public int directionY;         //移動方向(y座標)(+1 or -1)
+        public int directionX;         //移動方向(x座標)
+        public int directionY;         //移動方向(y座標)
         public int radius;             //円の半径
         public int pitch;              //移動の割合
         public int score = 0;          //スコア
@@ -107,6 +107,38 @@ namespace BreakBlock
             //以前の表示を削除
             DeleteCircle();
 
+            int n = 0;
+
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                if ((positionX < blocks[i].left - radius) && (positionY <= blocks[i].bottom + radius) && (positionY >= blocks[i].top - radius))
+                {
+                    n = 1; //左側からきた
+                    break;
+                }
+                if ((positionX > blocks[i].right + radius) && (positionY <= blocks[i].bottom + radius) && (positionY >= blocks[i].top - radius))
+                {
+                    n = 2;  //右側からきた
+                    break;
+                }
+                if ((positionY < blocks[i].top - radius) && (positionX >= blocks[i].left - radius) && (positionX <= blocks[i].right + radius))
+                {
+                    n = 3;  //上側からきた
+                    break;
+                }
+                if ((positionY > blocks[i].bottom + radius) && (positionX >= blocks[i].left - radius) && (positionX <= blocks[i].right + radius))
+                {
+                    n = 4;  //下側からきた
+                    break;
+                }
+                else  //ななめからきた
+                {
+                    n = 5;
+                }
+            }
+
+
+
             //新しい移動先の計算
             int x = positionX + (pitch + accel) * directionX;
             int y = positionY + (pitch + accel) * directionY;
@@ -133,7 +165,52 @@ namespace BreakBlock
             {
                 if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
                 {
+                    //Acceleration();
+
+                    if (n == 3)　//上辺の処理
+                    {
+                        directionY = -1;
+                    }
+                    else if (n == 4)　//下辺の処理
+                    {
+                        directionY = 1;
+                    }
+                    else if (n == 1)　　//左辺の処理
+                    {
+                        directionX = -1;
+                    }
+                    else if (n == 2)　 //右辺の処理
+                    {
+                        directionX = 1;
+                    }
+                    else if (n == 5)
+                    {
+                        directionX *= -1;
+                        directionY *= -1;
+                    }
+                    blocks[i].DeleteBlock();
+                    blocks.RemoveAt(i);
+                    score += 10;
+                    continue;
+
+                }
+            }
+
+            //ブロックに当たった時の跳ね返りとブロックを消す処理
+            /*for (int i = 0; i < blocks.Count; i++)
+            {
+                if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
+                {
                     Acceleration();
+
+                    if (directionY == 1)　//上辺の処理
+                    {
+                        directionY *= -1;
+                        blocks[i].DeleteBlock();
+                        blocks.RemoveAt(i);
+                        score += 10;
+                        continue;
+                    }
                     if (directionY == -1)　//下辺の処理
                     {
                         directionY *= -1;
@@ -158,19 +235,13 @@ namespace BreakBlock
                         score += 10;
                         continue;
                     }
-                    if (directionY == 1)　//上辺の処理
-                    {
-                        directionY *= -1;
-                        blocks[i].DeleteBlock();
-                        blocks.RemoveAt(i);
-                        score += 10;
-                        continue;
-                    }
                 }
-            }
+            }*/
+
 
             //バーに衝突すると跳ね返る
-            if(y >= 350 - radius && y <= 350){
+            if (y >= 350 - radius && y <= 350)
+            {
                 if (x >= Bar.barpositionX && x <= Bar.barpositionX + 90)
                 {
                     directionY = -1;
@@ -189,17 +260,6 @@ namespace BreakBlock
                     }
                 }
             }
-
-            //跳ね返り補正fを反映した値で新しい位置を計算
-            positionX = x + directionX;
-            positionY = y + directionY;
-
-            //新しい位置に描画
-            PutCircle(positionX, positionY);
-
-            //新しい位置を以前の値として記憶
-            previousX = positionX;
-            previousY = positionY;
 
             //下端に来たときゲームオーバー画面に移る
             if (y >= canvas.Height)
@@ -224,7 +284,7 @@ namespace BreakBlock
         private void Acceleration()
         {
             hitNum += 1;
-            if (hitNum == 2)
+            if (hitNum == 3)
             {
                 accel += 1;
                 hitNum = 0;

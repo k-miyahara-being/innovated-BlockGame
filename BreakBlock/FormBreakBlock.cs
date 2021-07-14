@@ -30,6 +30,7 @@ namespace BreakBlock
             canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
         }
 
+        //スタートボタンを押したとき
         private void buttonStart_Click(object sender, EventArgs e)
         {
             ClickedStart = true;  
@@ -59,13 +60,13 @@ namespace BreakBlock
         private void InitializeBlock()
         {
             //ブロックを4×3に整列する
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     Block block;
-                    int x = 20 + j * 80;
-                    int y = 20 + i * 40;
+                    int x = 10 + j * 55;
+                    int y = 20 + i * 25;
                     block = new Block(pictureBox1, canvas, x, y);
                     block.DrawBlock();
                     //リストに追加する
@@ -152,6 +153,7 @@ namespace BreakBlock
             }
         }
 
+        //コンティニューボタンを押したとき
         private void buttonContinue_Click(object sender, EventArgs e)
         {
             using (Graphics g = Graphics.FromImage(canvas))
@@ -162,6 +164,7 @@ namespace BreakBlock
             InithalizeAll();
         }
 
+        //プレイ画面のコントロールの設定
         private void ControlPlay()
         {
             buttonStart.Visible = false;  //スタートボタンを非表示
@@ -170,7 +173,7 @@ namespace BreakBlock
             labelScore.Visible = true;      //スコアの数字を表示
         }
 
-
+        //終了画面のコントロールの設定
         private void ControlFinish()
         {
             labelPlay.Visible = false;       　 //「[Fキー] ⇦　　⇨ [Jキー]」の非表示
@@ -184,7 +187,7 @@ namespace BreakBlock
             buttonContinue.Focus();　　　　　　 //コンティニューボタンにフォーカスする
         }
 
-
+        //コンティニュー時の初期化
         private void InithalizeAll()
         {
             labelClear.Visible = false;　　　　　//「CLEAR」の文字を非表示
@@ -204,12 +207,5 @@ namespace BreakBlock
             buttonStart.Visible = true;　　　　　//スタートボタンの表示
             buttonStart.Focus();　　　　　　　　 //スタートボタンにフォーカスする
         }
-      
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-            
-        }
-
     }
 }

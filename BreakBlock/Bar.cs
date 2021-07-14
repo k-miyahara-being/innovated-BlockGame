@@ -71,8 +71,6 @@ namespace BreakBlock
 
             //新しい位置を以前の値として記憶
             previousX = barpositionX;
-
         }
-
     }
 }

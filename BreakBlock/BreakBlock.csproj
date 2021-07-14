@@ -49,7 +49,6 @@
     <Compile Include="Ball.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="Block.cs" />
-    <Compile Include="Collision.cs" />
     <Compile Include="FormBreakBlock.cs">
       <SubType>Form</SubType>
     </Compile>
