@@ -10,24 +10,21 @@ namespace BreakBlock
 {
     class Ball
     {
-        public int pitch;     //移動の割合
-        private int hitNum ;  //跳ね返り回数の変数宣言
-
-        private PictureBox pictureBox;   //描画するpictureBox
-        private Bitmap canvas;          //描画するキャンバス
+        private PictureBox pictureBox; //描画するpictureBox
+        private Bitmap canvas;         //描画するキャンバス
+        private Brush brushColor;      //塗りつぶす色
+        private int previousX;         //以前の横位置(x座標)
+        private int previousY;         //以前の縦位置(y座標)
         public int positionX;          //横位置(x座標)
         public int positionY;          //縦位置(y座標)
-        private int previousX;          //以前の横位置(x座標)
-        private int previousY;          //以前の縦位置(y座標)
         public int directionX;         //移動方向(x座標)(+1 or -1)
         public int directionY;         //移動方向(y座標)(+1 or -1)
         public int radius;             //円の半径
-        private Brush brushColor;       //塗りつぶす色
-
-        public int score = 0;
+        public int pitch;              //移動の割合
+        public int score = 0;          //スコア
         public int finish = 0;         //0のときまだプレイ中、1のときクリア、2のときゲームオーバー
-
-
+        private int hitNum;  　　　　　//跳ね返り回数の変数宣言
+        private int accel;　　　　　　 //加速度
 
         //ボールコンストラクタ    
         public Ball(PictureBox pb, Bitmap cv, Brush cl)
@@ -39,20 +36,28 @@ namespace BreakBlock
             radius = 10;                //円の半径の初期設定
             pitch = radius / 2;         //移動の割合の初期設定(半径の半分)
 
-            //ToDo発射角度の決定
+            //ランダム発射
             Random r = new Random();
-            int randomX = r.Next(0, 100) % 2;
+            int randomX = r.Next(0, 100) % 4;
             if (randomX == 0)
             {
                 directionX = -1;
-                directionY = -1;
             }
-            else
+            else if(randomX == 1)
             {
                 directionX = +1;
-                directionY = -1;
             }
-
+            else if(randomX == 2)
+            {
+                directionX = +2;
+                pitch = radius / 3;
+            }
+            else if(randomX == 3)
+            {
+                directionX = -2;
+                pitch = radius / 3;
+            }
+            directionY = -1;
         }
 
         //指定した位置にボールを描く
@@ -74,25 +79,25 @@ namespace BreakBlock
         //指定した位置のボールを消す(黒で描く)
         public void DeleteCircle()
         {
-        
-                //初めて呼ばれて以前の値が無い時
-                if (previousX == 0)
-                {
-                    previousX = positionX;
-                }
-                if (previousY == 0)
-                {
-                    previousY = positionY;
-                }
 
-                using (Graphics g = Graphics.FromImage(canvas))
-                {
-                    //弾を黒で描く
-                    g.FillEllipse(Brushes.Black, previousX - radius, previousY - radius, radius * 2, radius * 2);
+            //初めて呼ばれて以前の値が無い時
+            if (previousX == 0)
+            {
+                previousX = positionX;
+            }
+            if (previousY == 0)
+            {
+                previousY = positionY;
+            }
 
-                    pictureBox.Image = canvas;
-                }
-            
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                //弾を黒で描く
+                g.FillEllipse(Brushes.Black, previousX - radius, previousY - radius, radius * 2, radius * 2);
+
+                pictureBox.Image = canvas;
+            }
+
         }
 
         //ボールを動かす
@@ -103,33 +108,33 @@ namespace BreakBlock
             DeleteCircle();
 
             //新しい移動先の計算
-            int x = positionX + pitch * directionX;
-            int y = positionY + pitch * directionY;
-
+            int x = positionX + (pitch + accel) * directionX;
+            int y = positionY + (pitch + accel) * directionY;
 
             //壁で跳ね返る補正
             if (x >= canvas.Width - radius) //右端に来た場合の判定
             {
                 directionX = -1;
+                pitch = radius / 2;
             }
             if (x <= radius) //左端に来た場合の判定
             {
                 directionX = +1;
+                pitch = radius / 2;
             }
             if (y <= radius) //上端に来た場合の判定
             {
                 directionY = +1;
+                pitch = radius / 2;
             }
 
-            //ボールがブロックに当たった時の跳ね返り処理
-            //ブロックを消す処理
+            //ブロックに当たった時の跳ね返りとブロックを消す処理
             for (int i = 0; i < blocks.Count; i++)
             {
                 if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
                 {
                     Acceleration();
-                    //下辺の処理
-                    if (directionY == -1)
+                    if (directionY == -1)　//下辺の処理
                     {
                         directionY *= -1;
                         blocks[i].DeleteBlock();
@@ -137,8 +142,7 @@ namespace BreakBlock
                         score += 10;
                         continue;
                     }
-                    //左辺の処理
-                    if (directionX == 1)
+                    if (directionX == 1)　　//左辺の処理
                     {
                         directionX *= -1;
                         blocks[i].DeleteBlock();
@@ -146,8 +150,7 @@ namespace BreakBlock
                         score += 10;
                         continue;
                     }
-                    //右辺の処理
-                    if (directionX == -1)
+                    if (directionX == -1)　 //右辺の処理
                     {
                         directionX *= -1;
                         blocks[i].DeleteBlock();
@@ -155,8 +158,7 @@ namespace BreakBlock
                         score += 10;
                         continue;
                     }
-                    //上辺の処理
-                    if (directionY == 1)
+                    if (directionY == 1)　//上辺の処理
                     {
                         directionY *= -1;
                         blocks[i].DeleteBlock();
@@ -166,11 +168,26 @@ namespace BreakBlock
                     }
                 }
             }
-       
-            //バーに衝突するとで跳ね返る
-            if ((x >= Bar.barpositionX) && (x <= Bar.barpositionX + 90) && (y >= (350 - radius)) && (y <= 350 + radius))
-            {
-                directionY = -1;
+
+            //バーに衝突すると跳ね返る
+            if(y >= 350 - radius && y <= 350){
+                if (x >= Bar.barpositionX && x <= Bar.barpositionX + 90)
+                {
+                    directionY = -1;
+                    if (x < Bar.barpositionX + 30)　　//バーの左側
+                    {
+                        directionX = -2;
+                        pitch = 2;
+                    }
+                    if (x >= Bar.barpositionX + 30 && x <= Bar.barpositionX + 60)　　//バーの真ん中
+                    {
+                    }
+                    if (x > Bar.barpositionX + 60)　　//バーの右側
+                    {
+                        directionX = +2;
+                        pitch = 2;
+                    }
+                }
             }
 
             //跳ね返り補正fを反映した値で新しい位置を計算
@@ -183,7 +200,6 @@ namespace BreakBlock
             //新しい位置を以前の値として記憶
             previousX = positionX;
             previousY = positionY;
-
 
             //下端に来たときゲームオーバー画面に移る
             if (y >= canvas.Height)
@@ -203,12 +219,14 @@ namespace BreakBlock
             previousY = positionY;
 
         }
+
+        //加速処理
         private void Acceleration()
         {
             hitNum += 1;
             if (hitNum == 2)
             {
-                pitch += 1;
+                accel += 1;
                 hitNum = 0;
             }
         }

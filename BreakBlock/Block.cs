@@ -53,7 +53,6 @@ namespace BreakBlock
                 pictureBox.Image = canvas;
             }
         }
-
     }
 
 

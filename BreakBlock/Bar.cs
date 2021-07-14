@@ -12,12 +12,12 @@ namespace BreakBlock
     {
         private PictureBox pictureBox;  //描画するpictureBox
         private Bitmap canvas;          //描画するキャンバス
-        public static int barpositionX;          //位置(x座標)
-        private int positionY = 350;    //位置(y座標)
         private int previousX;          //以前の位置(x座標)
         private int directionX = +1;    //移動方向(x座標)(+1 or -1)
-        public int Bar_width = 90;　　 //バーの幅
-        private int Bar_Height = 10;　　//バーの高さ
+        private int barpositionY = 350; //位置(y座標)
+        public static int barpositionX; //位置(x座標)
+        public int Bar_width = 90;　　  //バーの幅
+        private int Bar_height = 10;　　//バーの高さ
         
         public Bar(PictureBox pb, Bitmap cv)
         {
@@ -29,10 +29,9 @@ namespace BreakBlock
         public void PutBar(int x)
         {
             barpositionX = x;
-
             using (Graphics g = Graphics.FromImage(canvas))
             {
-                g.FillRectangle(Brushes.Yellow, barpositionX, positionY, Bar_width, Bar_Height);
+                g.FillRectangle(Brushes.Yellow, barpositionX, barpositionY, Bar_width, Bar_height);
                 //コントロールに表示
                 pictureBox.Image = canvas;
             }
@@ -49,7 +48,7 @@ namespace BreakBlock
             //前の位置のバーを削除
             using (Graphics g = Graphics.FromImage(canvas))
             {
-                g.FillRectangle(Brushes.Black, previousX, positionY, Bar_width, Bar_Height);
+                g.FillRectangle(Brushes.Black, previousX, barpositionY, Bar_width, Bar_height);
                 pictureBox.Image = canvas;
             }
 
@@ -57,15 +56,15 @@ namespace BreakBlock
             directionX = direction;
 
             //新しい移動先の計算
-            barpositionX = previousX + 50 * directionX;
+            barpositionX = previousX + 30 * directionX;
 
-            //左右両端でバーが止まる
-            if(barpositionX <= 0)
+            //バーの移動範囲
+            if(barpositionX <= (Bar_width / 2) * -1)　　//左の壁に半分まで入る
             {
-                barpositionX = 0;
-            }else if(barpositionX + Bar_width >= pictureBox.Width)
+                barpositionX = (Bar_width / 2) * -1;
+            }else if(barpositionX >= pictureBox.Width - (Bar_width / 2))　　//右の壁に半分まで入る
             {
-                barpositionX = pictureBox.Width - Bar_width;
+                barpositionX = pictureBox.Width - (Bar_width / 2);
             }
 
             PutBar(barpositionX);
