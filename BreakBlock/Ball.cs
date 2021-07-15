@@ -25,7 +25,6 @@ namespace BreakBlock
         public int finish = 0;         //0のときまだプレイ中、1のときクリア、2のときゲームオーバー
         private int hitNum;  　　　　　//跳ね返り回数の変数宣言
         private int accel;　　　　　　 //加速度
-        private int n = 0;
 
         //ボールコンストラクタ    
         public Ball(PictureBox pb, Bitmap cv, Brush cl)
@@ -34,7 +33,7 @@ namespace BreakBlock
             canvas = cv;                //描画するキャンバス
             brushColor = cl;            //塗りつぶす色
 
-            radius = 8;                //円の半径の初期設定
+            radius = 8;                 //円の半径の初期設定
             pitch = radius / 2;         //移動の割合の初期設定(半径の半分)
 
             //ランダム発射
@@ -42,20 +41,20 @@ namespace BreakBlock
             int randomX = r.Next(0, 100) % 4;
             if (randomX == 0)
             {
-                directionX = -1;
+                directionX = -1;        //角度45°
             }
             else if(randomX == 1)
             {
-                directionX = +1;
+                directionX = +1;        //角度(180-45)°
             }
             else if(randomX == 2)
             {
-                directionX = +2;
-                pitch = radius / 3;
+                directionX = +2;        //角度22.5°
+                pitch = radius / 3;     
             }
             else if(randomX == 3)
             {
-                directionX = -2;
+                directionX = -2;        //角度(180-22.5)°
                 pitch = radius / 3;
             }
             directionY = -1;
@@ -126,7 +125,6 @@ namespace BreakBlock
             if (y <= radius) //上端に来た場合の判定
             {
                 directionY = +1;
-                pitch = radius / 2;
             }
             if (y >= canvas.Height)  //下端に来たときゲームオーバー画面に移る
             {
@@ -142,13 +140,13 @@ namespace BreakBlock
 
                     if ((positionY < blocks[i].bottom + radius / 2) && (positionY > blocks[i].top - radius / 2))
                     {
-                        directionX *= -1; //左側からきた
+                        directionX *= -1; //左右からきた
                     }
-                    else if ((positionX > blocks[i].left - radius) && (positionX < blocks[i].right + radius))
+                    else if ((positionX > blocks[i].left - radius / 2) && (positionX < blocks[i].right + radius / 2))
                     {
-                        directionY *= -1;  //上側からきた
+                        directionY *= -1;  //上下からきた
                     }
-                    else  //ななめからきた
+                    else  //斜めからきた
                     {
                         directionX *= -1;
                         directionY *= -1;
@@ -159,49 +157,6 @@ namespace BreakBlock
                     break;
                 }
             }
-
-            //ブロックに当たった時の跳ね返りとブロックを消す処理
-            /*for (int i = 0; i < blocks.Count; i++)
-            {
-                if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
-                {
-                    Acceleration();
-
-                    if (directionY == 1)　//上辺の処理
-                    {
-                        directionY *= -1;
-                        blocks[i].DeleteBlock();
-                        blocks.RemoveAt(i);
-                        score += 10;
-                        continue;
-                    }
-                    if (directionY == -1)　//下辺の処理
-                    {
-                        directionY *= -1;
-                        blocks[i].DeleteBlock();
-                        blocks.RemoveAt(i);
-                        score += 10;
-                        continue;
-                    }
-                    if (directionX == 1)　　//左辺の処理
-                    {
-                        directionX *= -1;
-                        blocks[i].DeleteBlock();
-                        blocks.RemoveAt(i);
-                        score += 10;
-                        continue;
-                    }
-                    if (directionX == -1)　 //右辺の処理
-                    {
-                        directionX *= -1;
-                        blocks[i].DeleteBlock();
-                        blocks.RemoveAt(i);
-                        score += 10;
-                        continue;
-                    }
-                }
-            }*/
-
 
             //バーに衝突すると跳ね返る
             if (y >= 350 - radius && y <= 350)

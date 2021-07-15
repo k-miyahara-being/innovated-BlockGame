@@ -44,8 +44,8 @@ namespace BreakBlock
 
                 InitializeBlock(); //ブロックの初期化
 
-                ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
-                int ballCenter = pictureBox1.Width / 2;    //ボールの初期位置x座標
+                ball = new Ball(pictureBox1, canvas, Brushes.Red);          //ボールクラスインスタンスの作成
+                int ballCenter = pictureBox1.Width / 2;                     //ボールの初期位置x座標
                 ball.PutCircle(ballCenter, 342);
             }
         }
