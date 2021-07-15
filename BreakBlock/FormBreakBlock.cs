@@ -36,7 +36,7 @@ namespace BreakBlock
             ClickedStart = true;  
             if (ClickedStart == true)
              {
-                ControlPlay();
+                ControlPlay();  //ラベル・ボタンの表示
 
                 bar = new Bar(pictureBox1, canvas);
                 int barCenter = (pictureBox1.Width - bar.Bar_width) / 2;     //バーの初期位置x座標
@@ -50,7 +50,7 @@ namespace BreakBlock
             }
         }
 
-        //弾が動く
+        //画面の更新を呼ぶ
         private void timer1_Tick(object sender, EventArgs e)
         {
             Draw();
@@ -59,7 +59,7 @@ namespace BreakBlock
         //ブロックの初期化
         private void InitializeBlock()
         {
-            //ブロックを4×3に整列する
+            //ブロックを整列する
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 6; j++)
@@ -69,8 +69,7 @@ namespace BreakBlock
                     int y = 20 + i * 25;
                     block = new Block(pictureBox1, canvas, x, y);
                     block.DrawBlock();
-                    //リストに追加する
-                    blocks.Add(block);
+                    blocks.Add(block);    //リストに追加する
                 }
             }
         }
@@ -106,27 +105,23 @@ namespace BreakBlock
         private void Draw()
         {
             ball.Move(blocks);
-            bar.MoveBar(0);
+            bar.MoveBar(0);                           //バーが移動していないとき
             for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].DrawBlock();
             }
-            //スコア(数字)をプレイ画面にリアルタイム表示
-            labelScore.Text = ball.score.ToString();
-            pictureBox1.Controls.Add(labelScore);
-            ResultLabelScore.Text = ball.score.ToString();
-
-            if (!blocks.Any())　　　　//ブロックのリストが空ならゲームクリア
+            labelScore.Text = ball.score.ToString();  //スコア(数字)をプレイ画面にリアルタイム表示
+            if (!blocks.Any())　　　　                //ブロックのリストが空ならゲームクリア
             {
                 ball.finish = 1;
             }
-            GameFinish();　　　　　　 //結果の判定
+            GameFinish();　　　　　　                 //結果の判定
         }
 
         //クリアか？ゲームオーバーか？
         private void GameFinish()
         {
-            if (ball.finish == 1)　//ゲームクリア
+            if (ball.finish == 1)　　　 //ゲームクリア
             {
                 Finish(Brushes.Orange);
                 labelClear.Visible = true;      //「CLEAR」の表示
@@ -179,8 +174,9 @@ namespace BreakBlock
             labelScore.Visible = false;　　　　 //プレイ画面のスコアを非表示
             PressedSpace = false;
 
-            ResultTextScore.Visible = true;　 　//終了画面の「Score：」を非表示
-            ResultLabelScore.Visible = true;　　//終了画面のスコアを非表示
+            ResultLabelScore.Text = ball.score.ToString();
+            ResultTextScore.Visible = true;　 　//終了画面の「Score：」を表示
+            ResultLabelScore.Visible = true;　　//終了画面のスコアを表示
             buttonContinue.Visible = true;　　　//コンティニューボタンの表示
             buttonContinue.Focus();　　　　　　 //コンティニューボタンにフォーカスする
         }
