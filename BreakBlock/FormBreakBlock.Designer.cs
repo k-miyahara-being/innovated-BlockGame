@@ -30,8 +30,6 @@ namespace BreakBlock
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.labelPlay = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelGameover = new System.Windows.Forms.Label();
             this.ResultLabelScore = new System.Windows.Forms.Label();
@@ -43,31 +41,9 @@ namespace BreakBlock
             this.labelClear = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.labelPlay);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 618);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(568, 82);
-            this.panel1.TabIndex = 0;
-            // 
-            // labelPlay
-            // 
-            this.labelPlay.AutoSize = true;
-            this.labelPlay.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelPlay.Location = new System.Drawing.Point(85, 21);
-            this.labelPlay.Name = "labelPlay";
-            this.labelPlay.Size = new System.Drawing.Size(365, 40);
-            this.labelPlay.TabIndex = 1;
-            this.labelPlay.Text = "[Fキー] ⇦　　⇨ [Jキー]";
-            this.labelPlay.Visible = false;
             // 
             // panel2
             // 
@@ -83,7 +59,7 @@ namespace BreakBlock
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(568, 618);
+            this.panel2.Size = new System.Drawing.Size(568, 608);
             this.panel2.TabIndex = 1;
             // 
             // labelGameover
@@ -191,7 +167,7 @@ namespace BreakBlock
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(568, 618);
+            this.pictureBox1.Size = new System.Drawing.Size(568, 608);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -205,9 +181,8 @@ namespace BreakBlock
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(568, 700);
+            this.ClientSize = new System.Drawing.Size(568, 608);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -219,8 +194,6 @@ namespace BreakBlock
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FormBreakBlock_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormBreakBlock_KeyDown);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -229,14 +202,11 @@ namespace BreakBlock
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
 
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.Label labelPlay;
         private System.Windows.Forms.Button buttonContinue;
         private System.Windows.Forms.Label labelClear;
         private System.Windows.Forms.Label labelGameover;

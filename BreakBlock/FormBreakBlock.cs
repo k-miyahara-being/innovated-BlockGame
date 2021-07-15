@@ -46,7 +46,7 @@ namespace BreakBlock
 
                 ball = new Ball(pictureBox1, canvas, Brushes.Red);      //ボールクラスインスタンスの作成
                 int ballCenter = pictureBox1.Width / 2;    //ボールの初期位置x座標
-                ball.PutCircle(ballCenter, 340);
+                ball.PutCircle(ballCenter, 342);
             }
         }
 
@@ -90,12 +90,12 @@ namespace BreakBlock
 
             if (PressedSpace == true )　　//スペースキーが押されたとき
             {
-                if (e.KeyData == Keys.J || e.KeyData == Keys.Right)　　//Jキーが押されたときバーが右に
+                if (e.KeyData == Keys.J || e.KeyData == Keys.Right || e.KeyData == Keys.S)　　//Jキーが押されたときバーが右に
                 {
                     bar.MoveBar(+1);
                 }
 
-                if (e.KeyData == Keys.F || e.KeyData == Keys.Left)　　//Fキーが押されたときバーが左に
+                if (e.KeyData == Keys.F || e.KeyData == Keys.Left || e.KeyData == Keys.A)　　//Fキーが押されたときバーが左に
                 {
                     bar.MoveBar(-1);
                 }
@@ -168,7 +168,6 @@ namespace BreakBlock
         private void ControlPlay()
         {
             buttonStart.Visible = false;  //スタートボタンを非表示
-            labelPlay.Visible = true;
             textScore.Visible = true;       //[score：]を表示
             labelScore.Visible = true;      //スコアの数字を表示
         }
@@ -176,7 +175,6 @@ namespace BreakBlock
         //終了画面のコントロールの設定
         private void ControlFinish()
         {
-            labelPlay.Visible = false;       　 //「[Fキー] ⇦　　⇨ [Jキー]」の非表示
             textScore.Visible = false;　　　　　//プレイ画面の「Score：」を非表示
             labelScore.Visible = false;　　　　 //プレイ画面のスコアを非表示
             PressedSpace = false;

@@ -17,7 +17,7 @@ namespace BreakBlock
         private int barpositionY = 350; //位置(y座標)
         public static int barpositionX; //位置(x座標)
         public int Bar_width = 90;　　  //バーの幅
-        private int Bar_height = 10;　　//バーの高さ
+        private int Bar_height = 8;　　//バーの高さ
         
         public Bar(PictureBox pb, Bitmap cv)
         {
