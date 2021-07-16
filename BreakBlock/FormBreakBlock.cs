@@ -13,7 +13,7 @@ namespace BreakBlock
     public partial class FormBreakBlock : Form
     {
         private Bitmap canvas;      //キャンバスの宣言
-        private Ball ball;          //ボールの宣言
+        private Ball ball;          //弾の宣言
         private List<Block> blocks = new List<Block>();　　//ブロックリストの生成
         private Bar bar;      //バーの宣言
 
