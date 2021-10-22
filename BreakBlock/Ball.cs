@@ -113,12 +113,12 @@ namespace BreakBlock {
 
             //ブロックに当たった時の跳ね返りとブロックを消す処理
             for (int wI = 0; wI < vBlocks.Count; wI++) {
-                if ((wY >= vBlocks[wI].top - FRadius) && (wY <= vBlocks[wI].bottom + FRadius) && (wX >= vBlocks[wI].left - FRadius) && (wX <= vBlocks[wI].right + FRadius)) {
+                if ((wY >= vBlocks[wI].BlockTop - FRadius) && (wY <= vBlocks[wI].BlockBottom + FRadius) && (wX >= vBlocks[wI].BlockLeft - FRadius) && (wX <= vBlocks[wI].BlockRight + FRadius)) {
                     Acceleration();
 
-                    if ((FPositionY < vBlocks[wI].bottom + FRadius / 2) && (FPositionY > vBlocks[wI].top - FRadius / 2)) {
+                    if ((FPositionY < vBlocks[wI].BlockBottom + FRadius / 2) && (FPositionY > vBlocks[wI].BlockTop - FRadius / 2)) {
                         FDirectionX *= -1; //左右からきた
-                    } else if ((FPositionX > vBlocks[wI].left - FRadius / 2) && (FPositionX < vBlocks[wI].right + FRadius / 2)) {
+                    } else if ((FPositionX > vBlocks[wI].BlockLeft - FRadius / 2) && (FPositionX < vBlocks[wI].BlockRight + FRadius / 2)) {
                         FDirectionY *= -1;  //上下からきた
                     } else  //斜めからきた
                       {
