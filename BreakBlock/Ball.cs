@@ -134,14 +134,14 @@ namespace BreakBlock {
 
             //バーに衝突すると跳ね返る
             if (wY >= 350 - FRadius && wY <= 350) {
-                if (wX >= Bar.barpositionX - 10 && wX <= Bar.barpositionX + 100) {
+                if (wX >= Bar.FBarpositionX - 10 && wX <= Bar.FBarpositionX + 100) {
                     FDirectionY = -1;
-                    if (wX < Bar.barpositionX + 30)　　//バーの左側
+                    if (wX < Bar.FBarpositionX + 30)　　//バーの左側
                     {
                         FDirectionX = -2;
                         FPitch = 2;
                     }
-                    if (wX > Bar.barpositionX + 60)　　//バーの右側
+                    if (wX > Bar.FBarpositionX + 60)　　//バーの右側
                     {
                         FDirectionX = +2;
                         FPitch = 2;

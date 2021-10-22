@@ -1,76 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace BreakBlock
-{
-    class Bar
-    {
-        private PictureBox pictureBox;  //描画するpictureBox
-        private Bitmap canvas;          //描画するキャンバス
-        private int previousX;          //以前の位置(x座標)
-        private int directionX = +1;    //移動方向(x座標)(+1 or -1)
-        private int barpositionY = 350; //位置(y座標)
-        public static int barpositionX; //位置(x座標)
-        public int Bar_width = 90;　　  //バーの幅
-        private int Bar_height = 8;　　//バーの高さ
-        
-        public Bar(PictureBox pb, Bitmap cv)
-        {
-            pictureBox = pb;
-            canvas = cv;
+namespace BreakBlock {
+    class Bar {
+        private PictureBox FPictureBox;  //描画するpictureBox
+        private Bitmap FCanvas;          //描画するキャンバス
+        private int FPreviousX;          //以前の位置(x座標)
+        private int FDirectionX = +1;    //移動方向(x座標)(+1 or -1)
+        private int C_BarpositionY = 350; //位置(y座標)
+        public static int FBarpositionX; //位置(x座標)
+        public int C_BarWidth = 90;　　  //バーの幅
+        private int C_BarHeight = 8;  //バーの高さ
+
+        public Bar(PictureBox pb, Bitmap cv) {
+            FPictureBox = pb;
+            FCanvas = cv;
         }
 
         //バーの描画
-        public void PutBar(int x)
-        {
-            barpositionX = x;
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.FillRectangle(Brushes.Yellow, barpositionX, barpositionY, Bar_width, Bar_height);
+        public void PutBar(int x) {
+            FBarpositionX = x;
+            using (Graphics g = Graphics.FromImage(FCanvas)) {
+                g.FillRectangle(Brushes.Yellow, FBarpositionX, C_BarpositionY, C_BarWidth, C_BarHeight);
                 //コントロールに表示
-                pictureBox.Image = canvas;
+                FPictureBox.Image = FCanvas;
             }
         }
 
         //バーの移動
-        public void MoveBar(int direction)
-        {
-            if (previousX == 0)
-            {
-                previousX = barpositionX;
+        public void MoveBar(int direction) {
+            if (FPreviousX == 0) {
+                FPreviousX = FBarpositionX;
             }
 
             //前の位置のバーを削除
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.FillRectangle(Brushes.Black, previousX, barpositionY, Bar_width, Bar_height);
-                pictureBox.Image = canvas;
+            using (Graphics g = Graphics.FromImage(FCanvas)) {
+                g.FillRectangle(Brushes.Black, FPreviousX, C_BarpositionY, C_BarWidth, C_BarHeight);
+                FPictureBox.Image = FCanvas;
             }
 
             //移動方向が右か左か
-            directionX = direction;
+            FDirectionX = direction;
 
             //新しい移動先の計算
-            barpositionX = previousX + 30 * directionX;
+            FBarpositionX = FPreviousX + 30 * FDirectionX;
 
             //バーの移動範囲
-            if(barpositionX <= (Bar_width / 2) * -1)　　//左の壁に半分まで入る
+            if (FBarpositionX <= (C_BarWidth / 2) * -1)　　//左の壁に半分まで入る
             {
-                barpositionX = (Bar_width / 2) * -1;
-            }else if(barpositionX >= pictureBox.Width - (Bar_width / 2))　　//右の壁に半分まで入る
-            {
-                barpositionX = pictureBox.Width - (Bar_width / 2);
+                FBarpositionX = (C_BarWidth / 2) * -1;
+            } else if (FBarpositionX >= FPictureBox.Width - (C_BarWidth / 2))  //右の壁に半分まで入る
+             {
+                FBarpositionX = FPictureBox.Width - (C_BarWidth / 2);
             }
 
-            PutBar(barpositionX);
+            PutBar(FBarpositionX);
 
             //新しい位置を以前の値として記憶
-            previousX = barpositionX;
+            FPreviousX = FBarpositionX;
         }
     }
 }
