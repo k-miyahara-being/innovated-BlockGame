@@ -134,15 +134,15 @@ namespace BreakBlock
             //ブロックに当たった時の跳ね返りとブロックを消す処理
             for (int i = 0; i < blocks.Count; i++)
             {
-                if ((y >= blocks[i].top - radius) && (y <= blocks[i].bottom + radius) && (x >= blocks[i].left - radius) && (x <= blocks[i].right + radius))
+                if ((y >= blocks[i].BlockTop - radius) && (y <= blocks[i].BlockBottom + radius) && (x >= blocks[i].BlockLeft - radius) && (x <= blocks[i].BlockRight + radius))
                 {
                     Acceleration();
 
-                    if ((positionY < blocks[i].bottom + radius / 2) && (positionY > blocks[i].top - radius / 2))
+                    if ((positionY < blocks[i].BlockBottom + radius / 2) && (positionY > blocks[i].BlockTop - radius / 2))
                     {
                         directionX *= -1; //左右からきた
                     }
-                    else if ((positionX > blocks[i].left - radius / 2) && (positionX < blocks[i].right + radius / 2))
+                    else if ((positionX > blocks[i].BlockLeft - radius / 2) && (positionX < blocks[i].BlockRight + radius / 2))
                     {
                         directionY *= -1;  //上下からきた
                     }

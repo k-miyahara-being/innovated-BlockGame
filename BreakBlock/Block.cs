@@ -1,56 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 
-namespace BreakBlock
-{
-    class Block
-    {
-        private PictureBox pictureBox;  //描画するpictureBox
-        private Bitmap canvas;          //描画するキャンバス
-        private int Block_width = 50;　 //ブロックの幅
-        private int Block_height = 20;　//ブロックの高さ
-        public int blockPositionX;
-        public int blockPositionY;
+namespace BreakBlock {
+    class Block {
+        private PictureBox FPictureBox;  //描画するpictureBox
+        private Bitmap FCanvas;          //描画するキャンバス
+        private int C_Block_width = 50;　 //ブロックの幅
+        private int C_Block_height = 20;　//ブロックの高さ
 
-        public int top => blockPositionY;
-        public int bottom => blockPositionY + Block_height;
-        public int left => blockPositionX;
-        public int right => blockPositionX + Block_width;
+        /// <summary>
+        /// ブロックのX座標
+        /// </summary>
+        public int BlockPositionX { get; set; }
+        /// <summary>
+        /// ブロックのY座標
+        /// </summary>
+        public int BlockPositionY { get; set; }
+        /// <summary>
+        /// ブロックの上辺
+        /// </summary>
+        public int BlockTop => this.BlockPositionY;
+        /// <summary>
+        /// ブロックの下辺
+        /// </summary>
+        public int BlockBottom => this.BlockPositionY + C_Block_height;
+        /// <summary>
+        /// ブロックの左辺
+        /// </summary>
+        public int BlockLeft => this.BlockPositionX;
+        /// <summary>
+        /// ブロックの右辺
+        /// </summary>
+        public int BlockRight => this.BlockPositionX + C_Block_width;
 
-        public Block(PictureBox pb, Bitmap cv, int x, int y)
-        {
-            pictureBox = pb;       
-            canvas = cv;           
-            blockPositionX = x;
-            blockPositionY = y;
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vPictureBox"></param>
+        /// <param name="vCanvas"></param>
+        /// <param name="vX"></param>
+        /// <param name="vY"></param>
+        public Block(PictureBox vPictureBox, Bitmap vCanvas, int vX, int vY) {
+            FPictureBox = vPictureBox;
+            FCanvas = vCanvas;
+            this.BlockPositionX = vX;
+            this.BlockPositionY = vY;
         }
 
-        //ブロックを表示する
-        public void DrawBlock()
-        {
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                //LightBlueのブロックを描画
-                g.FillRectangle(Brushes.LightBlue, blockPositionX, blockPositionY, Block_width, Block_height);
-                //Panelコントロールに表示
-                pictureBox.Image = canvas;
+        /// <summary>
+        /// ブロックを表示する
+        /// </summary>
+        public void DrawBlock() {
+            using (var wG = Graphics.FromImage(FCanvas)) {
+                wG.FillRectangle(Brushes.LightBlue, this.BlockPositionX, this.BlockPositionY, C_Block_width, C_Block_height);
+                FPictureBox.Image = FCanvas;
             }
         }
 
-        public void DeleteBlock()
-        {
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                //LightBlueのブロックを描画
-                g.FillRectangle(Brushes.Black, blockPositionX, blockPositionY, Block_width, Block_height);
-                //Panelコントロールに表示
-                pictureBox.Image = canvas;
+        /// <summary>
+        /// ブロックを消す
+        /// </summary>
+        public void DeleteBlock() {
+            using (var wG = Graphics.FromImage(FCanvas)) {
+                wG.FillRectangle(Brushes.Black, this.BlockPositionX, this.BlockPositionY, C_Block_width, C_Block_height);
+                FPictureBox.Image = FCanvas;
             }
         }
     }
