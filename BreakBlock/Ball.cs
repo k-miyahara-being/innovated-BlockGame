@@ -27,7 +27,12 @@ namespace BreakBlock {
         /// </summary>
         public int Finish { get; set; }          
 
-        //ボールコンストラクタ    
+        /// <summary>
+        /// ボールのコンストラクタ
+        /// </summary>
+        /// <param name="vPb">ピクチャーボックス</param>
+        /// <param name="vCv">キャンバス</param>
+        /// <param name="vCl">色</param>        
         public Ball(PictureBox vPb, Bitmap vCv, Brush vCl) {
             FPictureBox = vPb;            //描画するpictureBox
             FCanvas = vCv;                //描画するキャンバス
@@ -53,7 +58,11 @@ namespace BreakBlock {
             FDirectionY = -1;
         }
 
-        //指定した位置にボールを描く
+        /// <summary>
+        /// 引数で指定した位置にボールを描く
+        /// </summary>
+        /// <param name="wX">X座標</param>
+        /// <param name="wY">Y座標</param>
         public void PutCircle(int wX, int wY) {
             //現在の位置を記憶
             FPositionX = wX;
@@ -67,7 +76,9 @@ namespace BreakBlock {
             }
         }
 
-        //指定した位置のボールを消す(黒で描く)
+        /// <summary>
+        /// 指定した位置のボールを消す(黒で描く)
+        /// </summary>
         public void DeleteCircle() {
 
             //初めて呼ばれて以前の値が無い時
@@ -87,7 +98,10 @@ namespace BreakBlock {
 
         }
 
-        //ボールを動かす
+        /// <summary>
+        /// ボールを動かす
+        /// </summary>
+        /// <param name="vBlocks">リストブロック</param>
         public void Move(List<Block> vBlocks) {
 
             //以前の表示を削除
@@ -114,7 +128,7 @@ namespace BreakBlock {
             }
             if (wY >= FCanvas.Height)  //下端に来たときゲームオーバー画面に移る
             {
-                Finish = 2;
+                this.Finish = 2;
             }
 
             //ブロックに当たった時の跳ね返りとブロックを消す処理
@@ -133,7 +147,7 @@ namespace BreakBlock {
                     }
                     vBlocks[wI].DeleteBlock();
                     vBlocks.RemoveAt(wI);
-                    Score += 10;
+                    this.Score += 10;
                     break;
                 }
             }
