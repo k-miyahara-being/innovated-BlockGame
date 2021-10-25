@@ -5,21 +5,27 @@ using System.Windows.Forms;
 
 namespace BreakBlock {
     class Ball {
-        private readonly PictureBox FPictureBox; //描画するpictureBox
+        private PictureBox FPictureBox; //描画するpictureBox
         private Bitmap FCanvas;         //描画するキャンバス
         private Brush FBrushColor;      //塗りつぶす色
         private int FPreviousX;         //以前の横位置(x座標)
         private int FPreviousY;         //以前の縦位置(y座標)
-        public int FPositionX;          //横位置(x座標)
-        public int FPositionY;          //縦位置(y座標)
-        public int FDirectionX;         //移動方向(x座標)
-        public int FDirectionY;         //移動方向(y座標)
-        public int FRadius;             //円の半径
-        public int FPitch;              //移動の割合
-        public int FScore = 0;          //スコア
-        public int FFinish = 0;         //0のときまだプレイ中、1のときクリア、2のときゲームオーバー
+        private int FPositionX;          //横位置(x座標)
+        private int FPositionY;          //縦位置(y座標)
+        private int FDirectionX;         //移動方向(x座標)
+        private int FDirectionY;         //移動方向(y座標)
+        private int FRadius;             //円の半径
+        private int FPitch;              //移動の割合
         private int FHitNum;  　　　　　//跳ね返り回数の変数宣言
-        private int FAccel;　　　　　　 //加速度
+        private int FAccel;             //加速度
+        /// <summary>
+        /// スコア
+        /// </summary>
+        public int Score { get; set; }     
+        /// <summary>
+        /// ゲームの終了
+        /// </summary>
+        public int Finish { get; set; }          
 
         //ボールコンストラクタ    
         public Ball(PictureBox vPb, Bitmap vCv, Brush vCl) {
@@ -108,7 +114,7 @@ namespace BreakBlock {
             }
             if (wY >= FCanvas.Height)  //下端に来たときゲームオーバー画面に移る
             {
-                FFinish = 2;
+                Finish = 2;
             }
 
             //ブロックに当たった時の跳ね返りとブロックを消す処理
@@ -127,7 +133,7 @@ namespace BreakBlock {
                     }
                     vBlocks[wI].DeleteBlock();
                     vBlocks.RemoveAt(wI);
-                    FScore += 10;
+                    Score += 10;
                     break;
                 }
             }

@@ -110,10 +110,10 @@ namespace BreakBlock
             {
                 blocks[i].DrawBlock();
             }
-            labelScore.Text = ball.FScore.ToString();  //スコア(数字)をプレイ画面にリアルタイム表示
+            labelScore.Text = ball.Score.ToString();  //スコア(数字)をプレイ画面にリアルタイム表示
             if (!blocks.Any())　　　　                //ブロックのリストが空ならゲームクリア
             {
-                ball.FFinish = 1;
+                ball.Finish = 1;
             }
             GameFinish();　　　　　　                 //結果の判定
         }
@@ -121,12 +121,12 @@ namespace BreakBlock
         //クリアか？ゲームオーバーか？
         private void GameFinish()
         {
-            if (ball.FFinish == 1)　　　 //ゲームクリア
+            if (ball.Finish == 1)　　　 //ゲームクリア
             {
                 Finish(Brushes.Orange);
                 labelClear.Visible = true;      //「CLEAR」の表示
             }
-            else if (ball.FFinish == 2)　//ゲームオーバー
+            else if (ball.Finish == 2)　//ゲームオーバー
             {
                 Finish(Brushes.Blue);
                 labelGameover.Visible = true;　 //「GAME OVER」の表示
@@ -174,7 +174,7 @@ namespace BreakBlock
             labelScore.Visible = false;　　　　 //プレイ画面のスコアを非表示
             PressedSpace = false;
 
-            ResultLabelScore.Text = ball.FScore.ToString();
+            ResultLabelScore.Text = ball.Score.ToString();
             ResultTextScore.Visible = true;　 　//終了画面の「Score：」を表示
             ResultLabelScore.Visible = true;　　//終了画面のスコアを表示
             buttonContinue.Visible = true;　　　//コンティニューボタンの表示
@@ -190,8 +190,8 @@ namespace BreakBlock
 
             ClickedStart = false;　　　　　　　　//スタートボタンを押していない状態に戻す
             PressedSpace = false;　　　　　　　　//スペースボタンを押していない状態に戻す
-            ball.FFinish = 0; 　　　　　　　　　　//ゲーム終了状態をリセット
-            ball.FScore = 0;　　　　　　　　　　　//スコアをリセット
+            ball.Finish = 0; 　　　　　　　　　　//ゲーム終了状態をリセット
+            ball.Score = 0;　　　　　　　　　　　//スコアをリセット
             blocks.Clear();　　　　　　　　　　　//ブロックのリストを空にする
 
             ResultTextScore.Visible = false;　　 //「Score：」を非表示
