@@ -37,8 +37,7 @@ namespace BreakBlock {
             FPictureBox = vPb;            //描画するpictureBox
             FCanvas = vCv;                //描画するキャンバス
             FBrushColor = vCl;            //塗りつぶす色
-
-            FRadius = 8;                 //円の半径の初期設定
+            FRadius = 8;                  //円の半径の初期設定
             FPitch = FRadius / 2;         //移動の割合の初期設定(半径の半分)
 
             //ランダム発射
@@ -181,7 +180,9 @@ namespace BreakBlock {
             FPreviousY = FPositionY;
         }
 
-        //加速処理
+        /// <summary>
+        /// ボールの加速処理
+        /// </summary>
         private void Acceleration() {
             FHitNum += 1;
             if (FHitNum == 4) {
