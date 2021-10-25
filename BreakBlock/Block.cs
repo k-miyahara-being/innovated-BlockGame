@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 
 namespace BreakBlock {
+    /// <summary>
+    /// ブロッククラス
+    /// </summary>
     class Block {
         private PictureBox FPictureBox;  //描画するpictureBox
         private Bitmap FCanvas;          //描画するキャンバス

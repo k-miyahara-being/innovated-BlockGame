@@ -2,33 +2,45 @@
 using System.Windows.Forms;
 
 namespace BreakBlock {
+    /// <summary>
+    /// バークラス
+    /// </summary>
     class Bar {
         private PictureBox FPictureBox;  //描画するpictureBox
         private Bitmap FCanvas;          //描画するキャンバス
         private int FPreviousX;          //以前の位置(x座標)
-        private int FDirectionX = +1;    //移動方向(x座標)(+1 or -1)
         private int C_BarpositionY = 350; //位置(y座標)
         public static int FBarpositionX; //位置(x座標)
         public int C_BarWidth = 90;　　  //バーの幅
         private int C_BarHeight = 8;  //バーの高さ
 
-        public Bar(PictureBox pb, Bitmap cv) {
-            FPictureBox = pb;
-            FCanvas = cv;
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vPictureBox"></param>
+        /// <param name="vCanvas"></param>
+        public Bar(PictureBox vPictureBox, Bitmap vCanvas) {
+            FPictureBox = vPictureBox;
+            FCanvas = vCanvas;
         }
 
-        //バーの描画
-        public void PutBar(int x) {
-            FBarpositionX = x;
-            using (Graphics g = Graphics.FromImage(FCanvas)) {
-                g.FillRectangle(Brushes.Yellow, FBarpositionX, C_BarpositionY, C_BarWidth, C_BarHeight);
-                //コントロールに表示
+        /// <summary>
+        /// バーの描画
+        /// </summary>
+        /// <param name="vX">バーのX座標</param>
+        public void PutBar(int vX) {
+            //FBarpositionX = vX;
+            using (var g = Graphics.FromImage(FCanvas)) {
+                g.FillRectangle(Brushes.Yellow, vX, C_BarpositionY, C_BarWidth, C_BarHeight);
                 FPictureBox.Image = FCanvas;
             }
         }
 
-        //バーの移動
-        public void MoveBar(int direction) {
+        /// <summary>
+        /// バーの移動
+        /// </summary>
+        /// <param name="vDirection">動くX方向</param>
+        public void MoveBar(int vDirection) {
             if (FPreviousX == 0) {
                 FPreviousX = FBarpositionX;
             }
@@ -39,11 +51,8 @@ namespace BreakBlock {
                 FPictureBox.Image = FCanvas;
             }
 
-            //移動方向が右か左か
-            FDirectionX = direction;
-
             //新しい移動先の計算
-            FBarpositionX = FPreviousX + 30 * FDirectionX;
+            FBarpositionX = FPreviousX + 30 * vDirection;
 
             //バーの移動範囲
             if (FBarpositionX <= (C_BarWidth / 2) * -1)　　//左の壁に半分まで入る
