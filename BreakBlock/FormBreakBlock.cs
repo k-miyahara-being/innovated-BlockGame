@@ -39,7 +39,7 @@ namespace BreakBlock
                 ControlPlay();  //ラベル・ボタンの表示
 
                 bar = new Bar(pictureBox1, canvas);
-                int barCenter = (pictureBox1.Width - bar.C_BarWidth) / 2;     //バーの初期位置x座標
+                int barCenter = (pictureBox1.Width - bar.BarWidth) / 2;     //バーの初期位置x座標
                 bar.PutBar(barCenter);  //バーを描画する
 
                 InitializeBlock(); //ブロックの初期化

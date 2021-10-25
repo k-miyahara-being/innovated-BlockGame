@@ -10,9 +10,16 @@ namespace BreakBlock {
         private Bitmap FCanvas;          //描画するキャンバス
         private int FPreviousX;          //以前の位置(x座標)
         private int C_BarpositionY = 350; //位置(y座標)
-        public static int FBarpositionX; //位置(x座標)
-        public int C_BarWidth = 90;　　  //バーの幅
         private int C_BarHeight = 8;  //バーの高さ
+
+        /// <summary>
+        /// バーのX座標
+        /// </summary>
+        public static int BarPositionX { get; set; }
+        /// <summary>
+        /// バーの幅
+        /// </summary>
+        public int BarWidth => 90;
 
         /// <summary>
         /// コンストラクタ
@@ -29,9 +36,9 @@ namespace BreakBlock {
         /// </summary>
         /// <param name="vX">バーのX座標</param>
         public void PutBar(int vX) {
-            //FBarpositionX = vX;
+            BarPositionX = vX;
             using (var g = Graphics.FromImage(FCanvas)) {
-                g.FillRectangle(Brushes.Yellow, vX, C_BarpositionY, C_BarWidth, C_BarHeight);
+                g.FillRectangle(Brushes.Yellow, BarPositionX, C_BarpositionY, BarWidth, C_BarHeight);
                 FPictureBox.Image = FCanvas;
             }
         }
@@ -42,31 +49,31 @@ namespace BreakBlock {
         /// <param name="vDirection">動くX方向</param>
         public void MoveBar(int vDirection) {
             if (FPreviousX == 0) {
-                FPreviousX = FBarpositionX;
+                FPreviousX = BarPositionX;
             }
 
             //前の位置のバーを削除
             using (Graphics g = Graphics.FromImage(FCanvas)) {
-                g.FillRectangle(Brushes.Black, FPreviousX, C_BarpositionY, C_BarWidth, C_BarHeight);
+                g.FillRectangle(Brushes.Black, FPreviousX, C_BarpositionY, BarWidth, C_BarHeight);
                 FPictureBox.Image = FCanvas;
             }
 
             //新しい移動先の計算
-            FBarpositionX = FPreviousX + 30 * vDirection;
+            BarPositionX = FPreviousX + 30 * vDirection;
 
             //バーの移動範囲
-            if (FBarpositionX <= (C_BarWidth / 2) * -1)　　//左の壁に半分まで入る
+            if (BarPositionX <= (BarWidth / 2) * -1)　　//左の壁に半分まで入る
             {
-                FBarpositionX = (C_BarWidth / 2) * -1;
-            } else if (FBarpositionX >= FPictureBox.Width - (C_BarWidth / 2))  //右の壁に半分まで入る
+                BarPositionX = (BarWidth / 2) * -1;
+            } else if (BarPositionX >= FPictureBox.Width - (BarWidth / 2))  //右の壁に半分まで入る
              {
-                FBarpositionX = FPictureBox.Width - (C_BarWidth / 2);
+                BarPositionX = FPictureBox.Width - (BarWidth / 2);
             }
 
-            PutBar(FBarpositionX);
+            PutBar(BarPositionX);
 
             //新しい位置を以前の値として記憶
-            FPreviousX = FBarpositionX;
+            FPreviousX = BarPositionX;
         }
     }
 }
