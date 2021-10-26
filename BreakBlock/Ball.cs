@@ -14,44 +14,47 @@ namespace BreakBlock {
         private int FPositionY;          //縦位置(y座標)
         private int FDirectionX;         //移動方向(x座標)
         private int FDirectionY;         //移動方向(y座標)
-        private int FRadius;             //円の半径
+        private int FRadius = 8;             //円の半径
         private int FPitch;              //移動の割合
         private int FHitNum;  　　　　　//跳ね返り回数の変数宣言
         private int FAccel;             //加速度
         /// <summary>
         /// スコア
         /// </summary>
-        public int Score { get; set; }     
+        public int Score { get; set; }
         /// <summary>
         /// ゲームの終了
         /// </summary>
-        public int Finish { get; set; }          
+        public int Finish { get; set; }
 
         /// <summary>
         /// ボールのコンストラクタ
         /// </summary>
-        /// <param name="vPb">ピクチャーボックス</param>
-        /// <param name="vCv">キャンバス</param>
-        /// <param name="vCl">色</param>        
-        public Ball(PictureBox vPb, Bitmap vCv, Brush vCl) {
-            FPictureBox = vPb;            //描画するpictureBox
-            FCanvas = vCv;                //描画するキャンバス
-            FBrushColor = vCl;            //塗りつぶす色
-            FRadius = 8;                  //円の半径の初期設定
-            FPitch = FRadius / 2;         //移動の割合の初期設定(半径の半分)
+        /// <param name="vPictureBox">ピクチャーボックス</param>
+        /// <param name="vCanvas">キャンバス</param>
+        /// <param name="vColor">色</param>        
+        public Ball(PictureBox vPictureBox, Bitmap vCanvas, Brush vColor) {
+            FPictureBox = vPictureBox;
+            FCanvas = vCanvas;
+            FBrushColor = vColor;
+            FPitch = FRadius / 2;
 
             //ランダム発射
-            Random wR = new Random();
+            var wR = new Random();
             int wRandomX = wR.Next(0, 100) % 4;
             if (wRandomX == 0) {
-                FDirectionX = -1;        //角度45°
+                //角度45°
+                FDirectionX = -1;
             } else if (wRandomX == 1) {
-                FDirectionX = +1;        //角度(180-45)°
+                //角度(180-45)°
+                FDirectionX = +1;
             } else if (wRandomX == 2) {
-                FDirectionX = +2;        //角度22.5°
+                //角度22.5°
+                FDirectionX = +2;
                 FPitch = FRadius / 3;
             } else if (wRandomX == 3) {
-                FDirectionX = -2;        //角度(180-22.5)°
+                //角度(180-22.5)°
+                FDirectionX = -2;
                 FPitch = FRadius / 3;
             }
             FDirectionY = -1;
@@ -88,9 +91,9 @@ namespace BreakBlock {
                 FPreviousY = FPositionY;
             }
 
-            using (Graphics g = Graphics.FromImage(FCanvas)) {
+            using (var wG = Graphics.FromImage(FCanvas)) {
                 //弾を黒で描く
-                g.FillEllipse(Brushes.Black, FPreviousX - FRadius, FPreviousY - FRadius, FRadius * 2, FRadius * 2);
+                wG.FillEllipse(Brushes.Black, FPreviousX - FRadius, FPreviousY - FRadius, FRadius * 2, FRadius * 2);
 
                 FPictureBox.Image = FCanvas;
             }
@@ -152,17 +155,16 @@ namespace BreakBlock {
             }
 
             //バーに衝突すると跳ね返る
-            
             if (wY >= 350 - FRadius && wY <= 350) {
                 if (wX >= Bar.BarPositionX - 10 && wX <= Bar.BarPositionX + 100) {
                     FDirectionY = -1;
-                    if (wX < Bar.BarPositionX + 30)　　//バーの左側
-                    {
+                    //バーの左側
+                    if (wX < Bar.BarPositionX + 30) {
                         FDirectionX = -2;
                         FPitch = 2;
                     }
-                    if (wX > Bar.BarPositionX + 60)　　//バーの右側
-                    {
+                    //バーの右側
+                    if (wX > Bar.BarPositionX + 60) {
                         FDirectionX = +2;
                         FPitch = 2;
                     }

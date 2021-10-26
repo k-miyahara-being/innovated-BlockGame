@@ -1,205 +1,153 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BreakBlock
-{
-    public partial class FormBreakBlock : Form
-    {
-        private Bitmap canvas;      //キャンバスの宣言
-        private Ball ball;          //弾の宣言
-        private List<Block> blocks = new List<Block>();　　//ブロックリストの生成
-        private Bar bar;      //バーの宣言
+namespace BreakBlock {
+    public partial class FormBreakBlock : Form {
+        private Bitmap FCanvas;
+        private Ball FBall;
+        private List<Block> FBlocks = new List<Block>();
+        private Bar FBar;
 
-        private bool ClickedStart = false;    //スタートボタンが押されたか？
-        private bool PressedSpace = false;  //スペースキーが押されたか？
+        private bool FIsStartClicked = false;
+        private bool FIsSpacePressed = false;
 
-        public FormBreakBlock()
-        {
-            InitializeComponent();
-        }
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public FormBreakBlock() => this.InitializeComponent();
 
-        private void FormBreakBlock_Load(object sender, EventArgs e)
-        {
-            canvas = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-        }
+        private void FormBreakBlock_Load(object vSender, EventArgs vE) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
 
-        //スタートボタンを押したとき
-        private void buttonStart_Click(object sender, EventArgs e)
-        {
-            ClickedStart = true;  
-            if (ClickedStart == true)
-             {
-                ControlPlay();  //ラベル・ボタンの表示
+        private void ButtonStart_Click(object vSender, EventArgs vE) {
+            FIsStartClicked = true;
+            if (FIsStartClicked == true) {
+                ControlPlay();
 
-                bar = new Bar(pictureBox1, canvas);
-                int barCenter = (pictureBox1.Width - bar.BarWidth) / 2;     //バーの初期位置x座標
-                bar.PutBar(barCenter);  //バーを描画する
+                FBar = new Bar(PictureBox1, FCanvas);
+                int barCenter = (PictureBox1.Width - FBar.BarWidth) / 2;
+                FBar.PutBar(barCenter);
 
-                InitializeBlock(); //ブロックの初期化
+                InitializeBlock();
 
-                ball = new Ball(pictureBox1, canvas, Brushes.Red);          //ボールクラスインスタンスの作成
-                int ballCenter = pictureBox1.Width / 2;                     //ボールの初期位置x座標
-                ball.PutCircle(ballCenter, 342);
+                FBall = new Ball(PictureBox1, FCanvas, Brushes.Red);
+                FBall.PutCircle(PictureBox1.Width / 2, 342);
             }
         }
 
-        //画面の更新を呼ぶ
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            Draw();
-        }
+        private void Timer_Tick(object vSender, EventArgs vE) => this.Draw();
 
-        //ブロックの初期化
-        private void InitializeBlock()
-        {
-            //ブロックを整列する
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 6; j++)
-                {
-                    Block block;
+        private void InitializeBlock() {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 6; j++) {
                     int x = 10 + j * 55;
                     int y = 20 + i * 25;
-                    block = new Block(pictureBox1, canvas, x, y);
-                    block.DrawBlock();
-                    blocks.Add(block);    //リストに追加する
+                    var wBlock = new Block(PictureBox1, FCanvas, x, y);
+                    wBlock.DrawBlock();
+                    FBlocks.Add(wBlock);
                 }
             }
         }
 
-        //キーイベント
-        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (ClickedStart == true)
-            {
-                if (e.KeyData == Keys.Space)  //スペースキーが押された際にボール発射
-                {
-                    PressedSpace = true;
-                    timer1.Start();
+        private void FormBreakBlock_KeyDown(object vSender, KeyEventArgs vE) {
+            if (FIsStartClicked == true) {
+                if (vE.KeyData == Keys.Space) {
+                    FIsSpacePressed = true;
+                    Timer.Start();
                 }
             }
-            e.Handled = true;
+            vE.Handled = true;
 
-            if (PressedSpace == true )　　//スペースキーが押されたとき
-            {
-                if (e.KeyData == Keys.J || e.KeyData == Keys.Right || e.KeyData == Keys.S)　　//Jキーが押されたときバーが右に
-                {
-                    bar.MoveBar(+1);
+            if (FIsSpacePressed == true) {
+                if (vE.KeyData == Keys.J || vE.KeyData == Keys.Right || vE.KeyData == Keys.S) {
+                    FBar.MoveBar(+1);
                 }
 
-                if (e.KeyData == Keys.F || e.KeyData == Keys.Left || e.KeyData == Keys.A)　　//Fキーが押されたときバーが左に
-                {
-                    bar.MoveBar(-1);
+                if (vE.KeyData == Keys.F || vE.KeyData == Keys.Left || vE.KeyData == Keys.A) {
+                    FBar.MoveBar(-1);
                 }
             }
         }
 
-        //画面の更新
-        private void Draw()
-        {
-            ball.Move(blocks);
-            bar.MoveBar(0);                           //バーが移動していないとき
-            for (int i = 0; i < blocks.Count; i++)
-            {
-                blocks[i].DrawBlock();
+        private void Draw() {
+            FBall.Move(FBlocks);
+            FBar.MoveBar(0);
+            for (int i = 0; i < FBlocks.Count; i++) {
+                FBlocks[i].DrawBlock();
             }
-            labelScore.Text = ball.Score.ToString();  //スコア(数字)をプレイ画面にリアルタイム表示
-            if (!blocks.Any())　　　　                //ブロックのリストが空ならゲームクリア
-            {
-                ball.Finish = 1;
+            LabelScore.Text = FBall.Score.ToString();
+            if (!FBlocks.Any()) {
+                FBall.Finish = 1;
             }
-            GameFinish();　　　　　　                 //結果の判定
+            if (FBall.Finish != 0) {
+                ClearOrGameover();
+            }
         }
 
-        //クリアか？ゲームオーバーか？
-        private void GameFinish()
-        {
-            if (ball.Finish == 1)　　　 //ゲームクリア
-            {
+        private void ClearOrGameover() {
+            if (FBall.Finish == 1) {
                 Finish(Brushes.Orange);
-                labelClear.Visible = true;      //「CLEAR」の表示
-            }
-            else if (ball.Finish == 2)　//ゲームオーバー
-            {
+                LabelClear.Visible = true;
+            } else if (FBall.Finish == 2) {
                 Finish(Brushes.Blue);
-                labelGameover.Visible = true;　 //「GAME OVER」の表示
+                LabelGameover.Visible = true;
             }
-            
         }
 
-        //ゲーム終了画面
-        private void Finish(Brush cl1)
-        {
-            timer1.Stop();
+        private void Finish(Brush vColor) {
+            Timer.Stop();
             ControlFinish();
-            using (Graphics g = Graphics.FromImage(canvas))   //楕円の描画
-            {
-                g.Clear(BackColor);
-                int centerX = canvas.Width / 2 - 100;
-                int centerY = canvas.Height / 2 - 100;
-                g.FillEllipse(cl1, centerX, centerY, 200, 100);
+            using (var wG = Graphics.FromImage(FCanvas)) {
+                wG.Clear(this.BackColor);
+                wG.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
             }
         }
 
-        //コンティニューボタンを押したとき
-        private void buttonContinue_Click(object sender, EventArgs e)
-        {
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.Clear(BackColor);
+        private void ButtonContinue_Click(object vSender, EventArgs vE) {
+            using (var wG = Graphics.FromImage(FCanvas)) {
+                wG.Clear(this.BackColor);
             }
-            pictureBox1.Image = canvas;
+            PictureBox1.Image = FCanvas;
             InithalizeAll();
         }
 
-        //プレイ画面のコントロールの設定
-        private void ControlPlay()
-        {
-            buttonStart.Visible = false;  //スタートボタンを非表示
-            textScore.Visible = true;       //[score：]を表示
-            labelScore.Visible = true;      //スコアの数字を表示
+        private void ControlPlay() {
+            ButtonStart.Visible = false;
+            TextScore.Visible = true;
+            LabelScore.Visible = true;
         }
 
-        //終了画面のコントロールの設定
-        private void ControlFinish()
-        {
-            textScore.Visible = false;　　　　　//プレイ画面の「Score：」を非表示
-            labelScore.Visible = false;　　　　 //プレイ画面のスコアを非表示
-            PressedSpace = false;
+        private void ControlFinish() {
+            TextScore.Visible = false;
+            LabelScore.Visible = false;
+            FIsSpacePressed = false;
 
-            ResultLabelScore.Text = ball.Score.ToString();
-            ResultTextScore.Visible = true;　 　//終了画面の「Score：」を表示
-            ResultLabelScore.Visible = true;　　//終了画面のスコアを表示
-            buttonContinue.Visible = true;　　　//コンティニューボタンの表示
-            buttonContinue.Focus();　　　　　　 //コンティニューボタンにフォーカスする
+            ResultLabelScore.Text = FBall.Score.ToString();
+            ResultTextScore.Visible = true;
+            ResultLabelScore.Visible = true;
+            ButtonContinue.Visible = true;
+            ButtonContinue.Focus();
         }
 
-        //コンティニュー時の初期化
-        private void InithalizeAll()
-        {
-            labelClear.Visible = false;　　　　　//「CLEAR」の文字を非表示
-            labelGameover.Visible = false;　　　 //「GAME OVER」の文字を非表示
-            buttonContinue.Visible = false;　　  //コンティニューボタンを非表示
+        private void InithalizeAll() {
+            LabelClear.Visible = false;
+            LabelGameover.Visible = false;
+            ButtonContinue.Visible = false;
 
-            ClickedStart = false;　　　　　　　　//スタートボタンを押していない状態に戻す
-            PressedSpace = false;　　　　　　　　//スペースボタンを押していない状態に戻す
-            ball.Finish = 0; 　　　　　　　　　　//ゲーム終了状態をリセット
-            ball.Score = 0;　　　　　　　　　　　//スコアをリセット
-            blocks.Clear();　　　　　　　　　　　//ブロックのリストを空にする
+            FIsStartClicked = false;
+            FIsSpacePressed = false;
+            FBall.Finish = 0;
+            FBall.Score = 0;
+            FBlocks.Clear();
 
-            ResultTextScore.Visible = false;　　 //「Score：」を非表示
-            ResultLabelScore.Visible = false;　　//スコアを非表示
-            labelScore.Text = "0";　　　　　　　 //スコアの初期値
+            ResultTextScore.Visible = false;
+            ResultLabelScore.Visible = false;
+            LabelScore.Text = "0";
 
-            buttonStart.Visible = true;　　　　　//スタートボタンの表示
-            buttonStart.Focus();　　　　　　　　 //スタートボタンにフォーカスする
+            ButtonStart.Visible = true;
+            ButtonStart.Focus();
         }
     }
 }
