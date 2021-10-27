@@ -39,6 +39,7 @@ namespace BreakBlock {
 
         private void Timer_Tick(object vSender, EventArgs vE) => this.Draw();
 
+
         private void InitializeBlock() {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 6; j++) {
