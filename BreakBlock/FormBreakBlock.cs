@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace BreakBlock {
     public partial class FormBreakBlock : Form {
@@ -10,6 +11,8 @@ namespace BreakBlock {
         private Ball FBall;
         private List<Block> FBlocks = new List<Block>();
         private Bar FBar;
+
+        public Vector FBallPos;
 
         private bool FIsStartClicked = false;
         private bool FIsSpacePressed = false;
@@ -33,7 +36,8 @@ namespace BreakBlock {
                 InitializeBlock();
 
                 FBall = new Ball(PictureBox1, FCanvas, Brushes.Red);
-                FBall.PutCircle(PictureBox1.Width / 2, 342);
+                FBallPos = new Vector(PictureBox1.Width / 2, 342);
+                FBall.PutCircle(FBallPos.X, FBallPos.Y);
             }
         }
 

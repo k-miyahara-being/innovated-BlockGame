@@ -6,19 +6,20 @@ using System.Windows.Forms;
 
 namespace BreakBlock {
     class Ball {
+
         private PictureBox FPictureBox; //描画するpictureBox
         private Bitmap FCanvas;         //描画するキャンバス
         private Brush FBrushColor;      //塗りつぶす色
-        private int FPreviousX;         //以前の横位置(x座標)
-        private int FPreviousY;         //以前の縦位置(y座標)
-        private int FPositionX;          //横位置(x座標)
-        private int FPositionY;          //縦位置(y座標)
-        private int FDirectionX;         //移動方向(x座標)
-        private int FDirectionY;         //移動方向(y座標)
-        private int FRadius = 8;             //円の半径
-        private int FPitch;              //移動の割合
-        private int FHitNum;  　　　　　//跳ね返り回数の変数宣言
-        private int FAccel;             //加速度
+        private float FPreviousX;         //以前の横位置(x座標)
+        private float FPreviousY;         //以前の縦位置(y座標)
+        private float FPositionX;          //横位置(x座標)
+        private float FPositionY;          //縦位置(y座標)
+        private float FDirectionX;         //移動方向(x座標)
+        private float FDirectionY;         //移動方向(y座標)
+        private float FRadius = 8;             //円の半径
+        private float FPitch;              //移動の割合
+        private float FHitNum;  　　　　　//跳ね返り回数の変数宣言
+        private float FAccel;             //加速度
         /// <summary>
         /// スコア
         /// </summary>
@@ -66,14 +67,14 @@ namespace BreakBlock {
         /// </summary>
         /// <param name="wX">X座標</param>
         /// <param name="wY">Y座標</param>
-        public void PutCircle(int wX, int wY) {
+        public void PutCircle(double wX, double wY) {
             //現在の位置を記憶
-            FPositionX = wX;
-            FPositionY = wY;
+            FPositionX = (float)wX;
+            FPositionY = (float)wY;
 
             using (Graphics g = Graphics.FromImage(FCanvas)) {
                 //弾をbrushColorで指定された色で描く
-                g.FillEllipse(FBrushColor, wX - FRadius, wY - FRadius, FRadius * 2, FRadius * 2);
+                g.FillEllipse(FBrushColor, (float)wX - FRadius, (float)wY - FRadius, FRadius * 2, FRadius * 2);
 
                 FPictureBox.Image = FCanvas;
             }
@@ -111,8 +112,8 @@ namespace BreakBlock {
             DeleteCircle();
 
             //新しい移動先の計算
-            int wX = FPositionX + (FPitch + FAccel) * FDirectionX;
-            int wY = FPositionY + (FPitch + FAccel) * FDirectionY;
+            float wX = FPositionX + (FPitch + FAccel) * FDirectionX;
+            float wY = FPositionY + (FPitch + FAccel) * FDirectionY;
 
             //壁で跳ね返る補正
             if (wX >= FCanvas.Width - FRadius) //右端に来た場合の判定
