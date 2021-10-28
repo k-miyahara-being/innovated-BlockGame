@@ -17,7 +17,7 @@ namespace BreakBlock
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormBreakBlock());
+            Application.Run(new BreakBlockForm());
         }
     }
 }

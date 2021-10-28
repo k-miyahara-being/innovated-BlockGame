@@ -1,7 +1,7 @@
 ﻿
 namespace BreakBlock
 {
-    partial class FormBreakBlock
+    partial class BreakBlockForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -192,7 +192,7 @@ namespace BreakBlock
             this.Name = "FormBreakBlock";
             this.Text = "ブロック崩し";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.FormBreakBlock_Load);
+            this.Load += new System.EventHandler(this.BreakBlockForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormBreakBlock_KeyDown);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

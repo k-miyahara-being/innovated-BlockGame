@@ -50,16 +50,16 @@
     <Compile Include="Ball.cs" />
     <Compile Include="Bar.cs" />
     <Compile Include="Block.cs" />
-    <Compile Include="FormBreakBlock.cs">
+    <Compile Include="BreakBlockForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBreakBlock.Designer.cs">
-      <DependentUpon>FormBreakBlock.cs</DependentUpon>
+    <Compile Include="BreakBlockForm.Designer.cs">
+      <DependentUpon>BreakBlockForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormBreakBlock.resx">
-      <DependentUpon>FormBreakBlock.cs</DependentUpon>
+    <EmbeddedResource Include="BreakBlockForm.resx">
+      <DependentUpon>BreakBlockForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

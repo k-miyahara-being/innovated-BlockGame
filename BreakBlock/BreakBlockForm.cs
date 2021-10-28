@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Windows;
 
 namespace BreakBlock {
-    public partial class FormBreakBlock : Form {
+    public partial class BreakBlockForm : Form {
         private Bitmap FCanvas;
         private Ball FBall;
         private List<Block> FBlocks = new List<Block>();
@@ -20,9 +20,9 @@ namespace BreakBlock {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public FormBreakBlock() => this.InitializeComponent();
+        public BreakBlockForm() => this.InitializeComponent();
 
-        private void FormBreakBlock_Load(object vSender, EventArgs vE) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+        private void BreakBlockForm_Load(object vSender, EventArgs vE) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
 
         private void ButtonStart_Click(object vSender, EventArgs vE) {
             FIsStartClicked = true;

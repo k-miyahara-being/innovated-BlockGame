@@ -6,11 +6,11 @@ namespace BreakBlock {
     /// バークラス
     /// </summary>
     class Bar {
-        private PictureBox FPictureBox;  //描画するpictureBox
-        private Bitmap FCanvas;          //描画するキャンバス
-        private int FPreviousX;          //以前の位置(x座標)
-        private int C_BarpositionY = 350; //位置(y座標)
-        private int C_BarHeight = 8;  //バーの高さ
+        private PictureBox FPictureBox; 
+        private Bitmap FCanvas;         
+        private int FPreviousX;          
+        private int C_BarpositionY = 350; 
+        private int C_BarHeight = 8; 
 
         /// <summary>
         /// バーのX座標

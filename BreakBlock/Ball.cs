@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace BreakBlock {
@@ -116,22 +115,22 @@ namespace BreakBlock {
             float wY = FPositionY + (FPitch + FAccel) * FDirectionY;
 
             //壁で跳ね返る補正
-            if (wX >= FCanvas.Width - FRadius) //右端に来た場合の判定
-            {
+            if (wX >= FCanvas.Width - FRadius) {
+                //右端に来た場合の判定
                 FDirectionX = -1;
                 FPitch = FRadius / 2;
             }
-            if (wX <= FRadius) //左端に来た場合の判定
-            {
+            if (wX <= FRadius) {
+                //左端に来た場合の判定
                 FDirectionX = +1;
                 FPitch = FRadius / 2;
             }
-            if (wY <= FRadius) //上端に来た場合の判定
-            {
+            if (wY <= FRadius) {
+                //上端に来た場合の判定
                 FDirectionY = +1;
             }
-            if (wY >= FCanvas.Height)  //下端に来たときゲームオーバー画面に移る
-            {
+            if (wY >= FCanvas.Height) {
+                //下端に来たときゲームオーバー画面に移る
                 this.Finish = 2;
             }
 
@@ -141,11 +140,13 @@ namespace BreakBlock {
                     Acceleration();
 
                     if ((FPositionY < vBlocks[wI].BlockBottom + FRadius / 2) && (FPositionY > vBlocks[wI].BlockTop - FRadius / 2)) {
-                        FDirectionX *= -1; //左右からきた
+                        //左右からきた
+                        FDirectionX *= -1;
                     } else if ((FPositionX > vBlocks[wI].BlockLeft - FRadius / 2) && (FPositionX < vBlocks[wI].BlockRight + FRadius / 2)) {
-                        FDirectionY *= -1;  //上下からきた
-                    } else  //斜めからきた
-                      {
+                        //上下からきた
+                        FDirectionY *= -1;
+                    } else {
+                        //斜めからきた
                         FDirectionX *= -1;
                         FDirectionY *= -1;
                     }

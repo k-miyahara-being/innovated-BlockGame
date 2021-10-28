@@ -7,10 +7,10 @@ namespace BreakBlock {
     /// ブロッククラス
     /// </summary>
     class Block {
-        private PictureBox FPictureBox;  //描画するpictureBox
-        private Bitmap FCanvas;          //描画するキャンバス
-        private int C_Block_width = 50;　 //ブロックの幅
-        private int C_Block_height = 20;　//ブロックの高さ
+        private PictureBox FPictureBox;  
+        private Bitmap FCanvas;         
+        private int C_Block_width = 50;　
+        private int C_Block_height = 20;　
 
         /// <summary>
         /// ブロックのX座標
