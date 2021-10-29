@@ -62,14 +62,14 @@ namespace BreakBlock
             this.panel2.Size = new System.Drawing.Size(568, 608);
             this.panel2.TabIndex = 1;
             // 
-            // labelGameover
+            // LabelGameover
             // 
             this.LabelGameover.AutoSize = true;
             this.LabelGameover.BackColor = System.Drawing.Color.Blue;
             this.LabelGameover.Font = new System.Drawing.Font("MS UI Gothic", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.LabelGameover.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.LabelGameover.Location = new System.Drawing.Point(134, 210);
-            this.LabelGameover.Name = "labelGameover";
+            this.LabelGameover.Name = "LabelGameover";
             this.LabelGameover.Size = new System.Drawing.Size(261, 44);
             this.LabelGameover.TabIndex = 4;
             this.LabelGameover.Text = "GAME OVER";
@@ -99,36 +99,36 @@ namespace BreakBlock
             this.ResultTextScore.Text = "score：";
             this.ResultTextScore.Visible = false;
             // 
-            // labelScore
+            // LabelScore
             // 
             this.LabelScore.AutoSize = true;
             this.LabelScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.LabelScore.ForeColor = System.Drawing.Color.White;
             this.LabelScore.Location = new System.Drawing.Point(503, 562);
-            this.LabelScore.Name = "labelScore";
+            this.LabelScore.Name = "LabelScore";
             this.LabelScore.Size = new System.Drawing.Size(32, 34);
             this.LabelScore.TabIndex = 4;
             this.LabelScore.Text = "0";
             this.LabelScore.Visible = false;
             // 
-            // textScore
+            // TextScore
             // 
             this.TextScore.AutoSize = true;
             this.TextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.TextScore.ForeColor = System.Drawing.Color.White;
             this.TextScore.Location = new System.Drawing.Point(380, 558);
-            this.TextScore.Name = "textScore";
+            this.TextScore.Name = "TextScore";
             this.TextScore.Size = new System.Drawing.Size(111, 34);
             this.TextScore.TabIndex = 3;
             this.TextScore.Text = "score：";
             this.TextScore.Visible = false;
             // 
-            // buttonContinue
+            // ButtonContinue
             // 
             this.ButtonContinue.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ButtonContinue.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ButtonContinue.Location = new System.Drawing.Point(185, 470);
-            this.ButtonContinue.Name = "buttonContinue";
+            this.ButtonContinue.Name = "ButtonContinue";
             this.ButtonContinue.Size = new System.Drawing.Size(210, 70);
             this.ButtonContinue.TabIndex = 2;
             this.ButtonContinue.Text = "Continue";
@@ -136,47 +136,48 @@ namespace BreakBlock
             this.ButtonContinue.Visible = false;
             this.ButtonContinue.Click += new System.EventHandler(this.ButtonContinue_Click);
             // 
-            // buttonStart
+            // ButtonStart
             // 
             this.ButtonStart.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ButtonStart.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ButtonStart.Location = new System.Drawing.Point(195, 257);
-            this.ButtonStart.Name = "buttonStart";
+            this.ButtonStart.Name = "ButtonStart";
             this.ButtonStart.Size = new System.Drawing.Size(200, 70);
             this.ButtonStart.TabIndex = 1;
             this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = false;
             this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 
-            // labelClear
+            // LabelClear
             // 
             this.LabelClear.AutoSize = true;
             this.LabelClear.BackColor = System.Drawing.Color.Orange;
             this.LabelClear.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.LabelClear.ForeColor = System.Drawing.Color.Yellow;
             this.LabelClear.Location = new System.Drawing.Point(195, 210);
-            this.LabelClear.Name = "labelClear";
+            this.LabelClear.Name = "LabelClear";
             this.LabelClear.Size = new System.Drawing.Size(165, 48);
             this.LabelClear.TabIndex = 3;
             this.LabelClear.Text = "CLEAR";
             this.LabelClear.Visible = false;
             // 
-            // pictureBox1
+            // PictureBox1
             // 
+            this.PictureBox1.BackColor = System.Drawing.Color.Black;
             this.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBox1.Location = new System.Drawing.Point(0, 0);
             this.PictureBox1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.PictureBox1.Name = "pictureBox1";
+            this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(568, 608);
             this.PictureBox1.TabIndex = 0;
             this.PictureBox1.TabStop = false;
             // 
-            // timer1
+            // Timer
             // 
             this.Timer.Interval = 20;
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
-            // FormBreakBlock
+            // BreakBlockForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -189,7 +190,7 @@ namespace BreakBlock
             this.MaximumSize = new System.Drawing.Size(590, 782);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 662);
-            this.Name = "FormBreakBlock";
+            this.Name = "BreakBlockForm";
             this.Text = "ブロック崩し";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.BreakBlockForm_Load);

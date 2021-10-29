@@ -12,11 +12,8 @@ namespace BreakBlock {
         private List<Block> FBlocks = new List<Block>();
         private Bar FBar;
 
-        public Vector FBallPos;
-
         private bool FIsStartClicked = false;
         private bool FIsSpacePressed = false;
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -29,28 +26,27 @@ namespace BreakBlock {
             if (FIsStartClicked == true) {
                 ControlPlay();
 
-                FBar = new Bar(PictureBox1, FCanvas);
-                int barCenter = (PictureBox1.Width - FBar.BarWidth) / 2;
-                FBar.PutBar(barCenter);
+                FBar = new Bar();
+                int barCenter = (PictureBox1.Width - FBar.Width) / 2;
 
                 InitializeBlock();
 
-                FBall = new Ball(PictureBox1, FCanvas, Brushes.Red);
-                FBallPos = new Vector(PictureBox1.Width / 2, 342);
-                FBall.PutCircle(FBallPos.X, FBallPos.Y);
+                FBall = new Ball(PictureBox1.Width / 2, 342);
             }
         }
 
-        private void Timer_Tick(object vSender, EventArgs vE) => this.Draw();
-
+        private void Timer_Tick(object sender, EventArgs e) {
+            // TODO:ボールが動く処理＋当たり判定
+            FBall.Move();
+            this.Draw();
+        }
 
         private void InitializeBlock() {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 6; j++) {
                     int x = 10 + j * 55;
                     int y = 20 + i * 25;
-                    var wBlock = new Block(PictureBox1, FCanvas, x, y);
-                    wBlock.DrawBlock();
+                    var wBlock = new Block(x, y);
                     FBlocks.Add(wBlock);
                 }
             }
@@ -77,28 +73,21 @@ namespace BreakBlock {
         }
 
         private void Draw() {
-            FBall.Move(FBlocks);
-            FBar.MoveBar(0);
-            for (int i = 0; i < FBlocks.Count; i++) {
-                FBlocks[i].DrawBlock();
+            using (Graphics g = Graphics.FromImage(FCanvas)) {
+                g.Clear(this.BackColor);
+                //弾をbrushColorで指定された色で描く
+                g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - FBall.Radius), (float)(FBall.Position.Y - FBall.Radius), FBall.Radius * 2, FBall.Radius * 2);
+                
+                for (int i = 0; i < FBlocks.Count; i++) {
+                    g.FillRectangle(Brushes.LightBlue, FBlocks[i].BlockPositionX, FBlocks[i].BlockPositionY, FBlocks[i].Block_width,FBlocks[i].Block_height);
+                }
+                g.FillRectangle(Brushes.Yellow, FBar.PositionX, FBar.PositionY, FBar.Width, FBar.Height);
             }
-            LabelScore.Text = FBall.Score.ToString();
-            if (!FBlocks.Any()) {
-                FBall.Finish = 1;
-            }
-            if (FBall.Finish != 0) {
-                ClearOrGameover();
-            }
+            PictureBox1.Image = FCanvas;
         }
 
         private void ClearOrGameover() {
-            if (FBall.Finish == 1) {
-                Finish(Brushes.Orange);
-                LabelClear.Visible = true;
-            } else if (FBall.Finish == 2) {
-                Finish(Brushes.Blue);
-                LabelGameover.Visible = true;
-            }
+            
         }
 
         private void Finish(Brush vColor) {
@@ -129,7 +118,7 @@ namespace BreakBlock {
             LabelScore.Visible = false;
             FIsSpacePressed = false;
 
-            ResultLabelScore.Text = FBall.Score.ToString();
+            ResultLabelScore.Text = null;
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
             ButtonContinue.Visible = true;
@@ -143,8 +132,6 @@ namespace BreakBlock {
 
             FIsStartClicked = false;
             FIsSpacePressed = false;
-            FBall.Finish = 0;
-            FBall.Score = 0;
             FBlocks.Clear();
 
             ResultTextScore.Visible = false;
