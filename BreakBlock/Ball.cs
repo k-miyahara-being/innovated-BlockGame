@@ -18,7 +18,7 @@ namespace BreakBlock {
         private float FRadius = 8;             //円の半径
         private float FPitch;              //移動の割合
         private float FHitNum;  　　　　　//跳ね返り回数の変数宣言
-        private float FAccel;             //加速度
+        private int FAccel;             //加速度
         /// <summary>
         /// スコア
         /// </summary>
