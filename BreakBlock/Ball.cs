@@ -24,7 +24,6 @@ namespace BreakBlock {
         /// ボールを動かす
         /// </summary>
         public void Move() {
-            // TODO:弾の位置の更新処理
             this.Position += this.Speed;
         }
     }
