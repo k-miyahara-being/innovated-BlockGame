@@ -19,19 +19,21 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() => this.InitializeComponent();
 
-        private void BreakBlockForm_Load(object vSender, EventArgs vE) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+        private void BreakBlockForm_Load(object sender, EventArgs e) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
 
-        private void ButtonStart_Click(object vSender, EventArgs vE) {
+        private void ButtonStart_Click(object sender, EventArgs e) {
             FIsStartClicked = true;
             if (FIsStartClicked == true) {
                 ControlPlay();
 
                 FBar = new Bar();
-                int barCenter = (PictureBox1.Width - FBar.Width) / 2;
+                FBar.PositionX = (PictureBox1.Width - FBar.Width) / 2;
 
                 InitializeBlock();
 
                 FBall = new Ball(PictureBox1.Width / 2, 342);
+                Draw();
+
             }
         }
 
@@ -52,21 +54,21 @@ namespace BreakBlock {
             }
         }
 
-        private void FormBreakBlock_KeyDown(object vSender, KeyEventArgs vE) {
+        private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             if (FIsStartClicked == true) {
-                if (vE.KeyData == Keys.Space) {
+                if (e.KeyData == Keys.Space) {
                     FIsSpacePressed = true;
                     Timer.Start();
                 }
             }
-            vE.Handled = true;
+            e.Handled = true;
 
             if (FIsSpacePressed == true) {
-                if (vE.KeyData == Keys.J || vE.KeyData == Keys.Right || vE.KeyData == Keys.S) {
+                if (e.KeyData == Keys.J || e.KeyData == Keys.Right || e.KeyData == Keys.S) {
                     FBar.MoveBar(+1);
                 }
 
-                if (vE.KeyData == Keys.F || vE.KeyData == Keys.Left || vE.KeyData == Keys.A) {
+                if (e.KeyData == Keys.F || e.KeyData == Keys.Left || e.KeyData == Keys.A) {
                     FBar.MoveBar(-1);
                 }
             }
