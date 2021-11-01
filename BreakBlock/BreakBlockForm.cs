@@ -9,7 +9,7 @@ namespace BreakBlock {
     public partial class BreakBlockForm : Form {
         private Bitmap FCanvas;
         private Ball FBall;
-        private List<Block> FBlocks = new List<Block>();
+        private List<Rectangle> FBlocks = new List<Rectangle>();
         private Bar FBar;
 
         private bool FIsStartClicked = false;
@@ -44,9 +44,9 @@ namespace BreakBlock {
         private void InitializeBlock() {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 6; j++) {
-                    int x = 10 + j * 55;
-                    int y = 20 + i * 25;
-                    var wBlock = new Block(x, y);
+                    int wX = 10 + j * 55;
+                    int wY = 20 + i * 25;
+                    var wBlock = new Rectangle(wX, wY, 50, 20);
                     FBlocks.Add(wBlock);
                 }
             }
@@ -79,7 +79,7 @@ namespace BreakBlock {
                 g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - FBall.Radius), (float)(FBall.Position.Y - FBall.Radius), FBall.Radius * 2, FBall.Radius * 2);
                 
                 for (int i = 0; i < FBlocks.Count; i++) {
-                    g.FillRectangle(Brushes.LightBlue, FBlocks[i].BlockPositionX, FBlocks[i].BlockPositionY, FBlocks[i].Block_width,FBlocks[i].Block_height);
+                    g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
                 }
                 g.FillRectangle(Brushes.Yellow, FBar.PositionX, FBar.PositionY, FBar.Width, FBar.Height);
             }

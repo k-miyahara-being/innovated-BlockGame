@@ -6,18 +6,23 @@ namespace BreakBlock {
     /// バークラス
     /// </summary>
     class Bar {
-        
-        public int PositionY { get; set; } = 350;
-        public int Height { get; set; } = 8; 
 
         /// <summary>
         /// バーのX座標
         /// </summary>
         public int PositionX { get; set; }
         /// <summary>
+        /// バーのY座標
+        /// </summary>
+        public int PositionY => 350;
+        /// <summary>
         /// バーの幅
         /// </summary>
         public int Width => 90;
+        /// <summary>
+        /// バーの高さ
+        /// </summary>
+        public int Height => 8;
 
         /// <summary>
         /// バーの移動
