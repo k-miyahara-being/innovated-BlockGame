@@ -6,18 +6,30 @@ using System.Windows.Forms;
 
 namespace BreakBlock {
     class Ball {
-
-        public Vector Position { get; set; }          //横位置(x,y座標)
+        /// <summary>
+        /// x,y座標
+        /// </summary>
+        public Vector Position { get; set; }          
+        /// <summary>
+        /// スピード
+        /// </summary>
         public Vector Speed { get; set; }
-        public float Radius { get; set; } = 8;         //円の半径
+        /// <summary>
+        /// 半径
+        /// </summary>
+        public float Radius { get; set; } = 8;
+        //
+        private Random Rnd;
 
         /// <summary>
         /// ボールのコンストラクタ
         /// </summary>       
         public Ball(int vX, int vY) {
             this.Position = new Vector(vX, vY);
-            // TODO:値xをランダムにする
-            this.Speed = new Vector(-2, -4); 
+            // TODO:スピードが変わる問題を解決
+            Rnd = new Random();
+            double wRndX = Rnd.Next(-5, 5);
+            this.Speed = new Vector(wRndX, -4); 
         }
         
         /// <summary>
