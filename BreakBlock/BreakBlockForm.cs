@@ -27,11 +27,11 @@ namespace BreakBlock {
                 ControlPlay();
 
                 FBar = new Bar();
-                FBar.PositionX = (PictureBox1.Width - FBar.Width) / 2;
+                FBar.PositionX = (PictureBox1.Width - Define.C_BarWidth) / 2;
 
                 InitializeBlock();
 
-                FBall = new Ball(PictureBox1.Width / 2, 342);
+                FBall = new Ball(PictureBox1.Width / 2, Define.C_BallCenterY);
                 Draw();
 
             }
@@ -44,11 +44,11 @@ namespace BreakBlock {
         }
 
         private void InitializeBlock() {
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 6; j++) {
-                    int wX = 10 + j * 55;
-                    int wY = 20 + i * 25;
-                    var wBlock = new Rectangle(wX, wY, 50, 20);
+            for (int i = 0; i < Define.C_BlockColumnNum; i++) {
+                for (int j = 0; j < Define.C_BlockRowNum; j++) {
+                    int wX = Define.C_BlockFirstPositionX + j * (Define.C_BlockWidth + Define.C_BlockGap);
+                    int wY = Define.C_BlockFirstPositionY + i * (Define.C_BlockHeight + Define.C_BlockGap);
+                    var wBlock = new Rectangle(wX, wY, Define.C_BlockWidth, Define.C_BlockHeight);
                     FBlocks.Add(wBlock);
                 }
             }
@@ -65,25 +65,25 @@ namespace BreakBlock {
 
             if (FIsSpacePressed == true) {
                 if (e.KeyData == Keys.J || e.KeyData == Keys.Right || e.KeyData == Keys.S) {
-                    FBar.MoveBar(+1);
+                    FBar.MoveBar((int)Define.BarDirection.Right);
                 }
 
                 if (e.KeyData == Keys.F || e.KeyData == Keys.Left || e.KeyData == Keys.A) {
-                    FBar.MoveBar(-1);
+                    FBar.MoveBar((int)Define.BarDirection.Left);
                 }
             }
         }
 
         private void Draw() {
-            using (Graphics g = Graphics.FromImage(FCanvas)) {
+            using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
                 //弾をbrushColorで指定された色で描く
-                g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - FBall.Radius), (float)(FBall.Position.Y - FBall.Radius), FBall.Radius * 2, FBall.Radius * 2);
+                g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - Define.C_BallRadius), (float)(FBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
                 
                 for (int i = 0; i < FBlocks.Count; i++) {
                     g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
                 }
-                g.FillRectangle(Brushes.Yellow, FBar.PositionX, FBar.PositionY, FBar.Width, FBar.Height);
+                g.FillRectangle(Brushes.Yellow, FBar.PositionX, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight);
             }
             PictureBox1.Image = FCanvas;
         }
@@ -95,9 +95,9 @@ namespace BreakBlock {
         private void Finish(Brush vColor) {
             Timer.Stop();
             ControlFinish();
-            using (var wG = Graphics.FromImage(FCanvas)) {
-                wG.Clear(this.BackColor);
-                wG.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
+            using (var g = Graphics.FromImage(FCanvas)) {
+                g.Clear(this.BackColor);
+                g.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
             }
         }
 
