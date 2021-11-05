@@ -92,19 +92,19 @@ namespace BreakBlock {
             //そのため、構造体のコピーを作り、そのコピーのプロパティの値を変更しコピー元に再代入しています
             //次のページを参照してください
             //https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1612
-            if (FBall.Position.X + FBall.Radius > PictureBox1.Width || FBall.Position.X - FBall.Radius < 0) {
+            if (FBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FBall.Position.X - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.X *= -1;
                 FBall.Speed = wSpeed;
             }
-            if (FBall.Position.Y - FBall.Radius < 0) {
+            if (FBall.Position.Y - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
-            if (LineVsCircle(new Vector(FBar.PositionX, FBar.PositionY),
-                             new Vector(FBar.PositionX + FBar.Width, FBar.PositionY),
-                             FBall.Position, FBall.Radius)) {
+            if (LineVsCircle(new Vector(FBar.PositionX, Define.C_BarPositionY),
+                             new Vector(FBar.PositionX + Define.C_BarWidth, Define.C_BarPositionY),
+                             FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
@@ -126,39 +126,39 @@ namespace BreakBlock {
                 }
             }
         }
-        double DotProduct(Vector a, Vector b) {
-            return a.X * b.X + a.Y * b.Y; // 内積計算
+        double DotProduct(Vector vA, Vector vB) {
+            return vA.X * vB.X + vA.Y * vB.Y; // 内積計算
         }
 
-        bool LineVsCircle(Vector p1, Vector p2, Vector center, float radius) {
-            Vector lineDir = (p2 - p1);                   // パドルの方向ベクトル
-            Vector n = new Vector(lineDir.Y, -lineDir.X); // パドルの法線
-            n.Normalize();
+        bool LineVsCircle(Vector vP1, Vector vP2, Vector vBallCenter, float vBallRadius) {
+            Vector wLineDir = (vP2 - vP1);                   // パドルの方向ベクトル
+            Vector wN = new Vector(wLineDir.Y, -wLineDir.X); // パドルの法線
+            wN.Normalize();
 
-            Vector dir1 = center - p1;
-            Vector dir2 = center - p2;
+            Vector dir1 = vBallCenter - vP1;
+            Vector dir2 = vBallCenter - vP2;
 
-            double dist = Math.Abs(DotProduct(dir1, n));
-            double a1 = DotProduct(dir1, lineDir);
-            double a2 = DotProduct(dir2, lineDir);
+            double wDist = Math.Abs(DotProduct(dir1, wN));
+            double wA1 = DotProduct(dir1, wLineDir);
+            double wA2 = DotProduct(dir2, wLineDir);
 
-            return (a1 * a2 < 0 && dist < radius) ? true : false;
+            return (wA1 * wA2 < 0 && wDist < vBallRadius) ? true : false;
         }
-        int BlockVsCircle(Rectangle block, Vector ball) {
-            if (LineVsCircle(new Vector(block.Left, block.Top),
-                new Vector(block.Right, block.Top), ball, FBall.Radius))
+        int BlockVsCircle(Rectangle vBlock, Vector vBall) {
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top),
+                new Vector(vBlock.Right, vBlock.Top), vBall, Define.C_BallRadius))
                 return 1;
 
-            if (LineVsCircle(new Vector(block.Left, block.Bottom),
-                new Vector(block.Right, block.Bottom), ball, FBall.Radius))
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom),
+                new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius))
                 return 2;
 
-            if (LineVsCircle(new Vector(block.Right, block.Top),
-                new Vector(block.Right, block.Bottom), ball, FBall.Radius))
+            if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top),
+                new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius))
                 return 3;
 
-            if (LineVsCircle(new Vector(block.Left, block.Top),
-                new Vector(block.Left, block.Bottom), ball, FBall.Radius))
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top),
+                new Vector(vBlock.Left, vBlock.Bottom), vBall, Define.C_BallRadius))
                 return 4;
 
             return -1;
