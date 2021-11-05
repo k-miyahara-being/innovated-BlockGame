@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows;
 
 namespace BreakBlock {
     public partial class BreakBlockForm : Form {
@@ -91,32 +92,32 @@ namespace BreakBlock {
             //そのため、構造体のコピーを作り、そのコピーのプロパティの値を変更しコピー元に再代入しています
             //次のページを参照してください
             //https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1612
-            if (FBall.Position.X + FBall.Radius > PictureBox1.Width || FBall.Position.X - FBall.Radius < 0) {
+            if (FBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FBall.Position.X - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.X *= -1;
                 FBall.Speed = wSpeed;
             }
-            if (FBall.Position.Y - FBall.Radius < 0) {
+            if (FBall.Position.Y - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
-            if (LineVsCircle(new Vector(FBar.PositionX, FBar.PositionY),
-                             new Vector(FBar.PositionX + FBar.Width, FBar.PositionY),
-                             FBall.Position, FBall.Radius)) {
+            if (LineVsCircle(new Vector(FBar.PositionX, Define.C_BarPositionY),
+                             new Vector(FBar.PositionX + Define.C_BarWidth, Define.C_BarPositionY),
+                             FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
             for (int i = 0; i < FBlocks.Count; i++) {
-                int collision = BlockVsCircle(FBlocks[i], FBall.Position);
-                if (collision == 1 || collision == 2) {
+                Line collision = BlockVsCircle(FBlocks[i], FBall.Position);
+                if (collision == Line.Top || collision == Line.Bottom) {
                     Vector wSpeed = FBall.Speed;
                     wSpeed.Y *= -1;
                     FBall.Speed = wSpeed;
                     FBlocks.RemoveAt(i);
                     break;
-                } else if (collision == 3 || collision == 4) {
+                } else if (collision == Line.Right || collision == Line.Left) {
                     Vector wSpeed = FBall.Speed;
                     wSpeed.X *= -1;
                     FBall.Speed = wSpeed;
@@ -143,24 +144,24 @@ namespace BreakBlock {
 
             return (a1 * a2 < 0 && dist < radius) ? true : false;
         }
-        int BlockVsCircle(Rectangle block, Vector ball) {
+        Line BlockVsCircle(Rectangle block, Vector ball) {
             if (LineVsCircle(new Vector(block.Left, block.Top),
-                new Vector(block.Right, block.Top), ball, FBall.Radius))
-                return 1;
+                new Vector(block.Right, block.Top), ball, Define.C_BallRadius))
+                return Line.Top;
 
             if (LineVsCircle(new Vector(block.Left, block.Bottom),
-                new Vector(block.Right, block.Bottom), ball, FBall.Radius))
-                return 2;
+                new Vector(block.Right, block.Bottom), ball, Define.C_BallRadius))
+                return Line.Bottom;
 
             if (LineVsCircle(new Vector(block.Right, block.Top),
-                new Vector(block.Right, block.Bottom), ball, FBall.Radius))
-                return 3;
+                new Vector(block.Right, block.Bottom), ball, Define.C_BallRadius))
+                return Line.Right;
 
             if (LineVsCircle(new Vector(block.Left, block.Top),
-                new Vector(block.Left, block.Bottom), ball, FBall.Radius))
-                return 4;
+                new Vector(block.Left, block.Bottom), ball, Define.C_BallRadius))
+                return Line.Left;
 
-            return -1;
+            return Line.Exception;
         }
 
         private void ClearOrGameover() {

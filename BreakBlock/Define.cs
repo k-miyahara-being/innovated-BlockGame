@@ -25,4 +25,11 @@ namespace BreakBlock {
         Left = -1,
         Right = 1
     }
+    public enum Line {
+        Top,
+        Bottom,
+        Right,
+        Left,
+        Exception
+    }
 }
