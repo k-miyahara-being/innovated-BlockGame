@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using System.Windows;
 
@@ -23,18 +22,16 @@ namespace BreakBlock {
 
         private void ButtonStart_Click(object sender, EventArgs e) {
             FIsStartClicked = true;
-            if (FIsStartClicked == true) {
-                ControlPlay();
+            ControlPlay();
 
-                FBar = new Bar();
-                FBar.PositionX = (PictureBox1.Width - Define.C_BarWidth) / 2;
+            int wBarPositionX = (PictureBox1.Width - Define.C_BarWidth) / 2;
+            FBar = new Bar(wBarPositionX);
 
-                InitializeBlock();
+            InitializeBlock();
 
-                FBall = new Ball(PictureBox1.Width / 2, Define.C_BallCenterY);
-                Draw();
+            FBall = new Ball(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius);
+            Draw();
 
-            }
         }
 
         private void Timer_Tick(object sender, EventArgs e) {
@@ -55,22 +52,25 @@ namespace BreakBlock {
         }
 
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
-            if (FIsStartClicked == true) {
-                if (e.KeyData == Keys.Space) {
+            e.Handled = true;
+            switch (e.KeyData) {
+                case Keys.Space:
+                    if (!FIsStartClicked) break;
                     FIsSpacePressed = true;
                     Timer.Start();
-                }
-            }
-            e.Handled = true;
-
-            if (FIsSpacePressed == true) {
-                if (e.KeyData == Keys.J || e.KeyData == Keys.Right || e.KeyData == Keys.S) {
-                    FBar.MoveBar((int)Define.BarDirection.Right);
-                }
-
-                if (e.KeyData == Keys.F || e.KeyData == Keys.Left || e.KeyData == Keys.A) {
-                    FBar.MoveBar((int)Define.BarDirection.Left);
-                }
+                    break;
+                case Keys.J:
+                case Keys.Right:
+                case Keys.S:
+                    if (!FIsSpacePressed) break;
+                    FBar.MoveBar(BarDirection.Right);
+                    break;
+                case Keys.F:
+                case Keys.Left:
+                case Keys.A:
+                    if (!FIsSpacePressed) break;
+                    FBar.MoveBar(BarDirection.Left);
+                    break;
             }
         }
 
@@ -79,7 +79,7 @@ namespace BreakBlock {
                 g.Clear(this.BackColor);
                 //弾をbrushColorで指定された色で描く
                 g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - Define.C_BallRadius), (float)(FBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
-                
+
                 for (int i = 0; i < FBlocks.Count; i++) {
                     g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
                 }
@@ -110,14 +110,14 @@ namespace BreakBlock {
                 FBall.Speed = wSpeed;
             }
             for (int i = 0; i < FBlocks.Count; i++) {
-                int collision = BlockVsCircle(FBlocks[i], FBall.Position);
-                if (collision == 1 || collision == 2) {
+                Line collision = BlockVsCircle(FBlocks[i], FBall.Position);
+                if (collision == Line.Top || collision == Line.Bottom) {
                     Vector wSpeed = FBall.Speed;
                     wSpeed.Y *= -1;
                     FBall.Speed = wSpeed;
                     FBlocks.RemoveAt(i);
                     break;
-                } else if (collision == 3 || collision == 4) {
+                } else if (collision == Line.Right || collision == Line.Left) {
                     Vector wSpeed = FBall.Speed;
                     wSpeed.X *= -1;
                     FBall.Speed = wSpeed;
@@ -144,28 +144,28 @@ namespace BreakBlock {
 
             return (wA1 * wA2 < 0 && wDist < vBallRadius) ? true : false;
         }
-        int BlockVsCircle(Rectangle vBlock, Vector vBall) {
-            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top),
-                new Vector(vBlock.Right, vBlock.Top), vBall, Define.C_BallRadius))
-                return 1;
+        Line BlockVsCircle(Rectangle block, Vector ball) {
+            if (LineVsCircle(new Vector(block.Left, block.Top),
+                new Vector(block.Right, block.Top), ball, Define.C_BallRadius))
+                return Line.Top;
 
-            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom),
-                new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius))
-                return 2;
+            if (LineVsCircle(new Vector(block.Left, block.Bottom),
+                new Vector(block.Right, block.Bottom), ball, Define.C_BallRadius))
+                return Line.Bottom;
 
-            if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top),
-                new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius))
-                return 3;
+            if (LineVsCircle(new Vector(block.Right, block.Top),
+                new Vector(block.Right, block.Bottom), ball, Define.C_BallRadius))
+                return Line.Right;
 
-            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top),
-                new Vector(vBlock.Left, vBlock.Bottom), vBall, Define.C_BallRadius))
-                return 4;
+            if (LineVsCircle(new Vector(block.Left, block.Top),
+                new Vector(block.Left, block.Bottom), ball, Define.C_BallRadius))
+                return Line.Left;
 
-            return -1;
+            return Line.Exception;
         }
 
         private void ClearOrGameover() {
-            
+
         }
 
         private void Finish(Brush vColor) {

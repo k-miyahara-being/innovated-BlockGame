@@ -13,13 +13,18 @@ namespace BreakBlock {
         /// </summary>
         public int PositionX { get; set; }
 
+
+        public Bar(int vBarPositionX) {
+            this.PositionX = vBarPositionX;
+        }
+
         /// <summary>
         /// バーの移動
         /// </summary>
         /// <param name="vDirection">動くX方向</param>
-        public void MoveBar(int vDirection) {
+        public void MoveBar(BarDirection vDirection) {
             // TODO:移動範囲の処理を追加する
-            this.PositionX += Define.C_BarMoveDIstance * vDirection;
+            this.PositionX += Define.C_BarMoveDIstance * (int)vDirection;
         }
     }
 }
