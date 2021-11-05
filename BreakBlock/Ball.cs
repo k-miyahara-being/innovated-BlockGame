@@ -14,11 +14,7 @@ namespace BreakBlock {
         /// スピード
         /// </summary>
         public Vector Speed { get; set; }
-        /// <summary>
-        /// 半径
-        /// </summary>
-        public float Radius { get; set; } = 8;
-        //
+
         private Random Rnd;
 
         /// <summary>
