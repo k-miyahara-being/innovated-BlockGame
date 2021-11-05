@@ -184,6 +184,7 @@ namespace BreakBlock
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(568, 608);
             this.Controls.Add(this.panel2);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
