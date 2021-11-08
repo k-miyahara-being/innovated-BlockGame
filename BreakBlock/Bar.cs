@@ -6,16 +6,22 @@ namespace BreakBlock {
     /// バークラス
     /// </summary>
     class Bar {
-
+        private int FBoxWidth;
+        /// <summary>
+        /// バーの実体
+        /// </summary>
+        public Rectangle Rect { get; set; }
 
         /// <summary>
-        /// バーのX座標
+        /// コンストラクタ
         /// </summary>
-        public int PositionX { get; set; }
-
-
-        public Bar(int vBarPositionX) {
-            this.PositionX = vBarPositionX;
+        /// <param name="vPositionX">バーのX座標</param>
+        /// <param name="vPositionY">バーのY座標</param>
+        /// <param name="vWidth">バーの幅</param>
+        /// <param name="vHeight">バーの高さ</param>
+        public Bar(int vPositionX, int vPositionY, int vWidth, int vHeight, int vBoxWidth) {
+            this.Rect = new Rectangle(vPositionX, vPositionY, vWidth, vHeight);
+            FBoxWidth = vBoxWidth;
         }
 
         /// <summary>
@@ -23,8 +29,16 @@ namespace BreakBlock {
         /// </summary>
         /// <param name="vDirection">動くX方向</param>
         public void MoveBar(BarDirection vDirection) {
-            // TODO:移動範囲の処理を追加する
-            this.PositionX += Define.C_BarMoveDIstance * (int)vDirection;
+            Rectangle wRect = this.Rect;
+            wRect.X += Define.C_BarMoveDistance * (int)vDirection;
+            //バーの幅の半分までは壁に入ることができる
+            if (wRect.X + wRect.Width / 2 < 0) {
+                wRect.X = -1 * wRect.Width / 2;
+            }
+            else if(wRect.X + wRect.Width /2 > FBoxWidth) {
+                wRect.X = FBoxWidth - wRect.Width / 2;
+            }
+            this.Rect = wRect;
         }
     }
 }

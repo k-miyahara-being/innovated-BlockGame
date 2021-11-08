@@ -10,9 +10,8 @@ namespace BreakBlock {
         private Ball FBall;
         private List<Rectangle> FBlocks = new List<Rectangle>();
         private Bar FBar;
-       
-        private bool FIsStartClicked = false;
-        private bool FIsSpacePressed = false;
+        private Status FStatus;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -21,11 +20,10 @@ namespace BreakBlock {
         private void BreakBlockForm_Load(object sender, EventArgs e) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
 
         private void ButtonStart_Click(object sender, EventArgs e) {
-            FIsStartClicked = true;
             ControlPlay();
 
             int wBarPositionX = (PictureBox1.Width - Define.C_BarWidth) / 2;
-            FBar = new Bar(wBarPositionX);
+            FBar = new Bar(wBarPositionX, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
 
             InitializeBlock();
 
@@ -55,20 +53,20 @@ namespace BreakBlock {
             e.Handled = true;
             switch (e.KeyData) {
                 case Keys.Space:
-                    if (!FIsStartClicked) break;
-                    FIsSpacePressed = true;
+                    if (FStatus != Status.Ready) break;
+                    FStatus = Status.Playing;
                     Timer.Start();
                     break;
                 case Keys.J:
                 case Keys.Right:
                 case Keys.S:
-                    if (!FIsSpacePressed) break;
+                    if (FStatus != Status.Playing) break;
                     FBar.MoveBar(BarDirection.Right);
                     break;
                 case Keys.F:
                 case Keys.Left:
                 case Keys.A:
-                    if (!FIsSpacePressed) break;
+                    if (FStatus != Status.Playing) break;
                     FBar.MoveBar(BarDirection.Left);
                     break;
             }
@@ -83,10 +81,11 @@ namespace BreakBlock {
                 for (int i = 0; i < FBlocks.Count; i++) {
                     g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
                 }
-                g.FillRectangle(Brushes.Yellow, FBar.PositionX, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight);
+                g.FillRectangle(Brushes.Yellow, FBar.Rect);
             }
             PictureBox1.Image = FCanvas;
         }
+
         private void Bound() {
             //構造体のプロパティの値を変更しようとすると、コンパイルエラーになりました
             //そのため、構造体のコピーを作り、そのコピーのプロパティの値を変更しコピー元に再代入しています
@@ -102,8 +101,8 @@ namespace BreakBlock {
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
-            if (LineVsCircle(new Vector(FBar.PositionX, Define.C_BarPositionY),
-                             new Vector(FBar.PositionX + Define.C_BarWidth, Define.C_BarPositionY),
+            if (LineVsCircle(new Vector(FBar.Rect.X, Define.C_BarPositionY),
+                             new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY),
                              FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
@@ -126,6 +125,7 @@ namespace BreakBlock {
                 }
             }
         }
+
         double DotProduct(Vector vA, Vector vB) {
             return vA.X * vB.X + vA.Y * vB.Y; // 内積計算
         }
@@ -144,6 +144,7 @@ namespace BreakBlock {
 
             return (wA1 * wA2 < 0 && wDist < vBallRadius) ? true : false;
         }
+
         Line BlockVsCircle(Rectangle block, Vector ball) {
             if (LineVsCircle(new Vector(block.Left, block.Top),
                 new Vector(block.Right, block.Top), ball, Define.C_BallRadius))
@@ -186,6 +187,7 @@ namespace BreakBlock {
         }
 
         private void ControlPlay() {
+            FStatus = Status.Ready;
             ButtonStart.Visible = false;
             TextScore.Visible = true;
             LabelScore.Visible = true;
