@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace BreakBlock {
     public partial class BreakBlockForm : Form {
@@ -10,7 +10,7 @@ namespace BreakBlock {
         private Ball FBall;
         private List<Rectangle> FBlocks = new List<Rectangle>();
         private Bar FBar;
-       
+
         private bool FIsStartClicked = false;
         private bool FIsSpacePressed = false;
         /// <summary>
@@ -87,28 +87,36 @@ namespace BreakBlock {
             }
             PictureBox1.Image = FCanvas;
         }
+        /// <summary>
+        /// 跳ね返り処理
+        /// </summary>
         private void Bound() {
             //構造体のプロパティの値を変更しようとすると、コンパイルエラーになりました
             //そのため、構造体のコピーを作り、そのコピーのプロパティの値を変更しコピー元に再代入しています
             //次のページを参照してください
             //https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1612
+
+            //左右の壁に当たった際の跳ね返り
             if (FBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FBall.Position.X - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.X *= -1;
                 FBall.Speed = wSpeed;
             }
+            //上の壁に当たった際の跳ね返り
             if (FBall.Position.Y - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
-            if (LineVsCircle(new Vector(FBar.PositionX, Define.C_BarPositionY),
+            //バーに当たった際の跳ね返り
+            if (LineVsCircleCore(new Vector(FBar.PositionX, Define.C_BarPositionY),
                              new Vector(FBar.PositionX + Define.C_BarWidth, Define.C_BarPositionY),
                              FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
+            //ブロックに当たった際の跳ね返りとブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
                 Line collision = BlockVsCircle(FBlocks[i], FBall.Position);
                 if (collision == Line.Top || collision == Line.Bottom) {
@@ -126,39 +134,79 @@ namespace BreakBlock {
                 }
             }
         }
+        /// <summary>
+        /// 内積の計算
+        /// </summary>
+        /// <param name="vA">ベクトルの座標</param>
+        /// <param name="vB">ベクトルの座標</param>
+        /// <returns>内積の計算結果</returns>
         double DotProduct(Vector vA, Vector vB) {
-            return vA.X * vB.X + vA.Y * vB.Y; // 内積計算
+            return vA.X * vB.X + vA.Y * vB.Y;
         }
-
-        bool LineVsCircle(Vector vP1, Vector vP2, Vector vBallCenter, float vBallRadius) {
-            Vector wLineDir = (vP2 - vP1);                   // パドルの方向ベクトル
-            Vector wN = new Vector(wLineDir.Y, -wLineDir.X); // パドルの法線
+        /// <summary>
+        /// 直線と弾の当たり判定
+        /// </summary>
+        /// <param name="vPoint1">直線の左端の座標</param>
+        /// <param name="vPoint2">直線の右端の座標</param>
+        /// <param name="vBallCenter">弾の中心座標</param>
+        /// <param name="vBallRadius">弾の半径</param>
+        /// <returns>直線との当たり判定</returns>
+        bool LineVsCircleCore(Vector vPoint1, Vector vPoint2, Vector vBallCenter, float vBallRadius) {
+            // 直線の方向ベクトル
+            Vector wLineDir = (vPoint2 - vPoint1);
+            // 直線の法線ベクトル
+            var wN = new Vector(wLineDir.Y, -wLineDir.X);
             wN.Normalize();
 
-            Vector dir1 = vBallCenter - vP1;
-            Vector dir2 = vBallCenter - vP2;
+            //直線の左端から弾の中心に向かうベクトル
+            Vector wDirection1 = vBallCenter - vPoint1;
+            //直線の右端から弾の中心に向かうベクトル
+            Vector wDirection2 = vBallCenter - vPoint2;
 
-            double wDist = Math.Abs(DotProduct(dir1, wN));
-            double wA1 = DotProduct(dir1, wLineDir);
-            double wA2 = DotProduct(dir2, wLineDir);
+            //直線と弾の間の距離
+            double wDistance = Math.Abs(DotProduct(wDirection1, wN));
+            //ベクトルwDirection1とベクトルwLineDirの内積
+            double wA1 = DotProduct(wDirection1, wLineDir);
+            //ベクトルwDirection2とベクトルwLineDirの内積
+            double wA2 = DotProduct(wDirection2, wLineDir);
 
-            return (wA1 * wA2 < 0 && wDist < vBallRadius) ? true : false;
+            return (wA1 * wA2 < 0 && wDistance < vBallRadius) ? true : false;
         }
-        Line BlockVsCircle(Rectangle block, Vector ball) {
-            if (LineVsCircle(new Vector(block.Left, block.Top),
-                new Vector(block.Right, block.Top), ball, Define.C_BallRadius))
+
+        bool LineVsCircle(Vector vPoint1, Vector vPoint2, Vector vBallCenter, float vBallRadius, bool vIsVertical) {
+            if (vIsVertical) {
+                if (this.LineVsCircleCore(vPoint1, vPoint2, vBallCenter, vBallRadius)) return true;
+                if (this.LineVsCircleCore(vPoint1, vPoint2, new Vector(vBallCenter.X + vBallRadius, vBallCenter.Y), vBallRadius)) return true;
+                return this.LineVsCircleCore(vPoint1, vPoint2, new Vector(vBallCenter.X - vBallRadius, vBallCenter.Y), vBallRadius);
+            } else {
+                if (this.LineVsCircleCore(vPoint1, vPoint2, vBallCenter, vBallRadius)) return true;
+                if (this.LineVsCircleCore(vPoint1, vPoint2, new Vector(vBallCenter.X, vBallCenter.Y + vBallRadius), vBallRadius)) return true;
+                return this.LineVsCircleCore(vPoint1, vPoint2, new Vector(vBallCenter.X, vBallCenter.Y - vBallRadius), vBallRadius);
+            }
+        }
+
+        /// <summary>
+        /// 弾とブロックの当たり判定
+        /// </summary>
+        /// <param name="vBlock">ブロック</param>
+        /// <param name="vBall">弾</param>
+        /// <returns>ブロックとの当たり判定</returns>
+        Line BlockVsCircle(Rectangle vBlock, Vector vBall) {
+            //上辺での当たり判定
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top),
+                new Vector(vBlock.Right, vBlock.Top), vBall, Define.C_BallRadius, true))
                 return Line.Top;
-
-            if (LineVsCircle(new Vector(block.Left, block.Bottom),
-                new Vector(block.Right, block.Bottom), ball, Define.C_BallRadius))
+            //下辺での当たり判定
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom),
+                new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius, true))
                 return Line.Bottom;
-
-            if (LineVsCircle(new Vector(block.Right, block.Top),
-                new Vector(block.Right, block.Bottom), ball, Define.C_BallRadius))
+            //右辺での当たり判定
+            if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top),
+                new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius, false))
                 return Line.Right;
-
-            if (LineVsCircle(new Vector(block.Left, block.Top),
-                new Vector(block.Left, block.Bottom), ball, Define.C_BallRadius))
+            //左辺での当たり判定
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top),
+                new Vector(vBlock.Left, vBlock.Bottom), vBall, Define.C_BallRadius, false))
                 return Line.Left;
 
             return Line.Exception;

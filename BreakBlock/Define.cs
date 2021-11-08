@@ -9,7 +9,7 @@ namespace BreakBlock {
         public static readonly int C_BallRadius = 8;
 
         public static readonly int C_BarPositionY = 350;
-        public static readonly int C_BarWidth = 90;
+        public static readonly int C_BarWidth = 500;
         public static readonly int C_BarHeight = 8;
         public static readonly int C_BarMoveDIstance = 20;
 
@@ -19,7 +19,7 @@ namespace BreakBlock {
         public static readonly int C_BlockHeight = 20;
         public static readonly int C_BlockGap = 5;
         public static readonly int C_BlockColumnNum = 4;
-        public static readonly int C_BlockRowNum = 6;
+        public static readonly int C_BlockRowNum = 3;
     }
     public enum BarDirection {
         Left = -1,

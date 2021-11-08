@@ -25,7 +25,7 @@ namespace BreakBlock {
             // TODO:スピードが変わる問題を解決
             Rnd = new Random();
             double wRndX = Rnd.Next(-5, 5);
-            this.Speed = new Vector(wRndX, -4); 
+            this.Speed = new Vector(2.5, -2); 
         }
         
         /// <summary>
