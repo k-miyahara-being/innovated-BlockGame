@@ -19,7 +19,7 @@ namespace BreakBlock {
         public static readonly int C_BlockHeight = 20;
         public static readonly int C_BlockGap = 5;
         public static readonly int C_BlockColumnNum = 4;
-        public static readonly int C_BlockRowNum = 3;
+        public static readonly int C_BlockRowNum = 6;
     }
     public enum BarDirection {
         Left = -1,
