@@ -109,7 +109,7 @@ namespace BreakBlock {
                 FBall.Speed = wSpeed;
             }
             //バーに当たった際の跳ね返り
-            if (LineVsCircle(new Vector(FBar.PositionX, Define.C_BarPositionY),
+            if (LineVsCircleCore(new Vector(FBar.PositionX, Define.C_BarPositionY),
                              new Vector(FBar.PositionX + Define.C_BarWidth, Define.C_BarPositionY),
                              FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
@@ -118,7 +118,7 @@ namespace BreakBlock {
             }
             //ブロックに当たった際の跳ね返りとブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
-                Line collision = BlockVsCircle(FBlocks[i], FBall.Position);
+                Line? collision = BlockVsCircle(FBlocks[i], FBall.Position);
                 if (collision == Line.Top || collision == Line.Bottom) {
                     Vector wSpeed = FBall.Speed;
                     wSpeed.Y *= -1;
@@ -151,7 +151,7 @@ namespace BreakBlock {
         /// <param name="vBallCenter">弾の中心座標</param>
         /// <param name="vBallRadius">弾の半径</param>
         /// <returns>直線との当たり判定</returns>
-        bool LineVsCircle(Vector vPoint1, Vector vPoint2, Vector vBallCenter, float vBallRadius) {
+        bool LineVsCircleCore(Vector vPoint1, Vector vPoint2, Vector vBallCenter, float vBallRadius) {
             // 直線の方向ベクトル
             Vector wLineDir = (vPoint2 - vPoint1);
             // 直線の法線ベクトル
@@ -173,92 +173,46 @@ namespace BreakBlock {
             return (wA1 * wA2 < 0 && wDistance < vBallRadius) ? true : false;
         }
 
+        bool LineVsCircle(Vector vPoint1, Vector vPoint2, Vector vBallCenter, float vBallRadius, Rectangle vBlock, params Vector[] vNewBalls) {
+            if (LineVsCircleCore(vPoint1, vPoint2, vBallCenter, vBallRadius)) return true;
+            foreach (Vector wNewBall in vNewBalls) {
+                if (vBlock.Contains((int)wNewBall.X, (int)wNewBall.Y)) continue;
+                if (LineVsCircleCore(vPoint1, vPoint2, wNewBall, vBallRadius)) return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// 弾とブロックの当たり判定
         /// </summary>
         /// <param name="vBlock">ブロック</param>
         /// <param name="vBall">弾</param>
         /// <returns>ブロックとの当たり判定</returns>
-        Line BlockVsCircle(Rectangle vBlock, Vector vBall) {
+        Line? BlockVsCircle(Rectangle vBlock, Vector vBall) {
             //上辺での当たり判定
-            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Right, vBlock.Top), vBall, Define.C_BallRadius)) {
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Right, vBlock.Top), vBall, Define.C_BallRadius,
+                vBlock, new Vector(vBall.X + Define.C_BallRadius, vBall.Y), new Vector(vBall.X - Define.C_BallRadius, vBall.Y))) {
                 return Line.Top;
-            } else if (!vBlock.Contains((int)vBall.X + Define.C_BallRadius, (int)vBall.Y)) {
-                Vector wNewBall = new Vector(vBall.X + Define.C_BallRadius, vBall.Y);
-                if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Right, vBlock.Top), wNewBall, Define.C_BallRadius)) {
-                    return Line.Top;
-                } else if (!vBlock.Contains((int)vBall.X - Define.C_BallRadius, (int)vBall.Y)) {
-                    wNewBall = new Vector(vBall.X - Define.C_BallRadius, vBall.Y);
-                    if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Right, vBlock.Top), wNewBall, Define.C_BallRadius)) {
-                        return Line.Top;
-                    }
-                }
-            } else if (!vBlock.Contains((int)vBall.X - Define.C_BallRadius, (int)vBall.Y)) {
-                Vector wNewBall = new Vector(vBall.X - Define.C_BallRadius, vBall.Y);
-                if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Right, vBlock.Top), wNewBall, Define.C_BallRadius)) {
-                    return Line.Top;
-                }
             }
+
             //下辺での当たり判定
-            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom), new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius)) {
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom), new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius,
+                vBlock, new Vector(vBall.X + Define.C_BallRadius, vBall.Y), new Vector(vBall.X - Define.C_BallRadius, vBall.Y))) {
                 return Line.Bottom;
-            } else if (!vBlock.Contains((int)vBall.X + Define.C_BallRadius, (int)vBall.Y)) {
-                Vector wNewBall = new Vector(vBall.X + Define.C_BallRadius, vBall.Y);
-                if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom), new Vector(vBlock.Right, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                    return Line.Bottom;
-                } else if (!vBlock.Contains((int)vBall.X - Define.C_BallRadius, (int)vBall.Y)) {
-                    wNewBall = new Vector(vBall.X - Define.C_BallRadius, vBall.Y);
-                    if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom), new Vector(vBlock.Right, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                        return Line.Bottom;
-                    }
-                }
-            } else if (!vBlock.Contains((int)vBall.X - Define.C_BallRadius, (int)vBall.Y)) {
-                Vector wNewBall = new Vector(vBall.X - Define.C_BallRadius, vBall.Y);
-                if (LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom), new Vector(vBlock.Right, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                    return Line.Bottom;
-                }
             }
+
             //右辺での当たり判定
-            if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius)) {
+            if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), vBall, Define.C_BallRadius,
+                vBlock, new Vector(vBall.X, vBall.Y + Define.C_BallRadius), new Vector(vBall.X, vBall.Y - Define.C_BallRadius))) {
                 return Line.Right;
-            } else if (!vBlock.Contains((int)vBall.X, (int)vBall.Y + Define.C_BallRadius)) {
-                Vector wNewBall = new Vector(vBall.X, vBall.Y + Define.C_BallRadius);
-                if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                    return Line.Right;
-                } else if (!vBlock.Contains((int)vBall.X, (int)vBall.Y - Define.C_BallRadius)) {
-                    wNewBall = new Vector(vBall.X, vBall.Y - Define.C_BallRadius);
-                    if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                        return Line.Right;
-                    }
-                }
-            } else if (!vBlock.Contains((int)vBall.X, (int)vBall.Y - Define.C_BallRadius)) {
-                Vector wNewBall = new Vector(vBall.X, vBall.Y - Define.C_BallRadius);
-                if (LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                    return Line.Right;
-                }
             }
+
             //左辺での当たり判定
-            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), vBall, Define.C_BallRadius)) {
+            if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), vBall, Define.C_BallRadius,
+                vBlock, new Vector(vBall.X, vBall.Y + Define.C_BallRadius), new Vector(vBall.X, vBall.Y - Define.C_BallRadius))) {
                 return Line.Left;
-            } else if (!vBlock.Contains((int)vBall.X, (int)vBall.Y + Define.C_BallRadius)) {
-                Vector wNewBall = new Vector(vBall.X, vBall.Y + Define.C_BallRadius);
-                if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                    return Line.Left;
-                } else if (!vBlock.Contains((int)vBall.X, (int)vBall.Y - Define.C_BallRadius)) {
-                    wNewBall = new Vector(vBall.X, vBall.Y - Define.C_BallRadius);
-                    if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                        return Line.Left;
-                    }
-                }
-            } else if (!vBlock.Contains((int)vBall.X, (int)vBall.Y - Define.C_BallRadius)) {
-                Vector wNewBall = new Vector(vBall.X, vBall.Y - Define.C_BallRadius);
-                if (LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), wNewBall, Define.C_BallRadius)) {
-                    return Line.Left;
-                }
             }
-
-
-            return Line.Exception;
+            return null;
         }
 
         private void ClearOrGameover() {

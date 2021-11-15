@@ -192,6 +192,7 @@ namespace BreakBlock
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 662);
             this.Name = "BreakBlockForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ブロック崩し";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.BreakBlockForm_Load);

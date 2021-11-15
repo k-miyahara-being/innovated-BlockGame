@@ -30,6 +30,5 @@ namespace BreakBlock {
         Bottom,
         Right,
         Left,
-        Exception
     }
 }
