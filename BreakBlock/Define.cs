@@ -11,7 +11,7 @@ namespace BreakBlock {
         public static readonly int C_BarPositionY = 350;
         public static readonly int C_BarWidth = 90;
         public static readonly int C_BarHeight = 8;
-        public static readonly int C_BarMoveDIstance = 20;
+        public static readonly int C_BarMoveDistance = 20;
 
         public static readonly int C_BlockFirstPositionX = 10;
         public static readonly int C_BlockFirstPositionY = 20;
@@ -30,5 +30,12 @@ namespace BreakBlock {
         Bottom,
         Right,
         Left,
+    }
+    public enum Status {
+        Start,
+        Ready,
+        Playing,
+        GameOver,
+        Clear
     }
 }
