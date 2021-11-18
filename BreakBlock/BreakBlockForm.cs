@@ -10,8 +10,6 @@ namespace BreakBlock {
         private Ball FBall;
         private List<Rectangle> FBlocks = new List<Rectangle>();
         private Bar FBar;
-        private bool FIsStartClicked = false;
-        private bool FIsSpacePressed = false;
         private Status FStatus;
 
         /// <summary>
@@ -110,8 +108,8 @@ namespace BreakBlock {
                 FBall.Speed = wSpeed;
             }
 
-            if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY),
-                             new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY),FBall.Position, Define.C_BallRadius)) {
+            if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY), 
+                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY),FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
@@ -246,7 +244,6 @@ namespace BreakBlock {
         private void ControlFinish() {
             TextScore.Visible = false;
             LabelScore.Visible = false;
-            FIsSpacePressed = false;
 
             ResultLabelScore.Text = null;
             ResultTextScore.Visible = true;
@@ -260,8 +257,6 @@ namespace BreakBlock {
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
 
-            FIsStartClicked = false;
-            FIsSpacePressed = false;
             FBlocks.Clear();
 
             ResultTextScore.Visible = false;
