@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -10,9 +11,9 @@ namespace BreakBlock {
         private Ball FBall;
         private List<Rectangle> FBlocks = new List<Rectangle>();
         private Bar FBar;
-        private bool FIsStartClicked = false;
-        private bool FIsSpacePressed = false;
         private Status FStatus;
+        private int wScore = 0;
+
 
         /// <summary>
         /// コンストラクタ
@@ -36,13 +37,23 @@ namespace BreakBlock {
 
         private void Timer_Tick(object sender, EventArgs e) {
             FBall.Move();
-            this.Bound();
-            this.Draw();
+            FStatus = this.Bound();
+            switch (FStatus) {
+                case Status.Playing:
+                    this.Draw();
+                    break;
+                case Status.GameOver:
+                    this.Finish(Brushes.Blue, () => LabelGameover.Visible = true);
+                    break;
+                case Status.Clear:
+                    this.Finish(Brushes.Orange, () => LabelClear.Visible = true);
+                    break;
+            }
         }
 
         private void InitializeBlock() {
-            for (int i = 0; i < Define.C_BlockColumnNum; i++) {
-                for (int j = 0; j < Define.C_BlockRowNum; j++) {
+            for (int i = 0; i < Define.C_BlockRowNum; i++) {
+                for (int j = 0; j < Define.C_BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (Define.C_BlockWidth + Define.C_BlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (Define.C_BlockHeight + Define.C_BlockGap);
                     var wBlock = new Rectangle(wX, wY, Define.C_BlockWidth, Define.C_BlockHeight);
@@ -91,11 +102,12 @@ namespace BreakBlock {
         /// <summary>
         /// 跳ね返り処理
         /// </summary>
-        private void Bound() {
+        private Status Bound() {
             //構造体のプロパティの値を変更しようとすると、コンパイルエラーになりました
             //そのため、構造体のコピーを作り、そのコピーのプロパティの値を変更しコピー元に再代入しています
             //次のページを参照してください
             //https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1612
+
 
             //左右の壁に当たった際の跳ね返り
             if (FBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FBall.Position.X - Define.C_BallRadius < 0) {
@@ -109,9 +121,13 @@ namespace BreakBlock {
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
             }
+            //下の壁に当たってゲームオーバー
+            if (FBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
+                return Status.GameOver;
+            }
 
             if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY),
-                             new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY),FBall.Position, Define.C_BallRadius)) {
+                             new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
@@ -124,15 +140,20 @@ namespace BreakBlock {
                     wSpeed.Y *= -1;
                     FBall.Speed = wSpeed;
                     FBlocks.RemoveAt(i);
+                    wScore += 10;
+                    LabelScore.Text = wScore.ToString();
                     break;
                 } else if (collision == Line.Right || collision == Line.Left) {
                     Vector wSpeed = FBall.Speed;
                     wSpeed.X *= -1;
                     FBall.Speed = wSpeed;
                     FBlocks.RemoveAt(i);
+                    wScore += 10;
+                    LabelScore.Text = wScore.ToString();
                     break;
                 }
             }
+            return FBlocks.Any() ? Status.Playing : Status.Clear;
         }
         /// <summary>
         /// 内積の計算
@@ -215,17 +236,14 @@ namespace BreakBlock {
             return null;
         }
 
-        private void ClearOrGameover() {
-
-        }
-
-        private void Finish(Brush vColor) {
+        private void Finish(Brush vColor, Action vAction) {
             Timer.Stop();
-            ControlFinish();
             using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
                 g.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
             }
+            PictureBox1.Image = FCanvas;
+            ControlFinish(vAction);
         }
 
         private void ButtonContinue_Click(object vSender, EventArgs vE) {
@@ -240,15 +258,16 @@ namespace BreakBlock {
             FStatus = Status.Ready;
             ButtonStart.Visible = false;
             TextScore.Visible = true;
+            LabelScore.Text = wScore.ToString();
             LabelScore.Visible = true;
         }
 
-        private void ControlFinish() {
+        private void ControlFinish(Action vAction) {
             TextScore.Visible = false;
             LabelScore.Visible = false;
-            FIsSpacePressed = false;
 
-            ResultLabelScore.Text = null;
+            vAction?.Invoke();
+            ResultLabelScore.Text = wScore.ToString();
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
             ButtonContinue.Visible = true;
@@ -260,13 +279,11 @@ namespace BreakBlock {
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
 
-            FIsStartClicked = false;
-            FIsSpacePressed = false;
             FBlocks.Clear();
 
             ResultTextScore.Visible = false;
             ResultLabelScore.Visible = false;
-            LabelScore.Text = "0";
+            wScore = 0;
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();
