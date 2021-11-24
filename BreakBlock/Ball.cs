@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace BreakBlock {
     class Ball {
@@ -24,15 +25,24 @@ namespace BreakBlock {
             this.Position = new Vector(vX, vY);
             // TODO:スピードが変わる問題を解決
             Rnd = new Random();
-            double wRndX = Rnd.Next(-5, 5);
-            this.Speed = new Vector(wRndX, -2); 
+            float wRnd1 = Rnd.Next(20, 70);
+            int wRnd2 = Rnd.Next();
+            if (wRnd2 % 2 == 0) {
+                wRnd1 *= -1;
+            } else {
+                wRnd1 *= 1;
+            }
+            this.Speed = new Vector(0, -4);
+            var wMatrixAffine = new Matrix();
+            wMatrixAffine.Rotate(wRnd1);
+            this.Speed = Vector.Multiply(this.Speed, wMatrixAffine);
         }
         
         /// <summary>
         /// ボールを動かす
         /// </summary>
-        public void Move() {
-            this.Position += this.Speed;
+        public void Move() { 
+                this.Position += this.Speed;
         }
     }
 

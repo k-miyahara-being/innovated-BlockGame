@@ -125,8 +125,8 @@ namespace BreakBlock {
                 return Status.GameOver;
             }
             //バーに当たった際の跳ね返り
-            if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY),
-                             new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
+            if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY), 
+                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY),FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
