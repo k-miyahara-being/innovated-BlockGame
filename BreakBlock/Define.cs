@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BreakBlock {
+﻿namespace BreakBlock {
     public static class Define {
         public static readonly int C_BallRadius = 8;
+        public static readonly double C_Acceleration = 1.03;
 
         public static readonly int C_BarPositionY = 350;
         public static readonly int C_BarWidth = 90;

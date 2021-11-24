@@ -108,7 +108,6 @@ namespace BreakBlock {
             //次のページを参照してください
             //https://docs.microsoft.com/ja-jp/dotnet/csharp/language-reference/compiler-messages/cs1612
 
-
             //左右の壁に当たった際の跳ね返り
             if (FBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FBall.Position.X - Define.C_BallRadius < 0) {
                 Vector wSpeed = FBall.Speed;
@@ -125,7 +124,7 @@ namespace BreakBlock {
             if (FBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
                 return Status.GameOver;
             }
-
+            //バーに当たった際の跳ね返り
             if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY),
                              new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
@@ -137,7 +136,8 @@ namespace BreakBlock {
                 Line? collision = BlockVsCircle(FBlocks[i], FBall.Position);
                 if (collision == Line.Top || collision == Line.Bottom) {
                     Vector wSpeed = FBall.Speed;
-                    wSpeed.Y *= -1;
+                    wSpeed.X *= Define.C_Acceleration;
+                    wSpeed.Y *= -1 * Define.C_Acceleration;
                     FBall.Speed = wSpeed;
                     FBlocks.RemoveAt(i);
                     wScore += 10;
@@ -145,7 +145,8 @@ namespace BreakBlock {
                     break;
                 } else if (collision == Line.Right || collision == Line.Left) {
                     Vector wSpeed = FBall.Speed;
-                    wSpeed.X *= -1;
+                    wSpeed.X *= -1 * Define.C_Acceleration;
+                    wSpeed.Y *= Define.C_Acceleration;
                     FBall.Speed = wSpeed;
                     FBlocks.RemoveAt(i);
                     wScore += 10;
@@ -155,6 +156,7 @@ namespace BreakBlock {
             }
             return FBlocks.Any() ? Status.Playing : Status.Clear;
         }
+
         /// <summary>
         /// 内積の計算
         /// </summary>
