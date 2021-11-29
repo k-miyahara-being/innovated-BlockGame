@@ -124,9 +124,19 @@ namespace BreakBlock {
             if (FBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
                 return Status.GameOver;
             }
-            //バーに当たった際の跳ね返り
+            //バーの左・右部分に当たった際の跳ね返り
             if (LineVsCircleCore(new Vector(FBar.Rect.X, Define.C_BarPositionY), 
-                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY),FBall.Position, Define.C_BallRadius)) {
+                new Vector(FBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY),FBall.Position, Define.C_BallRadius)
+                || LineVsCircleCore(new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
+                Vector wSpeed = FBall.Speed;
+                wSpeed.X *= -1;
+                wSpeed.Y *= -1;
+                FBall.Speed = wSpeed;
+            }
+            //バーの真ん中部分に当たった際の跳ね返り
+            if (LineVsCircleCore(new Vector(FBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
                 Vector wSpeed = FBall.Speed;
                 wSpeed.Y *= -1;
                 FBall.Speed = wSpeed;
