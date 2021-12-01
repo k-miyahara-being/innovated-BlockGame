@@ -88,7 +88,6 @@ namespace BreakBlock {
                 g.Clear(this.BackColor);
                 //弾をbrushColorで指定された色で描く
                 g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - Define.C_BallRadius), (float)(FBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
-
                 for (int i = 0; i < FBlocks.Count; i++) {
                     g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
                 }
@@ -199,7 +198,7 @@ namespace BreakBlock {
                 || (vBall.Speed.Y < 0 && LineVsCircle(new Vector(vBlock.Left, vBlock.Bottom), new Vector(vBlock.Right, vBlock.Bottom), vBall.Position, Define.C_BallRadius)))) {
                 return Orientation.Vertical;
             }
-            //右辺での当たり判定
+            //右辺と左辺での当たり判定
             if ((vBall.Speed.X < 0 && LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), vBall.Position, Define.C_BallRadius)
                 || (vBall.Speed.X > 0 && LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), vBall.Position, Define.C_BallRadius)))) {
                 return Orientation.Horizontal;

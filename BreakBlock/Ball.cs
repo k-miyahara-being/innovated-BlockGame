@@ -17,11 +17,10 @@ namespace BreakBlock {
         private Random Rnd;
 
         /// <summary>
-        /// ボールのコンストラクタ
+        /// 弾のコンストラクタ
         /// </summary>       
         public Ball(int vX, int vY) {
             this.Position = new Vector(vX, vY);
-            // TODO:スピードが変わる問題を解決
             Rnd = new Random();
             float wRnd1 = Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
             int wRnd2 = Rnd.Next();
