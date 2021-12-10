@@ -14,16 +14,17 @@ namespace BreakBlock {
         /// </summary>
         public Vector Speed { get; set; }
 
-        private Random Rnd;
+        // 短時間でRandomのインスタンスを複数生成すると同一の乱数セットが生成され、弾が同じ方向に飛びます。
+        // そのため、単一のオブジェクトを使いまわしています。
+        private static Random G_Rnd = new Random();
 
         /// <summary>
         /// 弾のコンストラクタ
         /// </summary>       
         public Ball(int vX, int vY) {
             this.Position = new Vector(vX, vY);
-            Rnd = new Random();
-            float wRnd1 = Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
-            int wRnd2 = Rnd.Next();
+            float wRnd1 = G_Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
+            int wRnd2 = G_Rnd.Next();
             if (wRnd2 % 2 == 0) {
                 wRnd1 *= -1;
             } else {

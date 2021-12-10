@@ -31,6 +31,8 @@ namespace BreakBlock
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.remaingBallNum = new System.Windows.Forms.Label();
+            this.label = new System.Windows.Forms.Label();
             this.LabelGameover = new System.Windows.Forms.Label();
             this.ResultLabelScore = new System.Windows.Forms.Label();
             this.ResultTextScore = new System.Windows.Forms.Label();
@@ -47,6 +49,8 @@ namespace BreakBlock
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.remaingBallNum);
+            this.panel2.Controls.Add(this.label);
             this.panel2.Controls.Add(this.LabelGameover);
             this.panel2.Controls.Add(this.ResultLabelScore);
             this.panel2.Controls.Add(this.ResultTextScore);
@@ -61,6 +65,33 @@ namespace BreakBlock
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(568, 608);
             this.panel2.TabIndex = 1;
+            // 
+            // remaingBallNum
+            // 
+            this.remaingBallNum.BackColor = System.Drawing.Color.Transparent;
+            this.remaingBallNum.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.remaingBallNum.ForeColor = System.Drawing.Color.White;
+            this.remaingBallNum.Location = new System.Drawing.Point(86, 564);
+            this.remaingBallNum.Name = "remaingBallNum";
+            this.remaingBallNum.Size = new System.Drawing.Size(32, 34);
+            this.remaingBallNum.TabIndex = 8;
+            this.remaingBallNum.Text = "2";
+            this.remaingBallNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.remaingBallNum.Visible = false;
+            // 
+            // label
+            // 
+            this.label.AutoSize = true;
+            this.label.BackColor = System.Drawing.Color.Transparent;
+            this.label.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+            this.label.ForeColor = System.Drawing.Color.White;
+            this.label.Location = new System.Drawing.Point(55, 572);
+            this.label.Margin = new System.Windows.Forms.Padding(0);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(34, 24);
+            this.label.TabIndex = 7;
+            this.label.Text = "×";
+            this.label.Visible = false;
             // 
             // LabelGameover
             // 
@@ -217,6 +248,8 @@ namespace BreakBlock
         private System.Windows.Forms.Label LabelScore;
         private System.Windows.Forms.Label ResultLabelScore;
         private System.Windows.Forms.Label ResultTextScore;
+        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.Label remaingBallNum;
     }
 }
 

@@ -5,14 +5,17 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 
+
 namespace BreakBlock {
     public partial class BreakBlockForm : Form {
         private Bitmap FCanvas;
-        private Ball FBall;
+        private Ball FCurrentBall;
+        private Stack<Ball> FBalls;
         private List<Rectangle> FBlocks = new List<Rectangle>();
         private Bar FBar;
         private Status FStatus;
-        private int wScore = 0;
+        private int FScore = 0;
+        private int FRemainingBallNum = 2;
 
         /// <summary>
         /// コンストラクタ
@@ -24,17 +27,19 @@ namespace BreakBlock {
         private void ButtonStart_Click(object sender, EventArgs e) {
             ControlPlay();
 
-            int wBarPositionX = (PictureBox1.Width - Define.C_BarWidth) / 2;
-            FBar = new Bar(wBarPositionX, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
-
             InitializeBlock();
+            InitializeBar();
 
-            FBall = new Ball(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius);
+            FBalls = new Stack<Ball>();
+            for (int i = 0; i < Define.C_BallNum; i++) {
+                FBalls.Push(new Ball(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius));
+            }
+            FCurrentBall = FBalls.Pop();
             Draw();
         }
 
         private void Timer_Tick(object sender, EventArgs e) {
-            FBall.Move();
+            FCurrentBall.Move();
             FStatus = this.Bound();
             switch (FStatus) {
                 case Status.Playing:
@@ -45,6 +50,11 @@ namespace BreakBlock {
                     break;
                 case Status.Clear:
                     this.Finish(Brushes.Orange, () => LabelClear.Visible = true);
+                    break;
+                case Status.Ready:
+                    Timer.Stop();
+                    InitializeBar();
+                    this.Draw();
                     break;
             }
         }
@@ -59,6 +69,9 @@ namespace BreakBlock {
                 }
             }
         }
+
+        private void InitializeBar() => FBar = new Bar((PictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
+        
 
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             e.Handled = true;
@@ -87,7 +100,8 @@ namespace BreakBlock {
             using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
                 //弾をbrushColorで指定された色で描く
-                g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - Define.C_BallRadius), (float)(FBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
+                g.FillEllipse(Brushes.Red, (float)(FCurrentBall.Position.X - Define.C_BallRadius), (float)(FCurrentBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
+                g.FillEllipse(Brushes.Red, Define.C_SmallBallX, Define.C_SmallBallY, Define.C_SmallBallRadius * 2, Define.C_SmallBallRadius * 2);
                 for (int i = 0; i < FBlocks.Count; i++) {
                     g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
                 }
@@ -101,47 +115,52 @@ namespace BreakBlock {
         /// </summary>
         private Status Bound() {
             //左右の壁に当たった際の跳ね返り
-            if (FBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FBall.Position.X - Define.C_BallRadius < 0) {
-                FBall.Reverse(Orientation.Horizontal);
+            if (FCurrentBall.Position.X + Define.C_BallRadius > PictureBox1.Width || FCurrentBall.Position.X - Define.C_BallRadius < 0) {
+                FCurrentBall.Reverse(Orientation.Horizontal);
             }
             //上の壁に当たった際の跳ね返り
-            if (FBall.Position.Y - Define.C_BallRadius < 0) {
-                FBall.Reverse(Orientation.Vertical);
+            if (FCurrentBall.Position.Y - Define.C_BallRadius < 0) {
+                FCurrentBall.Reverse(Orientation.Vertical);
             }
             //下の壁に当たってゲームオーバー
-            if (FBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
-                return Status.GameOver;
+            if (FCurrentBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
+                if (FBalls.Count == 0) return Status.GameOver;   
+                
+                FCurrentBall = FBalls.Pop();
+                FRemainingBallNum -= 1;
+                remaingBallNum.Text = FRemainingBallNum.ToString(); 
+                return Status.Ready;
             }
             //バーの左部分に当たった際の跳ね返り
             if (LineVsCircle(new Vector(FBar.Rect.X, Define.C_BarPositionY),
-                new Vector(FBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
-                FBall.Reverse(Orientation.Vertical);
-                if (FBall.Speed.X > 0) {
-                    FBall.Reverse(Orientation.Horizontal);
+                new Vector(FBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                FCurrentBall.Reverse(Orientation.Vertical);
+                if (FCurrentBall.Speed.X > 0) {
+                    FCurrentBall.Reverse(Orientation.Horizontal);
                 }
             }
             //バーの右部分に当たった際の跳ね返り
             if (LineVsCircle(new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY),
-                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
-                FBall.Reverse(Orientation.Vertical);
-                if (FBall.Speed.X < 0) {
-                    FBall.Reverse(Orientation.Horizontal);
+                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                FCurrentBall.Reverse(Orientation.Vertical);
+                if (FCurrentBall.Speed.X < 0) {
+                    FCurrentBall.Reverse(Orientation.Horizontal);
                 }
             }
             //バーの真ん中部分に当たった際の跳ね返り
             if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY),
-                new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY), FBall.Position, Define.C_BallRadius)) {
-                FBall.Reverse(Orientation.Vertical);
+                new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                FCurrentBall.Reverse(Orientation.Vertical);
             }
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
-                Orientation? collision = BlockVsCircle(FBlocks[i], FBall);
+                Orientation? collision = BlockVsCircle(FBlocks[i], FCurrentBall);
                 if (collision != null) {
-                    FBall.Reverse(collision.Value);
-                    FBall.Accelerate();
+                    FCurrentBall.Reverse(collision.Value);
+                    FCurrentBall.Accelerate();
                     FBlocks.RemoveAt(i);
-                    wScore += Define.C_ScoreAddition;
-                    LabelScore.Text = wScore.ToString();
+                    FScore += Define.C_ScoreAddition;
+                    LabelScore.Text = FScore.ToString();
                     break;
                 }
             }
@@ -228,16 +247,21 @@ namespace BreakBlock {
             FStatus = Status.Ready;
             ButtonStart.Visible = false;
             TextScore.Visible = true;
-            LabelScore.Text = wScore.ToString();
+            LabelScore.Text = FScore.ToString();
             LabelScore.Visible = true;
+            remaingBallNum.Text = FRemainingBallNum.ToString();
+            remaingBallNum.Visible = true;
+            label.Visible = true;
         }
 
         private void ControlFinish(Action vAction) {
             TextScore.Visible = false;
             LabelScore.Visible = false;
+            remaingBallNum.Visible = false;
+            label.Visible = false;
 
             vAction?.Invoke();
-            ResultLabelScore.Text = wScore.ToString();
+            ResultLabelScore.Text = FScore.ToString();
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
             ButtonContinue.Visible = true;
@@ -253,7 +277,8 @@ namespace BreakBlock {
 
             ResultTextScore.Visible = false;
             ResultLabelScore.Visible = false;
-            wScore = 0;
+            FScore = 0;
+            FRemainingBallNum = 2;
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();
