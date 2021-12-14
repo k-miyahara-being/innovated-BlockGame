@@ -24,20 +24,24 @@ namespace BreakBlock {
         }
 
         /// <summary>
-        /// バーの移動
+        /// バーを移動させる
         /// </summary>
-        /// <param name="vDirection">動くX方向</param>
-        public void MoveBar(BarDirection vDirection) {
+        /// <param name="vDirectionX">移動の方向</param>
+        /// <returns>X方向の移動量</returns>
+        public int MoveBar(DirectionX vDirectionX) {
             Rectangle wRect = this.Rect;
-            wRect.X += Define.C_BarMoveDistance * (int)vDirection;
-            //バーの幅の半分までは壁に入ることができる
-            if (wRect.X + wRect.Width / 2 < 0) {
-                wRect.X = -1 * wRect.Width / 2;
-            }
-            else if(wRect.X + wRect.Width /2 > FBoxWidth) {
-                wRect.X = FBoxWidth - wRect.Width / 2;
+            wRect.X += Define.C_BarMoveDistance * (int)vDirectionX;
+            //バーの幅の3分の1までは壁に入ることができる
+            if (wRect.X + Define.C_BarWidth / 3 < 0) {
+                wRect.X = -1 * Define.C_BarWidth / 3;
+                return 0;
+            } else if (wRect.X + 2 * Define.C_BarWidth / 3 > FBoxWidth) {
+                wRect.X = FBoxWidth - 2 * Define.C_BarWidth / 3;
+                return 0;
             }
             this.Rect = wRect;
+
+            return Define.C_BarMoveDistance * (int)vDirectionX;
         }
     }
 }

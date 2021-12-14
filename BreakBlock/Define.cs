@@ -15,6 +15,7 @@
         public static readonly int C_BarWidth = 90;
         public static readonly int C_BarHeight = 8;
         public static readonly int C_BarMoveDistance = 20;
+        public static readonly int C_BarSection = 3;
 
         public static readonly int C_BlockFirstPositionX = 10;
         public static readonly int C_BlockFirstPositionY = 20;
@@ -26,7 +27,7 @@
 
         public static readonly int C_ScoreAddition = 10;
     }
-    public enum BarDirection {
+    public enum DirectionX {
         Left = -1,
         Right = 1
     }

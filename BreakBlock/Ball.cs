@@ -17,7 +17,6 @@ namespace BreakBlock {
         // 短時間でRandomのインスタンスを複数生成すると同一の乱数セットが生成され、弾が同じ方向に飛びます。
         // そのため、単一のオブジェクトを使いまわしています。
         private static Random G_Rnd = new Random();
-
         /// <summary>
         /// 弾のコンストラクタ
         /// </summary>       
@@ -37,9 +36,15 @@ namespace BreakBlock {
         }
 
         /// <summary>
-        /// ボールを動かす
+        /// 弾を動かす
         /// </summary>
         public void Move() => this.Position += this.Speed;
+
+        /// <summary>
+        /// 発射前に弾を動かす
+        /// </summary>
+        /// <param name="vDistance">移動の方向と量</param>
+        public void Move(Vector vDistance) => this.Position += vDistance;
 
         /// <summary>
         /// 衝突時の弾を反転させる

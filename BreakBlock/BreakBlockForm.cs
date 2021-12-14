@@ -85,15 +85,25 @@ namespace BreakBlock {
                 case Keys.J:
                 case Keys.Right:
                 case Keys.S:
-                    if (FStatus != Status.Playing) break;
-                    FBar.MoveBar(BarDirection.Right);
+                    MoveBarAndBall(DirectionX.Right);
                     break;
                 case Keys.F:
                 case Keys.Left:
                 case Keys.A:
-                    if (FStatus != Status.Playing) break;
-                    FBar.MoveBar(BarDirection.Left);
+                    MoveBarAndBall(DirectionX.Left);
                     break;
+            }
+            void MoveBarAndBall(DirectionX vDirectionX) {
+                switch (FStatus) {
+                    case Status.Playing:
+                        FBar.MoveBar(vDirectionX);
+                        Draw();
+                        break;
+                    case Status.Ready:
+                        FCurrentBall.Move(new Vector(FBar.MoveBar(vDirectionX), 0));
+                        Draw();
+                        break;
+                }
             }
         }
 
@@ -143,7 +153,7 @@ namespace BreakBlock {
                 }
             }
             //バーの右部分に当たった際の跳ね返り
-            if (LineVsCircle(new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY),
+            if (LineVsCircle(new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
                 new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
                 FCurrentBall.Reverse(Orientation.Vertical);
                 if (FCurrentBall.Speed.X < 0) {
@@ -151,10 +161,9 @@ namespace BreakBlock {
                 }
             }
             //バーの真ん中部分に当たった際の跳ね返り
-            if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY),
-                new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / 3, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
-                FCurrentBall.Reverse(Orientation.Vertical);
-            }
+            if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                FCurrentBall.Reverse(Orientation.Vertical);            }
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
                 Orientation? collision = BlockVsCircle(FBlocks[i], FCurrentBall);
