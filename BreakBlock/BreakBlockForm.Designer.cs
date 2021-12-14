@@ -83,12 +83,12 @@ namespace BreakBlock
             // 
             this.label.AutoSize = true;
             this.label.BackColor = System.Drawing.Color.Transparent;
-            this.label.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+            this.label.Font = new System.Drawing.Font("MS UI Gothic", 9F);
             this.label.ForeColor = System.Drawing.Color.White;
-            this.label.Location = new System.Drawing.Point(55, 572);
+            this.label.Location = new System.Drawing.Point(60, 576);
             this.label.Margin = new System.Windows.Forms.Padding(0);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(34, 24);
+            this.label.Size = new System.Drawing.Size(26, 18);
             this.label.TabIndex = 7;
             this.label.Text = "×";
             this.label.Visible = false;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -45,16 +46,16 @@ namespace BreakBlock {
                 case Status.Playing:
                     this.Draw();
                     break;
+                case Status.Ready:
+                    Timer.Stop();
+                    InitializeBar();
+                    this.Draw();
+                    break;
                 case Status.GameOver:
                     this.Finish(Brushes.Blue, () => LabelGameover.Visible = true);
                     break;
                 case Status.Clear:
                     this.Finish(Brushes.Orange, () => LabelClear.Visible = true);
-                    break;
-                case Status.Ready:
-                    Timer.Stop();
-                    InitializeBar();
-                    this.Draw();
                     break;
             }
         }
@@ -98,6 +99,8 @@ namespace BreakBlock {
 
         private void Draw() {
             using (var g = Graphics.FromImage(FCanvas)) {
+                //弾をきれいな円に描くプロパティ
+                g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.Clear(this.BackColor);
                 //弾をbrushColorで指定された色で描く
                 g.FillEllipse(Brushes.Red, (float)(FCurrentBall.Position.X - Define.C_BallRadius), (float)(FCurrentBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
@@ -124,7 +127,7 @@ namespace BreakBlock {
             }
             //下の壁に当たってゲームオーバー
             if (FCurrentBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
-                if (FBalls.Count == 0) return Status.GameOver;   
+                if (FBalls.Count == 0) return Status.GameOver;
                 
                 FCurrentBall = FBalls.Pop();
                 FRemainingBallNum -= 1;
@@ -236,8 +239,8 @@ namespace BreakBlock {
         }
 
         private void ButtonContinue_Click(object vSender, EventArgs vE) {
-            using (var wG = Graphics.FromImage(FCanvas)) {
-                wG.Clear(this.BackColor);
+            using (var g = Graphics.FromImage(FCanvas)) {
+                g.Clear(this.BackColor);
             }
             PictureBox1.Image = FCanvas;
             InithalizeAll();
