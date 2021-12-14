@@ -14,16 +14,16 @@ namespace BreakBlock {
         /// </summary>
         public Vector Speed { get; set; }
 
-        private Random Rnd;
+        private Random FRnd;
 
         /// <summary>
         /// 弾のコンストラクタ
         /// </summary>       
         public Ball(int vX, int vY) {
             this.Position = new Vector(vX, vY);
-            Rnd = new Random();
-            float wRnd1 = Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
-            int wRnd2 = Rnd.Next();
+            FRnd = new Random();
+            float wRnd1 = FRnd.Next(Define.C_AngleMin, Define.C_AngleMax);
+            int wRnd2 = FRnd.Next();
             if (wRnd2 % 2 == 0) {
                 wRnd1 *= -1;
             } else {
@@ -36,9 +36,15 @@ namespace BreakBlock {
         }
 
         /// <summary>
-        /// ボールを動かす
+        /// 弾を動かす
         /// </summary>
         public void Move() => this.Position += this.Speed;
+
+        /// <summary>
+        /// 発射前に弾を動かす
+        /// </summary>
+        /// <param name="vDistance">移動の方向と量</param>
+        public void Move(Vector vDistance) => this.Position += vDistance;
 
         /// <summary>
         /// 衝突時の弾を反転させる
