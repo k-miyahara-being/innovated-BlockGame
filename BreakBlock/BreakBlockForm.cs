@@ -84,22 +84,22 @@ namespace BreakBlock {
                 case Keys.J:
                 case Keys.Right:
                 case Keys.S:
-                    MoveBarAndBall(DirectionX.Right);
+                    MoveBarAndBall();
                     break;
                 case Keys.F:
                 case Keys.Left:
                 case Keys.A:
-                    MoveBarAndBall(DirectionX.Left);
+                    MoveBarAndBall();
                     break;
             }
-            void MoveBarAndBall(DirectionX vDirectionX) {
+            void MoveBarAndBall() {
                 switch (FStatus) {
                     case Status.Playing:
-                        FBar.MoveBar(Define.C_BarMoveDistance, vDirectionX);
+                        FBar.MoveBar(Define.C_BarMoveDistance);
                         Draw();
                         break;
                     case Status.Ready:
-                        FCurrentBall.Move(new Vector(FBar.MoveBar(Define.C_BarMoveDistance, vDirectionX), 0));
+                        FCurrentBall.Move(new Vector(FBar.MoveBar(-1 * Define.C_BarMoveDistance), 0));
                         Draw();
                         break;
                 }
@@ -111,11 +111,11 @@ namespace BreakBlock {
                 int wMoveDistance = e.X - FBar.Rect.X - Define.C_BarWidth / 2;
                 switch (FStatus) {
                     case Status.Playing:
-                        FBar.MoveBar(Math.Abs(wMoveDistance), wMoveDistance > 0 ? DirectionX.Right : DirectionX.Left);
+                        FBar.MoveBar(wMoveDistance);
                         Draw();
                         break;
                     case Status.Ready:
-                        FCurrentBall.Move(new Vector(FBar.MoveBar(Math.Abs(wMoveDistance), wMoveDistance > 0 ? DirectionX.Right : DirectionX.Left), 0));
+                        FCurrentBall.Move(new Vector(FBar.MoveBar(wMoveDistance), 0));
                         Draw();
                         break;
                 }

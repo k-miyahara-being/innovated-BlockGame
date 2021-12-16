@@ -27,10 +27,6 @@
 
         public static readonly int C_ScoreAddition = 10;
     }
-    public enum DirectionX {
-        Left = -1,
-        Right = 1
-    }
     public enum Status {
         Start,
         Ready,
