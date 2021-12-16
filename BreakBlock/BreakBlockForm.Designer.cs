@@ -202,6 +202,8 @@ namespace BreakBlock
             this.PictureBox1.Size = new System.Drawing.Size(568, 608);
             this.PictureBox1.TabIndex = 0;
             this.PictureBox1.TabStop = false;
+            this.PictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseDown);
+            this.PictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseMove);
             // 
             // Timer
             // 

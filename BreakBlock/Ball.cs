@@ -22,16 +22,15 @@ namespace BreakBlock {
         /// </summary>       
         public Ball(int vX, int vY) {
             this.Position = new Vector(vX, vY);
-            float wRnd1 = G_Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
-            int wRnd2 = G_Rnd.Next();
-            if (wRnd2 % 2 == 0) {
-                wRnd1 *= -1;
+            float wAngle = G_Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
+            if (G_Rnd.Next() % 2 == 0) {
+                wAngle *= -1;
             } else {
-                wRnd1 *= 1;
+                wAngle *= 1;
             }
             this.Speed = new Vector(0, Define.C_InitialVelocity);
             var wMatrixAffine = new Matrix();
-            wMatrixAffine.Rotate(wRnd1);
+            wMatrixAffine.Rotate(wAngle);
             this.Speed = Vector.Multiply(this.Speed, wMatrixAffine);
         }
 

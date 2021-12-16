@@ -72,7 +72,6 @@ namespace BreakBlock {
         }
 
         private void InitializeBar() => FBar = new Bar((PictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
-        
 
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             e.Handled = true;
@@ -96,14 +95,37 @@ namespace BreakBlock {
             void MoveBarAndBall(DirectionX vDirectionX) {
                 switch (FStatus) {
                     case Status.Playing:
-                        FBar.MoveBar(vDirectionX);
+                        FBar.MoveBar(Define.C_BarMoveDistance, vDirectionX);
                         Draw();
                         break;
                     case Status.Ready:
-                        FCurrentBall.Move(new Vector(FBar.MoveBar(vDirectionX), 0));
+                        FCurrentBall.Move(new Vector(FBar.MoveBar(Define.C_BarMoveDistance, vDirectionX), 0));
                         Draw();
                         break;
                 }
+            }
+        }
+
+        private void PictureBox1_MouseMove(object sender, MouseEventArgs e) {
+            if (FStatus == Status.Ready || FStatus == Status.Playing) {
+                int wMoveDistance = e.X - FBar.Rect.X - Define.C_BarWidth / 2;
+                switch (FStatus) {
+                    case Status.Playing:
+                        FBar.MoveBar(Math.Abs(wMoveDistance), wMoveDistance > 0 ? DirectionX.Right : DirectionX.Left);
+                        Draw();
+                        break;
+                    case Status.Ready:
+                        FCurrentBall.Move(new Vector(FBar.MoveBar(Math.Abs(wMoveDistance), wMoveDistance > 0 ? DirectionX.Right : DirectionX.Left), 0));
+                        Draw();
+                        break;
+                }
+            }
+        }
+
+        private void PictureBox1_MouseDown(object sender, MouseEventArgs e) {
+            if (FStatus == Status.Ready) {
+                FStatus = Status.Playing;
+                Timer.Start();
             }
         }
 
@@ -138,10 +160,10 @@ namespace BreakBlock {
             //下の壁に当たってゲームオーバー
             if (FCurrentBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
                 if (FBalls.Count == 0) return Status.GameOver;
-                
+
                 FCurrentBall = FBalls.Pop();
                 FRemainingBallNum -= 1;
-                remaingBallNum.Text = FRemainingBallNum.ToString(); 
+                remaingBallNum.Text = FRemainingBallNum.ToString();
                 return Status.Ready;
             }
             //バーの左部分に当たった際の跳ね返り
@@ -163,7 +185,8 @@ namespace BreakBlock {
             //バーの真ん中部分に当たった際の跳ね返り
             if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
                 new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
-                FCurrentBall.Reverse(Orientation.Vertical);            }
+                FCurrentBall.Reverse(Orientation.Vertical);
+            }
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
                 Orientation? collision = BlockVsCircle(FBlocks[i], FCurrentBall);
@@ -295,5 +318,6 @@ namespace BreakBlock {
             ButtonStart.Visible = true;
             ButtonStart.Focus();
         }
+
     }
 }

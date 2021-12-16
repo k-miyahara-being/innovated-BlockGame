@@ -26,11 +26,12 @@ namespace BreakBlock {
         /// <summary>
         /// バーを移動させる
         /// </summary>
-        /// <param name="vDirectionX">移動の方向</param>
+        /// <param name="vMoveDistance">移動量(絶対値)</param>
+        /// <param name="vDirectionX">移動の方向（右か左か）</param>
         /// <returns>X方向の移動量</returns>
-        public int MoveBar(DirectionX vDirectionX) {
+        public int MoveBar(int vMoveDistance, DirectionX vDirectionX) {
             Rectangle wRect = this.Rect;
-            wRect.X += Define.C_BarMoveDistance * (int)vDirectionX;
+            wRect.X += vMoveDistance * (int)vDirectionX;
             //バーの幅の3分の1までは壁に入ることができる
             if (wRect.X + Define.C_BarWidth / 3 < 0) {
                 wRect.X = -1 * Define.C_BarWidth / 3;
@@ -41,7 +42,7 @@ namespace BreakBlock {
             }
             this.Rect = wRect;
 
-            return Define.C_BarMoveDistance * (int)vDirectionX;
+            return vMoveDistance * (int)vDirectionX;
         }
     }
 }
