@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -17,6 +18,8 @@ namespace BreakBlock {
         private Status FStatus;
         private int FScore = 0;
         private int FRemainingBallNum = 2;
+        private Brush[] FColors;
+        private int FColorIndex = 0;
 
         /// <summary>
         /// コンストラクタ
@@ -52,10 +55,10 @@ namespace BreakBlock {
                     this.Draw();
                     break;
                 case Status.GameOver:
-                    this.Finish(Brushes.Blue, () => LabelGameover.Visible = true);
+                    this.Finish(Define.GameOverColors, () => LabelGameover.Visible = true);
                     break;
                 case Status.Clear:
-                    this.Finish(Brushes.Orange, () => LabelClear.Visible = true);
+                    this.Finish(Define.ClearColors, () => LabelClear.Visible = true);
                     break;
             }
         }
@@ -72,7 +75,7 @@ namespace BreakBlock {
         }
 
         private void InitializeBar() => FBar = new Bar((PictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
-        
+
 
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             e.Handled = true;
@@ -138,10 +141,10 @@ namespace BreakBlock {
             //下の壁に当たってゲームオーバー
             if (FCurrentBall.Position.Y + Define.C_BallRadius >= PictureBox1.Height) {
                 if (FBalls.Count == 0) return Status.GameOver;
-                
+
                 FCurrentBall = FBalls.Pop();
                 FRemainingBallNum -= 1;
-                remaingBallNum.Text = FRemainingBallNum.ToString(); 
+                remaingBallNum.Text = FRemainingBallNum.ToString();
                 return Status.Ready;
             }
             //バーの左部分に当たった際の跳ね返り
@@ -163,7 +166,8 @@ namespace BreakBlock {
             //バーの真ん中部分に当たった際の跳ね返り
             if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
                 new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
-                FCurrentBall.Reverse(Orientation.Vertical);            }
+                FCurrentBall.Reverse(Orientation.Vertical);
+            }
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
                 Orientation? collision = BlockVsCircle(FBlocks[i], FCurrentBall);
@@ -237,17 +241,29 @@ namespace BreakBlock {
             return null;
         }
 
-        private void Finish(Brush vColor, Action vAction) {
+        private void Finish(Brush[] vColors, Action vAction) {
             Timer.Stop();
+            FColors = vColors;
+            AnimationTimer.Start();
+            Thread.Sleep(100);
+            ControlFinish(vAction);
+        }
+
+        private void DrawFinish(Brush vColor) {
             using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
                 g.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
             }
             PictureBox1.Image = FCanvas;
-            ControlFinish(vAction);
+        }
+
+        private void AnimationTimer_Tick(object sender, EventArgs e) {
+            DrawFinish(FColors[FColorIndex % 4]);
+            FColorIndex++;
         }
 
         private void ButtonContinue_Click(object vSender, EventArgs vE) {
+            AnimationTimer.Stop();
             using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
             }
@@ -273,6 +289,8 @@ namespace BreakBlock {
             label.Visible = false;
 
             vAction?.Invoke();
+            PictureBox1.Controls.Add(LabelGameover);
+            PictureBox1.Controls.Add(LabelClear);
             ResultLabelScore.Text = FScore.ToString();
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
@@ -295,5 +313,6 @@ namespace BreakBlock {
             ButtonStart.Visible = true;
             ButtonStart.Focus();
         }
+
     }
 }

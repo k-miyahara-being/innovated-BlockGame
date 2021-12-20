@@ -1,4 +1,6 @@
-﻿namespace BreakBlock {
+﻿using System.Drawing;
+
+namespace BreakBlock {
     public static class Define {
         public static readonly int C_BallNum = 3;
         public static readonly int C_BallRadius = 8;
@@ -26,6 +28,18 @@
         public static readonly int C_BlockRowNum = 4;
 
         public static readonly int C_ScoreAddition = 10;
+        public static readonly Brush[] GameOverColors = new Brush[] {
+            Brushes.Navy,
+            Brushes.DarkBlue,
+            Brushes.MediumBlue,
+            Brushes.Blue,
+        };
+        public static readonly Brush[] ClearColors = new Brush[] {
+            Brushes.Tomato,
+            Brushes.OrangeRed,
+            Brushes.DarkOrange,
+            Brushes.Orange,
+        };
     }
     public enum DirectionX {
         Left = -1,
