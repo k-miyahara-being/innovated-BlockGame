@@ -88,41 +88,33 @@ namespace BreakBlock {
                 case Keys.J:
                 case Keys.Right:
                 case Keys.S:
-                    MoveBarAndBall();
+                    MoveBarAndBall(Define.C_BarMoveDistance);
                     break;
                 case Keys.F:
                 case Keys.Left:
                 case Keys.A:
-                    MoveBarAndBall();
+                    MoveBarAndBall(-1 * Define.C_BarMoveDistance);
                     break;
-            }
-            void MoveBarAndBall() {
-                switch (FStatus) {
-                    case Status.Playing:
-                        FBar.MoveBar(Define.C_BarMoveDistance);
-                        Draw();
-                        break;
-                    case Status.Ready:
-                        FCurrentBall.Move(new Vector(FBar.MoveBar(-1 * Define.C_BarMoveDistance), 0));
-                        Draw();
-                        break;
-                }
             }
         }
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e) {
             if (FStatus == Status.Ready || FStatus == Status.Playing) {
                 int wMoveDistance = e.X - FBar.Rect.X - Define.C_BarWidth / 2;
-                switch (FStatus) {
-                    case Status.Playing:
-                        FBar.MoveBar(wMoveDistance);
-                        Draw();
-                        break;
-                    case Status.Ready:
-                        FCurrentBall.Move(new Vector(FBar.MoveBar(wMoveDistance), 0));
-                        Draw();
-                        break;
-                }
+                MoveBarAndBall(wMoveDistance);
+            }
+        }
+
+        private void MoveBarAndBall(int vMoveDistance) {
+            switch (FStatus) {
+                case Status.Playing:
+                    FBar.MoveBar(vMoveDistance);
+                    Draw();
+                    break;
+                case Status.Ready:
+                    FCurrentBall.Move(new Vector(FBar.MoveBar(vMoveDistance), 0));
+                    Draw();
+                    break;
             }
         }
 
