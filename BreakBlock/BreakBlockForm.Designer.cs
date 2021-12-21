@@ -31,7 +31,7 @@ namespace BreakBlock
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.remaingBallNum = new System.Windows.Forms.Label();
+            this.remainingBallNum = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
             this.LabelGameover = new System.Windows.Forms.Label();
             this.ResultLabelScore = new System.Windows.Forms.Label();
@@ -49,7 +49,7 @@ namespace BreakBlock
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.remaingBallNum);
+            this.panel2.Controls.Add(this.remainingBallNum);
             this.panel2.Controls.Add(this.label);
             this.panel2.Controls.Add(this.LabelGameover);
             this.panel2.Controls.Add(this.ResultLabelScore);
@@ -66,18 +66,18 @@ namespace BreakBlock
             this.panel2.Size = new System.Drawing.Size(568, 608);
             this.panel2.TabIndex = 1;
             // 
-            // remaingBallNum
+            // remainingBallNum
             // 
-            this.remaingBallNum.BackColor = System.Drawing.Color.Transparent;
-            this.remaingBallNum.Font = new System.Drawing.Font("MS UI Gothic", 17F);
-            this.remaingBallNum.ForeColor = System.Drawing.Color.White;
-            this.remaingBallNum.Location = new System.Drawing.Point(86, 564);
-            this.remaingBallNum.Name = "remaingBallNum";
-            this.remaingBallNum.Size = new System.Drawing.Size(32, 34);
-            this.remaingBallNum.TabIndex = 8;
-            this.remaingBallNum.Text = "2";
-            this.remaingBallNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.remaingBallNum.Visible = false;
+            this.remainingBallNum.BackColor = System.Drawing.Color.Transparent;
+            this.remainingBallNum.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.remainingBallNum.ForeColor = System.Drawing.Color.White;
+            this.remainingBallNum.Location = new System.Drawing.Point(86, 564);
+            this.remainingBallNum.Name = "remainingBallNum";
+            this.remainingBallNum.Size = new System.Drawing.Size(32, 34);
+            this.remainingBallNum.TabIndex = 8;
+            this.remainingBallNum.Text = "2";
+            this.remainingBallNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.remainingBallNum.Visible = false;
             // 
             // label
             // 
@@ -249,7 +249,7 @@ namespace BreakBlock
         private System.Windows.Forms.Label ResultLabelScore;
         private System.Windows.Forms.Label ResultTextScore;
         private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Label remaingBallNum;
+        private System.Windows.Forms.Label remainingBallNum;
     }
 }
 
