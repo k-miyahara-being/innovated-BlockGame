@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -18,6 +19,8 @@ namespace BreakBlock {
         private Status FStatus;
         private int FScore = 0;
         private int FRemainingBallNum = 2;
+        private Brush[] FColors;
+        private int FColorIndex = 0;
 
         /// <summary>
         /// コンストラクタ
@@ -53,10 +56,10 @@ namespace BreakBlock {
                     this.Draw();
                     break;
                 case Status.GameOver:
-                    this.Finish(Brushes.Blue, () => LabelGameover.Visible = true);
+                    this.Finish(Define.GameOverColors, () => LabelGameover.Visible = true);
                     break;
                 case Status.Clear:
-                    this.Finish(Brushes.Orange, () => LabelClear.Visible = true);
+                    this.Finish(Define.ClearColors, () => LabelClear.Visible = true);
                     break;
             }
         }
@@ -188,8 +191,6 @@ namespace BreakBlock {
                 new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
                 FCurrentBall.Reverse(Orientation.Vertical);
             }
-
-
             //バーでのランダム跳ね返り
             this.BarVsBall();
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
@@ -297,17 +298,30 @@ namespace BreakBlock {
             return null;
         }
 
-        private void Finish(Brush vColor, Action vAction) {
+        private void Finish(Brush[] vColors, Action vAction) {
             Timer.Stop();
+            FColors = vColors;
+            AnimationTimer.Start();
+            //画面をリフレッシュする前にコントロールが表示されてしまうため100ms待つ
+            Thread.Sleep(100);
+            ControlFinish(vAction);
+        }
+
+        private void DrawFinish(Brush vColor) {
             using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
                 g.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
             }
             PictureBox1.Image = FCanvas;
-            ControlFinish(vAction);
+        }
+
+        private void AnimationTimer_Tick(object sender, EventArgs e) {
+            DrawFinish(FColors[FColorIndex % 4]);
+            FColorIndex++;
         }
 
         private void ButtonContinue_Click(object vSender, EventArgs vE) {
+            AnimationTimer.Stop();
             using (var g = Graphics.FromImage(FCanvas)) {
                 g.Clear(this.BackColor);
             }
@@ -333,6 +347,8 @@ namespace BreakBlock {
             label.Visible = false;
 
             vAction?.Invoke();
+            PictureBox1.Controls.Add(LabelGameover);
+            PictureBox1.Controls.Add(LabelClear);
             ResultLabelScore.Text = FScore.ToString();
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;

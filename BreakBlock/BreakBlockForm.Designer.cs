@@ -43,6 +43,7 @@ namespace BreakBlock
             this.LabelClear = new System.Windows.Forms.Label();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
+            this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -96,7 +97,7 @@ namespace BreakBlock
             // LabelGameover
             // 
             this.LabelGameover.AutoSize = true;
-            this.LabelGameover.BackColor = System.Drawing.Color.Blue;
+            this.LabelGameover.BackColor = System.Drawing.Color.Transparent;
             this.LabelGameover.Font = new System.Drawing.Font("MS UI Gothic", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.LabelGameover.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.LabelGameover.Location = new System.Drawing.Point(134, 210);
@@ -182,10 +183,10 @@ namespace BreakBlock
             // LabelClear
             // 
             this.LabelClear.AutoSize = true;
-            this.LabelClear.BackColor = System.Drawing.Color.Orange;
+            this.LabelClear.BackColor = System.Drawing.Color.Transparent;
             this.LabelClear.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.LabelClear.ForeColor = System.Drawing.Color.Yellow;
-            this.LabelClear.Location = new System.Drawing.Point(195, 210);
+            this.LabelClear.Location = new System.Drawing.Point(195, 205);
             this.LabelClear.Name = "LabelClear";
             this.LabelClear.Size = new System.Drawing.Size(165, 48);
             this.LabelClear.TabIndex = 3;
@@ -209,6 +210,10 @@ namespace BreakBlock
             // 
             this.Timer.Interval = 20;
             this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
+            // 
+            // AnimationTimer
+            // 
+            this.AnimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
             // 
             // BreakBlockForm
             // 
@@ -252,6 +257,7 @@ namespace BreakBlock
         private System.Windows.Forms.Label ResultTextScore;
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label remainingBallNum;
+        private System.Windows.Forms.Timer AnimationTimer;
     }
 }
 
