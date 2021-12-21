@@ -17,6 +17,7 @@ namespace BreakBlock {
         // 短時間でRandomのインスタンスを複数生成すると同一の乱数セットが生成され、弾が同じ方向に飛びます。
         // そのため、単一のオブジェクトを使いまわしています。
         private static Random G_Rnd = new Random();
+        private int AccelerationCounter = 0;
         /// <summary>
         /// 弾のコンストラクタ
         /// </summary>       
@@ -66,14 +67,19 @@ namespace BreakBlock {
             this.Speed = wSpeed;
         }
 
+        public void ChangeDirection(Matrix vMatrixAffine) {
+            var wSpeed = new Vector(0, Define.C_InitialVelocity);
+            this.Speed = Vector.Multiply(wSpeed, vMatrixAffine);
+            //弾の速度を維持するための処理
+            this.Speed *= Math.Pow(Define.C_Acceleration, AccelerationCounter);
+        }
+
         /// <summary>
         /// 弾を加速させる
         /// </summary>
         public void Accelerate() {
-            Vector wSpeed = this.Speed;
-            wSpeed.X *= Define.C_Acceleration;
-            wSpeed.Y *= Define.C_Acceleration;
-            this.Speed = wSpeed;
+            AccelerationCounter++;
+            this.Speed *= Define.C_Acceleration;
         }
     }
 }

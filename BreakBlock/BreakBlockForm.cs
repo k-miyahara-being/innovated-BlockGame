@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 
 namespace BreakBlock {
@@ -163,7 +164,7 @@ namespace BreakBlock {
 
                 FCurrentBall = FBalls.Pop();
                 FRemainingBallNum -= 1;
-                remaingBallNum.Text = FRemainingBallNum.ToString();
+                remainingBallNum.Text = FRemainingBallNum.ToString(); 
                 return Status.Ready;
             }
             //バーの左部分に当たった際の跳ね返り
@@ -187,6 +188,10 @@ namespace BreakBlock {
                 new Vector(FBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
                 FCurrentBall.Reverse(Orientation.Vertical);
             }
+
+
+            //バーでのランダム跳ね返り
+            this.BarVsBall();
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < FBlocks.Count; i++) {
                 Orientation? collision = BlockVsCircle(FBlocks[i], FCurrentBall);
@@ -239,6 +244,38 @@ namespace BreakBlock {
 
             return (wA1 * wA2 < 0 && wDistance < vBallRadius) ? true : false;
         }
+        /// <summary>
+        /// バーでの弾の跳ね返り
+        /// </summary>
+        private void BarVsBall() {
+            var wMatrixAffine = new System.Windows.Media.Matrix();
+            var wRandomAngle = new Random();
+            if (LineVsCircle(new Vector(FBar.Rect.X, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + Define.C_BarWidth / 5, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                wMatrixAffine.Rotate(wRandomAngle.Next(-70, -59));
+                FCurrentBall.ChangeDirection(wMatrixAffine);
+            }
+            if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth / 5, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                wMatrixAffine.Rotate(wRandomAngle.Next(-35, -29));
+                FCurrentBall.ChangeDirection(wMatrixAffine);
+            }
+            if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                wMatrixAffine.Rotate(wRandomAngle.Next(-10, 11));
+                FCurrentBall.ChangeDirection(wMatrixAffine);
+            }
+            if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                wMatrixAffine.Rotate(wRandomAngle.Next(30, 36));
+                FCurrentBall.ChangeDirection(wMatrixAffine);
+            }
+            if (LineVsCircle(new Vector(FBar.Rect.X + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY),
+                new Vector(FBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), FCurrentBall.Position, Define.C_BallRadius)) {
+                wMatrixAffine.Rotate(wRandomAngle.Next(60, 71));
+                FCurrentBall.ChangeDirection(wMatrixAffine);
+            }
+        }
 
         /// <summary>
         /// 弾とブロックの当たり判定
@@ -254,7 +291,7 @@ namespace BreakBlock {
             }
             //右辺と左辺での当たり判定
             if ((vBall.Speed.X < 0 && LineVsCircle(new Vector(vBlock.Right, vBlock.Top), new Vector(vBlock.Right, vBlock.Bottom), vBall.Position, Define.C_BallRadius)
-                || (vBall.Speed.X > 0 && LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), vBall.Position, Define.C_BallRadius)))) {
+                || (vBall.Speed.X >= 0 && LineVsCircle(new Vector(vBlock.Left, vBlock.Top), new Vector(vBlock.Left, vBlock.Bottom), vBall.Position, Define.C_BallRadius)))) {
                 return Orientation.Horizontal;
             }
             return null;
@@ -284,15 +321,15 @@ namespace BreakBlock {
             TextScore.Visible = true;
             LabelScore.Text = FScore.ToString();
             LabelScore.Visible = true;
-            remaingBallNum.Text = FRemainingBallNum.ToString();
-            remaingBallNum.Visible = true;
+            remainingBallNum.Text = FRemainingBallNum.ToString();
+            remainingBallNum.Visible = true;
             label.Visible = true;
         }
 
         private void ControlFinish(Action vAction) {
             TextScore.Visible = false;
             LabelScore.Visible = false;
-            remaingBallNum.Visible = false;
+            remainingBallNum.Visible = false;
             label.Visible = false;
 
             vAction?.Invoke();
