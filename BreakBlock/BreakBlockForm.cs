@@ -245,6 +245,7 @@ namespace BreakBlock {
             Timer.Stop();
             FColors = vColors;
             AnimationTimer.Start();
+            //画面をリフレッシュする前にコントロールが表示されてしまうため100ms待つ
             Thread.Sleep(100);
             ControlFinish(vAction);
         }
