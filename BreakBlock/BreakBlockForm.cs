@@ -29,7 +29,6 @@ namespace BreakBlock {
         }
 
         private void Timer_Tick(object sender, EventArgs e) {
-            //FCurrentBall.Move();
             FGameController.Ball.Move();
             FGameController.Bound(PictureBox1, LabelScore);
             switch (FGameController.Status) {
@@ -151,7 +150,7 @@ namespace BreakBlock {
             FGameController.Status = Status.Ready;
             ButtonStart.Visible = false;
             TextScore.Visible = true;
-            LabelScore.Text = "0";
+            LabelScore.Text = FGameController.Score.ToString();
             LabelScore.Visible = true;
             remainingBallNum.Text = FGameController.Balls.Count.ToString();
             remainingBallNum.Visible = true;
