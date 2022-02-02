@@ -8,13 +8,12 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 
-
 namespace BreakBlock {
     public partial class BreakBlockForm : Form {
         private Bitmap FCanvas;
         private Ball FCurrentBall;
         private Stack<Ball> FBalls;
-        private List<Rectangle> FBlocks = new List<Rectangle>();
+        private Block FBlock;
         private Bar FBar;
         private Status FStatus;
         private int FScore = 0;
@@ -32,9 +31,11 @@ namespace BreakBlock {
         private void ButtonStart_Click(object sender, EventArgs e) {
             ControlPlay();
 
-            InitializeBlock();
+            //ブロックを初期化
+            FBlock = new Block(Define.C_BlockFirstPositionX, Define.C_BlockFirstPositionY, Define.C_BlockWidth, Define.C_BlockHeight, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BlockGap);
+            //バーを初期化
             InitializeBar();
-
+            //弾を初期化
             FBalls = new Stack<Ball>();
             for (int i = 0; i < Define.C_BallNum; i++) {
                 FBalls.Push(new Ball(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius));
@@ -61,17 +62,6 @@ namespace BreakBlock {
                 case Status.Clear:
                     this.Finish(Define.ClearColors, () => LabelClear.Visible = true);
                     break;
-            }
-        }
-
-        private void InitializeBlock() {
-            for (int i = 0; i < Define.C_BlockRowNum; i++) {
-                for (int j = 0; j < Define.C_BlockColumnNum; j++) {
-                    int wX = Define.C_BlockFirstPositionX + j * (Define.C_BlockWidth + Define.C_BlockGap);
-                    int wY = Define.C_BlockFirstPositionY + i * (Define.C_BlockHeight + Define.C_BlockGap);
-                    var wBlock = new Rectangle(wX, wY, Define.C_BlockWidth, Define.C_BlockHeight);
-                    FBlocks.Add(wBlock);
-                }
             }
         }
 
@@ -133,8 +123,8 @@ namespace BreakBlock {
                 //弾をbrushColorで指定された色で描く
                 g.FillEllipse(Brushes.Red, (float)(FCurrentBall.Position.X - Define.C_BallRadius), (float)(FCurrentBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
                 g.FillEllipse(Brushes.Red, Define.C_SmallBallX, Define.C_SmallBallY, Define.C_SmallBallRadius * 2, Define.C_SmallBallRadius * 2);
-                for (int i = 0; i < FBlocks.Count; i++) {
-                    g.FillRectangle(Brushes.LightBlue, FBlocks[i]);
+                for (int i = 0; i < FBlock.Blocks.Count; i++) {
+                    g.FillRectangle(Brushes.LightBlue, FBlock.Blocks[i]);
                 }
                 g.FillRectangle(Brushes.Yellow, FBar.Rect);
             }
@@ -186,18 +176,18 @@ namespace BreakBlock {
             //バーでのランダム跳ね返り
             this.BarVsBall();
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
-            for (int i = 0; i < FBlocks.Count; i++) {
-                Orientation? collision = BlockVsCircle(FBlocks[i], FCurrentBall);
+            for (int i = 0; i < FBlock.Blocks.Count; i++) {
+                Orientation? collision = BlockVsCircle(FBlock.Blocks[i], FCurrentBall);
                 if (collision != null) {
                     FCurrentBall.Reverse(collision.Value);
                     FCurrentBall.Accelerate();
-                    FBlocks.RemoveAt(i);
+                    FBlock.RemoveBlock(i);
                     FScore += Define.C_ScoreAddition;
                     LabelScore.Text = FScore.ToString();
                     break;
                 }
             }
-            return FBlocks.Any() ? Status.Playing : Status.Clear;
+            return FBlock.Blocks.Any() ? Status.Playing : Status.Clear;
         }
 
         /// <summary>
@@ -352,8 +342,6 @@ namespace BreakBlock {
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
-
-            FBlocks.Clear();
 
             ResultTextScore.Visible = false;
             ResultLabelScore.Visible = false;

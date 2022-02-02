@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Ball.cs" />
     <Compile Include="Bar.cs" />
+    <Compile Include="Block.cs" />
     <Compile Include="BreakBlockForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +71,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
