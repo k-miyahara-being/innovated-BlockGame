@@ -18,19 +18,49 @@ namespace BreakBlock {
         /// ステータス
         /// </summary>
         public Status Status { get; set; }
+        /// <summary>
+        /// 弾
+        /// </summary>
+        public Ball Ball { get; set; }
+        /// <summary>
+        /// 弾のコレクション
+        /// </summary>
+        public Stack<Ball> Balls { get; set; }
+        /// <summary>
+        /// ブロック
+        /// </summary>
+        public Block Block { get; set; }
+        /// <summary>
+        /// バー
+        /// </summary>
+        public Bar Bar { get; set; }
 
-        public void Bound(Ball vCurrentBall, List<Rectangle> vBlocks, Stack<Ball> vBalls, Bar vBar, PictureBox vPictureBox1, Label vLabelScore) {
+        //private Stack<Ball> FBalls;
+
+        public GameController(PictureBox vPictureBox1) {
+            this.Balls = new Stack<Ball>();
+            for (int i = 0; i < Define.C_BallNum; i++) {
+                this.Balls.Push(new Ball(vPictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius));
+            }
+            this.Block = new Block(Define.C_BlockFirstPositionX, Define.C_BlockFirstPositionY, Define.C_BlockWidth, Define.C_BlockHeight, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BlockGap);
+            this.Bar = new Bar((vPictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, vPictureBox1.Width);
+        }
+
+        public void PopBall() => this.Ball = this.Balls.Pop();
+
+
+        public void Bound(PictureBox vPictureBox1, Label vLabelScore) {
             //左右の壁に当たった際の跳ね返り
-            if (vCurrentBall.Position.X + Define.C_BallRadius > vPictureBox1.Width || vCurrentBall.Position.X - Define.C_BallRadius < 0) {
-                vCurrentBall.Reverse(Orientation.Horizontal);
+            if (this.Ball.Position.X + Define.C_BallRadius > vPictureBox1.Width || this.Ball.Position.X - Define.C_BallRadius < 0) {
+                this.Ball.Reverse(Orientation.Horizontal);
             }
             //上の壁に当たった際の跳ね返り
-            if (vCurrentBall.Position.Y - Define.C_BallRadius < 0) {
-                vCurrentBall.Reverse(Orientation.Vertical);
+            if (this.Ball.Position.Y - Define.C_BallRadius < 0) {
+                this.Ball.Reverse(Orientation.Vertical);
             }
             //下の壁に当たってゲームオーバー
-            if (vCurrentBall.Position.Y + Define.C_BallRadius >= vPictureBox1.Height) {
-                if (vBalls.Count == 0) {
+            if (this.Ball.Position.Y + Define.C_BallRadius >= vPictureBox1.Height) {
+                if (this.Balls.Count == 0) {
                     this.Status = Status.GameOver;
                     return;
                 }
@@ -38,42 +68,42 @@ namespace BreakBlock {
                 return;
             }
             //バーの左部分に当たった際の跳ね返り
-            if (LineVsCircle(new Vector(vBar.Rect.X, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                vCurrentBall.Reverse(Orientation.Vertical);
-                if (vCurrentBall.Speed.X > 0) {
-                    vCurrentBall.Reverse(Orientation.Horizontal);
+            if (LineVsCircle(new Vector(this.Bar.Rect.X, Define.C_BarPositionY),
+                new Vector(this.Bar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY), this.Ball.Position, Define.C_BallRadius)) {
+                this.Ball.Reverse(Orientation.Vertical);
+                if (this.Ball.Speed.X > 0) {
+                    this.Ball.Reverse(Orientation.Horizontal);
                 }
             }
             //バーの右部分に当たった際の跳ね返り
-            if (LineVsCircle(new Vector(vBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                vCurrentBall.Reverse(Orientation.Vertical);
-                if (vCurrentBall.Speed.X < 0) {
-                    vCurrentBall.Reverse(Orientation.Horizontal);
+            if (LineVsCircle(new Vector(this.Bar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
+                new Vector(this.Bar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), this.Ball.Position, Define.C_BallRadius)) {
+                this.Ball.Reverse(Orientation.Vertical);
+                if (this.Ball.Speed.X < 0) {
+                    this.Ball.Reverse(Orientation.Horizontal);
                 }
             }
             //バーの真ん中部分に当たった際の跳ね返り
-            if (LineVsCircle(new Vector(vBar.Rect.X + Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                vCurrentBall.Reverse(Orientation.Vertical);
+            if (LineVsCircle(new Vector(this.Bar.Rect.X + Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
+                new Vector(this.Bar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), this.Ball.Position, Define.C_BallRadius)) {
+                this.Ball.Reverse(Orientation.Vertical);
             }
             //バーでのランダム跳ね返り
-            this.BarVsBall(vBar, vCurrentBall);
+            this.BarVsBall(this.Bar, this.Ball);
 
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
-            for (int i = 0; i < vBlocks.Count; i++) {
-                Orientation? collision = BlockVsCircle(vBlocks[i], vCurrentBall);
+            for (int i = 0; i < this.Block.Blocks.Count; i++) {
+                Orientation? collision = BlockVsCircle(this.Block.Blocks[i], this.Ball);
                 if (collision != null) {
-                    vCurrentBall.Reverse(collision.Value);
-                    vCurrentBall.Accelerate();
-                    vBlocks.RemoveAt(i);
+                    this.Ball.Reverse(collision.Value);
+                    this.Ball.Accelerate();
+                    this.Block.Blocks.RemoveAt(i);
                     this.Score += Define.C_ScoreAddition;
                     vLabelScore.Text = this.Score.ToString();
                     break;
                 }
             }
-            if (vBlocks.Any()) {
+            if (this.Block.Blocks.Any()) {
                 this.Status = Status.Playing;
                 return;
             } else {
