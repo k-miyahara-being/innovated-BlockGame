@@ -67,9 +67,11 @@ namespace BreakBlock {
             this.Speed = wSpeed;
         }
 
-        public void ChangeDirection(Matrix vMatrixAffine) {
+        public void ChangeDirection(int vRandomAngle) {
+            var wMatrixAffine = new Matrix();
+            wMatrixAffine.Rotate(vRandomAngle);
             var wSpeed = new Vector(0, Define.C_InitialVelocity);
-            this.Speed = Vector.Multiply(wSpeed, vMatrixAffine);
+            this.Speed = Vector.Multiply(wSpeed, wMatrixAffine);
             //弾の速度を維持するための処理
             this.Speed *= Math.Pow(Define.C_Acceleration, AccelerationCounter);
         }

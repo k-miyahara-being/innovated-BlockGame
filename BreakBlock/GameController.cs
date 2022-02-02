@@ -145,32 +145,26 @@ namespace BreakBlock {
             return (wA1 * wA2 < 0 && wDistance < vBallRadius) ? true : false;
         }
         private void BarVsBall(Bar vBar, Ball vCurrentBall) {
-            var wMatrixAffine = new System.Windows.Media.Matrix();
             var wRandomAngle = new Random();
             if (LineVsCircle(new Vector(vBar.Rect.X, Define.C_BarPositionY),
                 new Vector(vBar.Rect.X + Define.C_BarWidth / 5, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                wMatrixAffine.Rotate(wRandomAngle.Next(-70, -59));
-                vCurrentBall.ChangeDirection(wMatrixAffine);
+                vCurrentBall.ChangeDirection(wRandomAngle.Next(-70, -59));
             }
             if (LineVsCircle(new Vector(vBar.Rect.X + Define.C_BarWidth / 5, Define.C_BarPositionY),
                 new Vector(vBar.Rect.X + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                wMatrixAffine.Rotate(wRandomAngle.Next(-35, -29));
-                vCurrentBall.ChangeDirection(wMatrixAffine);
+                vCurrentBall.ChangeDirection(wRandomAngle.Next(-35, -29));
             }
             if (LineVsCircle(new Vector(vBar.Rect.X + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY),
                 new Vector(vBar.Rect.X + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                wMatrixAffine.Rotate(wRandomAngle.Next(-10, 11));
-                vCurrentBall.ChangeDirection(wMatrixAffine);
+                vCurrentBall.ChangeDirection(wRandomAngle.Next(-10, 11));
             }
             if (LineVsCircle(new Vector(vBar.Rect.X + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY),
                 new Vector(vBar.Rect.X + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                wMatrixAffine.Rotate(wRandomAngle.Next(30, 36));
-                vCurrentBall.ChangeDirection(wMatrixAffine);
+                vCurrentBall.ChangeDirection(wRandomAngle.Next(30, 36));
             }
             if (LineVsCircle(new Vector(vBar.Rect.X + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY),
                 new Vector(vBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), vCurrentBall.Position, Define.C_BallRadius)) {
-                wMatrixAffine.Rotate(wRandomAngle.Next(60, 71));
-                vCurrentBall.ChangeDirection(wMatrixAffine);
+                vCurrentBall.ChangeDirection(wRandomAngle.Next(60, 71));
             }
         }
         /// <summary>
