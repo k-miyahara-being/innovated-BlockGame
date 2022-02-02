@@ -1,9 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace BreakBlock {
+    /// <summary>
+    /// 弾のコレクションクラス
+    /// </summary>
+    class BallCollection {
+        /// <summary>
+        /// 弾のコレクション
+        /// </summary>
+        public Stack<Ball> Balls { get; set; }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vPictureBox">描画先</param>
+        public BallCollection(int vX, int vY, int vNum) {
+            this.Balls = new Stack<Ball>();
+            for (int i = 0; i < vNum; i++) {
+                this.Balls.Push(new Ball(vX, vY));
+            }
+        }
+    }
+    /// <summary>
+    /// 弾クラス
+    /// </summary>
     class Ball {
         /// <summary>
         /// x,y座標
@@ -13,11 +37,16 @@ namespace BreakBlock {
         /// スピード
         /// </summary>
         public Vector Speed { get; set; }
+        /// <summary>
+        /// 弾のリスト
+        /// </summary>
+        public Stack<Ball> Balls { get; set; }
 
         // 短時間でRandomのインスタンスを複数生成すると同一の乱数セットが生成され、弾が同じ方向に飛びます。
         // そのため、単一のオブジェクトを使いまわしています。
         private static Random G_Rnd = new Random();
         private int AccelerationCounter = 0;
+
         /// <summary>
         /// 弾のコンストラクタ
         /// </summary>       

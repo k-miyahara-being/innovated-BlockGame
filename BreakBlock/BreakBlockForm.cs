@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
@@ -9,13 +8,12 @@ using System.Windows.Forms;
 namespace BreakBlock {
     public partial class BreakBlockForm : Form {
         private Bitmap FCanvas;
-        private Ball FCurrentBall;
-        private Stack<Ball> FBalls;
+        private Ball FBall;
+        private BallCollection FBallCollection;
         private Block FBlock;
         private GameController FGamecontroller;
         private Bar FBar;
         private Status FStatus;
-        private int FRemainingBallNum = 2;
         private Brush[] FColors;
         private int FColorIndex = 0;
 
@@ -27,26 +25,23 @@ namespace BreakBlock {
         private void BreakBlockForm_Load(object sender, EventArgs e) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
 
         private void ButtonStart_Click(object sender, EventArgs e) {
-            ControlPlay();
-
+            //ゲームコントローラーの初期化
+            FGamecontroller = new GameController();
             //ブロックを初期化
             FBlock = new Block(Define.C_BlockFirstPositionX, Define.C_BlockFirstPositionY, Define.C_BlockWidth, Define.C_BlockHeight, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BlockGap);
             //バーを初期化
             InitializeBar();
-            //ゲームコントローラーの初期化
-            FGamecontroller = new GameController();
             //弾を初期化
-            FBalls = new Stack<Ball>();
-            for (int i = 0; i < Define.C_BallNum; i++) {
-                FBalls.Push(new Ball(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius));
-            }
-            FCurrentBall = FBalls.Pop();
+            FBallCollection = new BallCollection(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius, Define.C_BallNum);
+            FBall = FBallCollection.Balls.Pop();
+
+            ControlPlay();
             Draw();
         }
 
         private void Timer_Tick(object sender, EventArgs e) {
-            FCurrentBall.Move();
-            FStatus = FGamecontroller.Bound(FCurrentBall, FBlock.Blocks, FBalls, FBar, PictureBox1, LabelScore);
+            FBall.Move();
+            FStatus = FGamecontroller.Bound(FBall, FBlock.Blocks, FBallCollection.Balls, FBar, PictureBox1, LabelScore);
             switch (FStatus) {
                 case Status.Playing:
                     this.Draw();
@@ -54,9 +49,8 @@ namespace BreakBlock {
                 case Status.Ready:
                     Timer.Stop();
                     InitializeBar();
-                    FCurrentBall = FBalls.Pop();
-                    FRemainingBallNum -= 1;
-                    remainingBallNum.Text = FRemainingBallNum.ToString();
+                    FBall = FBallCollection.Balls.Pop();
+                    remainingBallNum.Text = FBallCollection.Balls.Count.ToString();
                     this.Draw();
                     break;
                 case Status.GameOver:
@@ -105,7 +99,7 @@ namespace BreakBlock {
                     Draw();
                     break;
                 case Status.Ready:
-                    FCurrentBall.Move(new Vector(FBar.MoveBar(vMoveDistance), 0));
+                    FBall.Move(new Vector(FBar.MoveBar(vMoveDistance), 0));
                     Draw();
                     break;
             }
@@ -124,7 +118,7 @@ namespace BreakBlock {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.Clear(this.BackColor);
                 //弾をbrushColorで指定された色で描く
-                g.FillEllipse(Brushes.Red, (float)(FCurrentBall.Position.X - Define.C_BallRadius), (float)(FCurrentBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
+                g.FillEllipse(Brushes.Red, (float)(FBall.Position.X - Define.C_BallRadius), (float)(FBall.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
                 g.FillEllipse(Brushes.Red, Define.C_SmallBallX, Define.C_SmallBallY, Define.C_SmallBallRadius * 2, Define.C_SmallBallRadius * 2);
                 for (int i = 0; i < FBlock.Blocks.Count; i++) {
                     g.FillRectangle(Brushes.LightBlue, FBlock.Blocks[i]);
@@ -171,7 +165,7 @@ namespace BreakBlock {
             TextScore.Visible = true;
             LabelScore.Text = "0";
             LabelScore.Visible = true;
-            remainingBallNum.Text = FRemainingBallNum.ToString();
+            remainingBallNum.Text = FBallCollection.Balls.Count.ToString();
             remainingBallNum.Visible = true;
             label.Visible = true;
         }
@@ -199,7 +193,6 @@ namespace BreakBlock {
 
             ResultTextScore.Visible = false;
             ResultLabelScore.Visible = false;
-            FRemainingBallNum = 2;
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();
