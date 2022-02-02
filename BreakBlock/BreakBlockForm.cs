@@ -12,9 +12,8 @@ namespace BreakBlock {
         private Ball FCurrentBall;
         private Stack<Ball> FBalls;
         private Block FBlock;
-        private GameController FGamecontroller;
+        private GameController FGameController;
         private Bar FBar;
-        private Status FStatus;
         private int FRemainingBallNum = 2;
         private Brush[] FColors;
         private int FColorIndex = 0;
@@ -24,30 +23,33 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() => this.InitializeComponent();
 
-        private void BreakBlockForm_Load(object sender, EventArgs e) => FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+        private void BreakBlockForm_Load(object sender, EventArgs e) {
+            FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+            FGameController = new GameController();
+        }
 
         private void ButtonStart_Click(object sender, EventArgs e) {
-            ControlPlay();
 
             //ブロックを初期化
             FBlock = new Block(Define.C_BlockFirstPositionX, Define.C_BlockFirstPositionY, Define.C_BlockWidth, Define.C_BlockHeight, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BlockGap);
             //バーを初期化
             InitializeBar();
             //ゲームコントローラーの初期化
-            FGamecontroller = new GameController();
+            //FGameController = new GameController();
             //弾を初期化
             FBalls = new Stack<Ball>();
             for (int i = 0; i < Define.C_BallNum; i++) {
                 FBalls.Push(new Ball(PictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius));
             }
             FCurrentBall = FBalls.Pop();
+            ControlPlay();
             Draw();
         }
 
         private void Timer_Tick(object sender, EventArgs e) {
             FCurrentBall.Move();
-            FStatus = FGamecontroller.Bound(FCurrentBall, FBlock.Blocks, FBalls, FBar, PictureBox1, LabelScore);
-            switch (FStatus) {
+            FGameController.Bound(FCurrentBall, FBlock.Blocks, FBalls, FBar, PictureBox1, LabelScore);
+            switch (FGameController.Status) {
                 case Status.Playing:
                     this.Draw();
                     break;
@@ -74,8 +76,8 @@ namespace BreakBlock {
             e.Handled = true;
             switch (e.KeyData) {
                 case Keys.Space:
-                    if (FStatus != Status.Ready) break;
-                    FStatus = Status.Playing;
+                    if (FGameController.Status != Status.Ready) break;
+                    FGameController.Status = Status.Playing;
                     Timer.Start();
                     break;
                 case Keys.J:
@@ -92,14 +94,14 @@ namespace BreakBlock {
         }
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e) {
-            if (FStatus == Status.Ready || FStatus == Status.Playing) {
+            if (FGameController.Status == Status.Ready || FGameController.Status == Status.Playing) {
                 int wMoveDistance = e.X - FBar.Rect.X - Define.C_BarWidth / 2;
                 MoveBarAndBall(wMoveDistance);
             }
         }
 
         private void MoveBarAndBall(int vMoveDistance) {
-            switch (FStatus) {
+            switch (FGameController.Status) {
                 case Status.Playing:
                     FBar.MoveBar(vMoveDistance);
                     Draw();
@@ -112,8 +114,8 @@ namespace BreakBlock {
         }
 
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e) {
-            if (FStatus == Status.Ready) {
-                FStatus = Status.Playing;
+            if (FGameController.Status == Status.Ready) {
+                FGameController.Status = Status.Playing;
                 Timer.Start();
             }
         }
@@ -166,7 +168,7 @@ namespace BreakBlock {
         }
 
         private void ControlPlay() {
-            FStatus = Status.Ready;
+            FGameController.Status = Status.Ready;
             ButtonStart.Visible = false;
             TextScore.Visible = true;
             LabelScore.Text = "0";
@@ -185,7 +187,7 @@ namespace BreakBlock {
             vAction?.Invoke();
             PictureBox1.Controls.Add(LabelGameover);
             PictureBox1.Controls.Add(LabelClear);
-            ResultLabelScore.Text = FGamecontroller.Score.ToString();
+            ResultLabelScore.Text = FGameController.Score.ToString();
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
             ButtonContinue.Visible = true;
@@ -193,6 +195,7 @@ namespace BreakBlock {
         }
 
         private void InithalizeAll() {
+            FGameController = new GameController();
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;

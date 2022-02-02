@@ -10,8 +10,16 @@ namespace BreakBlock {
     /// ゲームコントローラクラス
     /// </summary>
     class GameController {
+        /// <summary>
+        /// スコア
+        /// </summary>
         public int Score { get; set; }
-        public Status Bound(Ball vCurrentBall, List<Rectangle> vBlocks, Stack<Ball> vBalls, Bar vBar, PictureBox vPictureBox1, Label vLabelScore) {
+        /// <summary>
+        /// ステータス
+        /// </summary>
+        public Status Status { get; set; }
+
+        public void Bound(Ball vCurrentBall, List<Rectangle> vBlocks, Stack<Ball> vBalls, Bar vBar, PictureBox vPictureBox1, Label vLabelScore) {
             //左右の壁に当たった際の跳ね返り
             if (vCurrentBall.Position.X + Define.C_BallRadius > vPictureBox1.Width || vCurrentBall.Position.X - Define.C_BallRadius < 0) {
                 vCurrentBall.Reverse(Orientation.Horizontal);
@@ -22,9 +30,12 @@ namespace BreakBlock {
             }
             //下の壁に当たってゲームオーバー
             if (vCurrentBall.Position.Y + Define.C_BallRadius >= vPictureBox1.Height) {
-                if (vBalls.Count == 0) return Status.GameOver;
-
-                return Status.Ready;
+                if (vBalls.Count == 0) {
+                    this.Status = Status.GameOver;
+                    return;
+                }
+                this.Status = Status.Ready;
+                return;
             }
             //バーの左部分に当たった際の跳ね返り
             if (LineVsCircle(new Vector(vBar.Rect.X, Define.C_BarPositionY),
@@ -62,7 +73,13 @@ namespace BreakBlock {
                     break;
                 }
             }
-            return vBlocks.Any() ? Status.Playing : Status.Clear;
+            if (vBlocks.Any()) {
+                this.Status = Status.Playing;
+                return;
+            } else {
+                this.Status = Status.Clear;
+                return;
+            }
         }
 
         /// <summary>
