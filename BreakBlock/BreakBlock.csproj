@@ -56,6 +56,7 @@
       <DependentUpon>BreakBlockForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Define.cs" />
+    <Compile Include="GameController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BreakBlockForm.resx">
