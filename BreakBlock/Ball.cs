@@ -23,13 +23,13 @@ namespace BreakBlock {
         /// </summary>       
         public Ball(int vX, int vY) {
             this.Position = new Vector(vX, vY);
-            float wAngle = G_Rnd.Next(Define.C_AngleMin, Define.C_AngleMax);
+            float wAngle = G_Rnd.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
             if (G_Rnd.Next() % 2 == 0) {
                 wAngle *= -1;
             } else {
                 wAngle *= 1;
             }
-            this.Speed = new Vector(0, Define.C_InitialVelocity);
+            this.Speed = new Vector(0, Define.C_LaunchVelocity);
             var wMatrixAffine = new Matrix();
             wMatrixAffine.Rotate(wAngle);
             this.Speed = Vector.Multiply(this.Speed, wMatrixAffine);
@@ -67,10 +67,10 @@ namespace BreakBlock {
             this.Speed = wSpeed;
         }
 
-        public void ChangeDirection(int vRandomAngle) {
+        public void ChangeDirection(int vAngle) {
             var wMatrixAffine = new Matrix();
-            wMatrixAffine.Rotate(vRandomAngle);
-            var wSpeed = new Vector(0, Define.C_InitialVelocity);
+            wMatrixAffine.Rotate(vAngle);
+            var wSpeed = new Vector(0, Define.C_LaunchVelocity);
             this.Speed = Vector.Multiply(wSpeed, wMatrixAffine);
             //弾の速度を維持するための処理
             this.Speed *= Math.Pow(Define.C_Acceleration, AccelerationCounter);

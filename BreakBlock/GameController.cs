@@ -35,14 +35,14 @@ namespace BreakBlock {
         /// </summary>
         public Bar Bar { get; set; }
 
-        public GameController(PictureBox vPictureBox1) {
+        public GameController(int vPictureBoxWidth) {
             this.Score = 0;
             this.Balls = new Stack<Ball>();
             for (int i = 0; i < Define.C_BallNum; i++) {
-                this.Balls.Push(new Ball(vPictureBox1.Width / 2, Define.C_BarPositionY - Define.C_BallRadius));
+                this.Balls.Push(new Ball(vPictureBoxWidth / 2, Define.C_BarPositionY - Define.C_BallRadius));
             }
             this.Block = new Block(Define.C_BlockFirstPositionX, Define.C_BlockFirstPositionY, Define.C_BlockWidth, Define.C_BlockHeight, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BlockGap);
-            this.Bar = new Bar((vPictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, vPictureBox1.Width);
+            this.Bar = new Bar((vPictureBoxWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, vPictureBoxWidth);
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace BreakBlock {
         /// </summary>
         /// <param name="vPictureBox1">描画先</param>
         /// <param name="vLabelScore">スコアラベル</param>
-        public void Bound(PictureBox vPictureBox1, Label vLabelScore) {
+        public void Bound(int vPictureBoxWidth, int vPictureBoxHeight) {
             //左右の壁に当たった際の跳ね返り
-            if (this.Ball.Position.X + Define.C_BallRadius > vPictureBox1.Width || this.Ball.Position.X - Define.C_BallRadius < 0) {
+            if (this.Ball.Position.X + Define.C_BallRadius > vPictureBoxWidth || this.Ball.Position.X - Define.C_BallRadius < 0) {
                 this.Ball.Reverse(Orientation.Horizontal);
             }
             //上の壁に当たった際の跳ね返り
@@ -65,7 +65,7 @@ namespace BreakBlock {
                 this.Ball.Reverse(Orientation.Vertical);
             }
             //下の壁に当たってゲームオーバー
-            if (this.Ball.Position.Y + Define.C_BallRadius >= vPictureBox1.Height) {
+            if (this.Ball.Position.Y + Define.C_BallRadius >= vPictureBoxHeight) {
                 if (this.Balls.Count == 0) {
                     this.Status = Status.GameOver;
                     return;
@@ -73,39 +73,17 @@ namespace BreakBlock {
                 this.Status = Status.Ready;
                 return;
             }
-            //バーの左部分に当たった際の跳ね返り
-            if (IsBallCollidedLine(new Vector(this.Bar.Rect.X, Define.C_BarPositionY),
-                new Vector(this.Bar.Rect.X + Define.C_BarWidth / 3, Define.C_BarPositionY), this.Ball.Position, Define.C_BallRadius)) {
-                this.Ball.Reverse(Orientation.Vertical);
-                if (this.Ball.Speed.X > 0) {
-                    this.Ball.Reverse(Orientation.Horizontal);
-                }
-            }
-            //バーの右部分に当たった際の跳ね返り
-            if (IsBallCollidedLine(new Vector(this.Bar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
-                new Vector(this.Bar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), this.Ball.Position, Define.C_BallRadius)) {
-                this.Ball.Reverse(Orientation.Vertical);
-                if (this.Ball.Speed.X < 0) {
-                    this.Ball.Reverse(Orientation.Horizontal);
-                }
-            }
-            //バーの真ん中部分に当たった際の跳ね返り
-            if (IsBallCollidedLine(new Vector(this.Bar.Rect.X + Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY),
-                new Vector(this.Bar.Rect.X + 2 * Define.C_BarWidth / Define.C_BarSection, Define.C_BarPositionY), this.Ball.Position, Define.C_BallRadius)) {
-                this.Ball.Reverse(Orientation.Vertical);
-            }
             //バーでのランダム跳ね返り
-            this.BarVsBall(this.Bar, this.Ball);
+            this.BarVsBall(this.Bar.Rect.X, this.Ball);
 
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < this.Block.Blocks.Count; i++) {
-                Orientation? collision = BlockVsCircle(this.Block.Blocks[i], this.Ball);
-                if (collision != null) {
-                    this.Ball.Reverse(collision.Value);
+                Orientation? wCollision = BlockVsCircle(this.Block.Blocks[i], this.Ball);
+                if (wCollision != null) {
+                    this.Ball.Reverse(wCollision.Value);
                     this.Ball.Accelerate();
-                    this.Block.Blocks.RemoveAt(i);
+                    this.Block.RemoveBlock(i);
                     this.Score += Define.C_ScoreAddition;
-                    vLabelScore.Text = this.Score.ToString();
                     break;
                 }
             }
@@ -126,7 +104,7 @@ namespace BreakBlock {
         /// <param name="vBallCenter">弾の中心座標</param>
         /// <param name="vBallRadius">弾の半径</param>
         /// <returns>弾が直線に当たったらTrue</returns>
-        private bool IsBallCollidedLine(Vector vPoint1, Vector vPoint2, Vector vBallCenter, float vBallRadius) {
+        private bool IsBallCollidedLine(Vector vPoint1, Vector vPoint2, Vector vBallCenter, int vBallRadius) {
             // 直線の方向ベクトル
             Vector wLineDir = (vPoint2 - vPoint1);
             // 直線の法線ベクトル
@@ -152,30 +130,31 @@ namespace BreakBlock {
         }
 
         /// <summary>
-        /// 
+        /// 弾がバーに当たったときの判定
         /// </summary>
-        /// <param name="vBar"></param>
-        /// <param name="vBall"></param>
-        private void BarVsBall(Bar vBar, Ball vBall) {
+        /// <param name="vBarX">バーのX座標</param>
+        /// <param name="vBall">弾のインスタンス</param>
+        private void BarVsBall(int vBarX, Ball vBall) {
             var wRandomAngle = new Random();
-            if (IsBallCollidedLine(new Vector(vBar.Rect.X, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
+            if (IsBallCollidedLine(new Vector(vBarX, Define.C_BarPositionY),
+                new Vector(vBarX + Define.C_BarWidth / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
+
                 vBall.ChangeDirection(wRandomAngle.Next(-70, -59));
             }
-            if (IsBallCollidedLine(new Vector(vBar.Rect.X + Define.C_BarWidth / 5, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
+            if (IsBallCollidedLine(new Vector(vBarX + Define.C_BarWidth / 5, Define.C_BarPositionY),
+                new Vector(vBarX + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
                 vBall.ChangeDirection(wRandomAngle.Next(-35, -29));
             }
-            if (IsBallCollidedLine(new Vector(vBar.Rect.X + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
+            if (IsBallCollidedLine(new Vector(vBarX + Define.C_BarWidth * 2 / 5, Define.C_BarPositionY),
+                new Vector(vBarX + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
                 vBall.ChangeDirection(wRandomAngle.Next(-10, 11));
             }
-            if (IsBallCollidedLine(new Vector(vBar.Rect.X + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
+            if (IsBallCollidedLine(new Vector(vBarX + Define.C_BarWidth * 3 / 5, Define.C_BarPositionY),
+                new Vector(vBarX + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
                 vBall.ChangeDirection(wRandomAngle.Next(30, 36));
             }
-            if (IsBallCollidedLine(new Vector(vBar.Rect.X + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY),
-                new Vector(vBar.Rect.X + Define.C_BarWidth, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
+            if (IsBallCollidedLine(new Vector(vBarX + Define.C_BarWidth * 4 / 5, Define.C_BarPositionY),
+                new Vector(vBarX + Define.C_BarWidth, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
                 vBall.ChangeDirection(wRandomAngle.Next(60, 71));
             }
         }

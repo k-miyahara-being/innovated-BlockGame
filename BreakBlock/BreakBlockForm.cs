@@ -19,7 +19,7 @@ namespace BreakBlock {
 
         private void BreakBlockForm_Load(object sender, EventArgs e) {
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
-            FGameController = new GameController(PictureBox1);
+            FGameController = new GameController(PictureBox1.Width);
         }
 
         private void ButtonStart_Click(object sender, EventArgs e) {
@@ -30,7 +30,8 @@ namespace BreakBlock {
 
         private void Timer_Tick(object sender, EventArgs e) {
             FGameController.Ball.Move();
-            FGameController.Bound(PictureBox1, LabelScore);
+            FGameController.Bound(PictureBox1.Width,PictureBox1.Height);
+            LabelScore.Text = FGameController.Score.ToString();
             switch (FGameController.Status) {
                 case Status.Playing:
                     this.Draw();
@@ -174,7 +175,7 @@ namespace BreakBlock {
         }
 
         private void InithalizeAll() {
-            FGameController = new GameController(PictureBox1);
+            FGameController = new GameController(PictureBox1.Width);
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
