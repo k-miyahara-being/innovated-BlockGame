@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace BreakBlock {
-    class Ball {
+    public class Ball {
         /// <summary>
         /// x,y座標
         /// </summary>

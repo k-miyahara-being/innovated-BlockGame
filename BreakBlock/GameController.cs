@@ -9,7 +9,7 @@ namespace BreakBlock {
     /// <summary>
     /// ゲームコントローラクラス
     /// </summary>
-    class GameController {
+    public class GameController {
         /// <summary>
         /// スコア
         /// </summary>

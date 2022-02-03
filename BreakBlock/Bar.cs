@@ -4,7 +4,7 @@ namespace BreakBlock {
     /// <summary>
     /// バークラス
     /// </summary>
-    class Bar {
+    public class Bar {
         private int FBoxWidth;
         /// <summary>
         /// バーの実体

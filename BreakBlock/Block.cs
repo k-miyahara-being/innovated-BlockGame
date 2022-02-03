@@ -5,7 +5,7 @@ namespace BreakBlock {
     /// <summary>
     /// ブロッククラス
     /// </summary>
-    class Block {
+    public class Block {
         /// <summary>
         /// ブロックのリスト
         /// </summary>
