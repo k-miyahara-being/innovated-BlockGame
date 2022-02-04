@@ -21,8 +21,6 @@ namespace BreakBlock {
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
         }
 
-        private void BreakBlockForm_Load(object sender, EventArgs e) { }
-
         private void ButtonStart_Click(object sender, EventArgs e) {
             #region プレイ画面へ遷移
             FGameController.Status = Status.Ready;
@@ -48,7 +46,6 @@ namespace BreakBlock {
                 case Status.Ready:
                     Timer.Stop();
                     FGameController.Bar = new Bar((PictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
-                    //FGameController.PopBall();
                     remainingBallNum.Text = FGameController.BallCount.ToString();
                     this.Draw();
                     break;

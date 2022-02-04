@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="Ball.cs" />
     <Compile Include="Bar.cs" />
-    <Compile Include="Block.cs" />
     <Compile Include="BreakBlockForm.cs">
       <SubType>Form</SubType>
     </Compile>

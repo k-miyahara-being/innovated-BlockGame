@@ -82,8 +82,8 @@ namespace BreakBlock {
         /// <summary>
         /// 弾の当たり判定
         /// </summary>
-        /// <param name="vPictureBox1">描画先</param>
-        /// <param name="vLabelScore">スコアラベル</param>
+        /// <param name="vPictureBoxWidth">PictureBoxの幅</param>
+        /// <param name="vPictureBoxHeight">PictureBoxの高さ</param>
         public void Bound(int vPictureBoxWidth, int vPictureBoxHeight) {
             //左右の壁に当たった際の跳ね返り
             if (this.Ball.Position.X + Define.C_BallRadius > vPictureBoxWidth || this.Ball.Position.X - Define.C_BallRadius < 0) {

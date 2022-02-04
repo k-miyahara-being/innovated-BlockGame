@@ -233,7 +233,6 @@ namespace BreakBlock
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ブロック崩し";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.BreakBlockForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormBreakBlock_KeyDown);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
