@@ -15,16 +15,25 @@ namespace BreakBlock {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public BreakBlockForm() => this.InitializeComponent();
-
-        private void BreakBlockForm_Load(object sender, EventArgs e) {
-            FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+        public BreakBlockForm() {
+            this.InitializeComponent();
             FGameController = new GameController(PictureBox1.Width);
+            FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
         }
 
+        private void BreakBlockForm_Load(object sender, EventArgs e) { }
+
         private void ButtonStart_Click(object sender, EventArgs e) {
-            FGameController.PopBall();
-            ControlPlay();
+            #region プレイ画面へ遷移
+            FGameController.Status = Status.Ready;
+            ButtonStart.Visible = false;
+            TextScore.Visible = true;
+            LabelScore.Text = FGameController.Score.ToString();
+            LabelScore.Visible = true;
+            remainingBallNum.Text = FGameController.BallCount.ToString();
+            remainingBallNum.Visible = true;
+            label.Visible = true;
+            #endregion
             Draw();
         }
 
@@ -40,18 +49,18 @@ namespace BreakBlock {
                     Timer.Stop();
                     FGameController.Bar = new Bar((PictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
                     FGameController.PopBall();
-                    remainingBallNum.Text = FGameController.Balls.Count.ToString();
+                    remainingBallNum.Text = FGameController.BallCount.ToString();
                     this.Draw();
                     break;
                 case Status.GameOver:
-                    this.Finish(Define.GameOverColors, () => LabelGameover.Visible = true);
+                    this.ShowFinishView(Define.GameOverColors, () => LabelGameover.Visible = true);
                     break;
                 case Status.Clear:
-                    this.Finish(Define.ClearColors, () => LabelClear.Visible = true);
+                    this.ShowFinishView(Define.ClearColors, () => LabelClear.Visible = true);
                     break;
             }
         }
-
+        #region キー操作
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             e.Handled = true;
             switch (e.KeyData) {
@@ -72,6 +81,7 @@ namespace BreakBlock {
                     break;
             }
         }
+        #endregion
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e) {
             if (FGameController.Status == Status.Ready || FGameController.Status == Status.Playing) {
@@ -94,10 +104,9 @@ namespace BreakBlock {
         }
 
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e) {
-            if (FGameController.Status == Status.Ready) {
-                FGameController.Status = Status.Playing;
-                Timer.Start();
-            }
+            if (FGameController.Status != Status.Ready) return;
+            FGameController.Status = Status.Playing;
+            Timer.Start();
         }
 
         private void Draw() {
@@ -108,57 +117,21 @@ namespace BreakBlock {
                 //弾をbrushColorで指定された色で描く
                 g.FillEllipse(Brushes.Red, (float)(FGameController.Ball.Position.X - Define.C_BallRadius), (float)(FGameController.Ball.Position.Y - Define.C_BallRadius), Define.C_BallRadius * 2, Define.C_BallRadius * 2);
                 g.FillEllipse(Brushes.Red, Define.C_SmallBallX, Define.C_SmallBallY, Define.C_SmallBallRadius * 2, Define.C_SmallBallRadius * 2);
-                for (int i = 0; i < FGameController.Block.Blocks.Count; i++) {
-                    g.FillRectangle(Brushes.LightBlue, FGameController.Block.Blocks[i]);
+                for (int i = 0; i < FGameController.Blocks.Count; i++) {
+                    g.FillRectangle(Brushes.LightBlue, FGameController.Blocks[i]);
                 }
                 g.FillRectangle(Brushes.Yellow, FGameController.Bar.Rect);
             }
             PictureBox1.Image = FCanvas;
         }
 
-        private void Finish(Brush[] vColors, Action vAction) {
+        private void ShowFinishView(Brush[] vColors, Action vAction) {
             Timer.Stop();
             FColors = vColors;
             AnimationTimer.Start();
             //画面をリフレッシュする前にコントロールが表示されてしまうため100ms待つ
             Thread.Sleep(100);
-            ControlFinish(vAction);
-        }
-
-        private void DrawFinish(Brush vColor) {
-            using (var g = Graphics.FromImage(FCanvas)) {
-                g.Clear(this.BackColor);
-                g.FillEllipse(vColor, FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
-            }
-            PictureBox1.Image = FCanvas;
-        }
-
-        private void AnimationTimer_Tick(object sender, EventArgs e) {
-            DrawFinish(FColors[FColorIndex % 4]);
-            FColorIndex++;
-        }
-
-        private void ButtonContinue_Click(object vSender, EventArgs vE) {
-            AnimationTimer.Stop();
-            using (var g = Graphics.FromImage(FCanvas)) {
-                g.Clear(this.BackColor);
-            }
-            PictureBox1.Image = FCanvas;
-            InithalizeAll();
-        }
-
-        private void ControlPlay() {
-            FGameController.Status = Status.Ready;
-            ButtonStart.Visible = false;
-            TextScore.Visible = true;
-            LabelScore.Text = FGameController.Score.ToString();
-            LabelScore.Visible = true;
-            remainingBallNum.Text = FGameController.Balls.Count.ToString();
-            remainingBallNum.Visible = true;
-            label.Visible = true;
-        }
-
-        private void ControlFinish(Action vAction) {
+            #region 終了画面へ遷移
             TextScore.Visible = false;
             LabelScore.Visible = false;
             remainingBallNum.Visible = false;
@@ -172,10 +145,28 @@ namespace BreakBlock {
             ResultLabelScore.Visible = true;
             ButtonContinue.Visible = true;
             ButtonContinue.Focus();
+            #endregion
         }
 
-        private void InithalizeAll() {
-            FGameController = new GameController(PictureBox1.Width);
+        private void AnimationTimer_Tick(object sender, EventArgs e) {
+            #region 終了画面の描画
+            using (var g = Graphics.FromImage(FCanvas)) {
+                g.Clear(this.BackColor);
+                g.FillEllipse(FColors[FColorIndex % 4], FCanvas.Width / 2 - 100, FCanvas.Height / 2 - 100, 200, 100);
+            }
+            PictureBox1.Image = FCanvas;
+            #endregion
+            FColorIndex++;
+        }
+
+        private void ButtonContinue_Click(object sender, EventArgs e) {
+            AnimationTimer.Stop();
+            using (var g = Graphics.FromImage(FCanvas)) {
+                g.Clear(this.BackColor);
+            }
+            PictureBox1.Image = FCanvas;
+            #region 画面の初期化
+            FGameController.Initialize(PictureBox1.Width);
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
@@ -185,7 +176,7 @@ namespace BreakBlock {
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();
+            # endregion 画面の初期化
         }
-
     }
 }

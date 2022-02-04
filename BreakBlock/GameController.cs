@@ -23,33 +23,62 @@ namespace BreakBlock {
         /// </summary>
         public Ball Ball { get; set; }
         /// <summary>
-        /// 弾のコレクション
+        /// ボールのコレクション
         /// </summary>
-        public Stack<Ball> Balls { get; set; }
+        private Stack<Ball> Balls { get; set; }
+        /// <summary>
+        /// ボール数
+        /// </summary>
+        public int BallCount  => this.Balls.Count; 
+        
         /// <summary>
         /// ブロック
         /// </summary>
-        public Block Block { get; set; }
+        //public Block Block { get; set; }
+        public List<Rectangle> Blocks { get; set; }
         /// <summary>
         /// バー
         /// </summary>
         public Bar Bar { get; set; }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vPictureBoxWidth">ピクチャーボックスの幅</param>
         public GameController(int vPictureBoxWidth) {
+            this.Initialize(vPictureBoxWidth);
+        }
+        /// <summary>
+        /// コントローラの初期化
+        /// </summary>
+        /// <param name="vPictureBoxWidth"></param>
+        public void Initialize(int vPictureBoxWidth) {
             this.Score = 0;
+
             this.Balls = new Stack<Ball>();
             for (int i = 0; i < Define.C_BallNum; i++) {
                 this.Balls.Push(new Ball(vPictureBoxWidth / 2, Define.C_BarPositionY - Define.C_BallRadius));
             }
-            this.Block = new Block(Define.C_BlockFirstPositionX, Define.C_BlockFirstPositionY, Define.C_BlockWidth, Define.C_BlockHeight, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BlockGap);
+            this.PopBall();
+
+            this.Blocks = new List<Rectangle>();
+            for (int i = 0; i < Define.C_BlockRowNum; i++) {
+                for (int j = 0; j < Define.C_BlockColumnNum; j++) {
+                    int wX = Define.C_BlockFirstPositionX + j * (Define.C_BlockWidth + Define.C_BlockGap);
+                    int wY = Define.C_BlockFirstPositionY + i * (Define.C_BlockHeight + Define.C_BlockGap);
+                    var wBlock = new Rectangle(wX, wY, Define.C_BlockWidth, Define.C_BlockHeight);
+                    this.Blocks.Add(wBlock);
+                }
+            }
+
             this.Bar = new Bar((vPictureBoxWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, vPictureBoxWidth);
         }
-
         /// <summary>
         /// 残弾をポップする
         /// </summary>
-        public void PopBall() => this.Ball = this.Balls.Pop();
-
+        public void PopBall() {
+            this.Ball = this.Balls.Pop();
+        }
         /// <summary>
         /// 弾の当たり判定
         /// </summary>
@@ -77,17 +106,17 @@ namespace BreakBlock {
             this.BarVsBall(this.Bar.Rect.X, this.Ball);
 
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
-            for (int i = 0; i < this.Block.Blocks.Count; i++) {
-                Orientation? wCollision = BlockVsCircle(this.Block.Blocks[i], this.Ball);
+            for (int i = 0; i < this.Blocks.Count; i++) {
+                Orientation? wCollision = BlockVsCircle(this.Blocks[i], this.Ball);
                 if (wCollision != null) {
                     this.Ball.Reverse(wCollision.Value);
                     this.Ball.Accelerate();
-                    this.Block.RemoveBlock(i);
+                    this.Blocks.RemoveAt(i);
                     this.Score += Define.C_ScoreAddition;
                     break;
                 }
             }
-            if (this.Block.Blocks.Any()) {
+            if (this.Blocks.Any()) {
                 this.Status = Status.Playing;
                 return;
             } else {

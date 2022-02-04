@@ -5,7 +5,7 @@ namespace BreakBlock {
     /// <summary>
     /// ブロッククラス
     /// </summary>
-    public class Block {
+    /*public class Block {
         /// <summary>
         /// ブロックのリスト
         /// </summary>
@@ -36,5 +36,5 @@ namespace BreakBlock {
         /// <param name="vIndex">消すブロックの位置</param>
         public void RemoveBlock(int vIndex) => this.Blocks.RemoveAt(vIndex);
 
-    }
+    }*/
 }
