@@ -76,7 +76,7 @@ namespace BreakBlock {
         /// <summary>
         /// 残弾をポップする
         /// </summary>
-        public void PopBall() {
+        private void PopBall() {
             this.Ball = this.Balls.Pop();
         }
         /// <summary>
@@ -100,6 +100,7 @@ namespace BreakBlock {
                     return;
                 }
                 this.Status = Status.Ready;
+                this.PopBall();
                 return;
             }
             //バーでのランダム跳ね返り
