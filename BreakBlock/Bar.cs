@@ -5,14 +5,11 @@ namespace BreakBlock {
     /// バークラス
     /// </summary>
     public class Bar {
+        private int FBoxWidth;
         /// <summary>
         /// バーの実体
         /// </summary>
         public Rectangle Rect { get; set; }
-        /// <summary>
-        /// バーの幅
-        /// </summary>
-        public int Width { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -23,7 +20,7 @@ namespace BreakBlock {
         /// <param name="vHeight">バーの高さ</param>
         public Bar(int vPositionX, int vPositionY, int vWidth, int vHeight, int vBoxWidth) {
             this.Rect = new Rectangle(vPositionX, vPositionY, vWidth, vHeight);
-            this.Width = vBoxWidth;
+            FBoxWidth = vBoxWidth;
         }
 
         /// <summary>
@@ -35,10 +32,10 @@ namespace BreakBlock {
             Rectangle wRect = this.Rect;
             wRect.X += vMoveDistance;
             //バーの幅の3分の1までは壁に入ることができる
-            if (wRect.X + Define.C_BarWidth / 3 < 0) {
-                wRect.X = -1 * Define.C_BarWidth / 3;
-            } else if (wRect.X + 2 * Define.C_BarWidth / 3 > this.Width) {
-                wRect.X = this.Width - 2 * Define.C_BarWidth / 3;          
+            if (wRect.X + this.Rect.Width / 3 < 0) {
+                wRect.X = -1 * this.Rect.Width / 3;
+            } else if (wRect.X + 2 * this.Rect.Width / 3 > FBoxWidth) {
+                wRect.X = FBoxWidth - 2 * this.Rect.Width / 3;          
             }
             int wMoveDistance = wRect.X - this.Rect.X;
             this.Rect = wRect;

@@ -123,23 +123,23 @@ namespace BreakBlock {
         /// <returns>当たった箇所</returns>
         public HitPointBar? VsBar(Bar vBar) {
             if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X, vBar.Rect.Y),
-                new Vector(vBar.Rect.X + vBar.Width / 5, vBar.Rect.Y), this.Position, this.Radius)) {
+                new Vector(vBar.Rect.X + vBar.Rect.Width / 5, vBar.Rect.Y), this.Position, this.Radius)) {
                 return HitPointBar.First;
             }
-            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Width / 5, vBar.Rect.Y),
-                new Vector(vBar.Rect.X + vBar.Width * 2 / 5, vBar.Rect.Y), this.Position, this.Radius)) {
+            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Rect.Width / 5, vBar.Rect.Y),
+                new Vector(vBar.Rect.X + vBar.Rect.Width * 2 / 5, vBar.Rect.Y), this.Position, this.Radius)) {
                 return HitPointBar.Second;
             }
-            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Width * 2 / 5, vBar.Rect.Y),
-                new Vector(vBar.Rect.X + vBar.Width * 3 / 5, vBar.Rect.Y), this.Position, this.Radius)) {
+            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Rect.Width * 2 / 5, vBar.Rect.Y),
+                new Vector(vBar.Rect.X + vBar.Rect.Width * 3 / 5, vBar.Rect.Y), this.Position, this.Radius)) {
                 return HitPointBar.Third;
             }
-            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Width * 3 / 5, vBar.Rect.Y),
-                new Vector(vBar.Rect.X + vBar.Width * 4 / 5, vBar.Rect.Y), this.Position, this.Radius)) {
+            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Rect.Width * 3 / 5, vBar.Rect.Y),
+                new Vector(vBar.Rect.X + vBar.Rect.Width * 4 / 5, vBar.Rect.Y), this.Position, this.Radius)) {
                 return HitPointBar.Fourth;
             }
-            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Width * 4 / 5, vBar.Rect.Y),
-                new Vector(vBar.Rect.X + vBar.Width, vBar.Rect.Y), this.Position, this.Radius)) {
+            if (Utils.IsCircleHitLine(new Vector(vBar.Rect.X + vBar.Rect.Width * 4 / 5, vBar.Rect.Y),
+                new Vector(vBar.Rect.X + vBar.Rect.Width, vBar.Rect.Y), this.Position, this.Radius)) {
                 return HitPointBar.Fifth;
             }
             return null;
