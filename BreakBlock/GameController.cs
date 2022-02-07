@@ -168,7 +168,6 @@ namespace BreakBlock {
             var wRandomAngle = new Random();
             if (IsBallCollidedLine(new Vector(vBarX, Define.C_BarPositionY),
                 new Vector(vBarX + Define.C_BarWidth / 5, Define.C_BarPositionY), vBall.Position, Define.C_BallRadius)) {
-
                 vBall.ChangeDirection(wRandomAngle.Next(-70, -59));
             }
             if (IsBallCollidedLine(new Vector(vBarX + Define.C_BarWidth / 5, Define.C_BarPositionY),
