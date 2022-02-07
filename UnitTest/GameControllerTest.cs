@@ -7,6 +7,8 @@ using NUnit.Framework;
 using BreakBlock;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace UnitTest {
     [TestFixture]
@@ -15,7 +17,7 @@ namespace UnitTest {
 
         [Test]
         public void 弾と直線が当たるとfalseが返ること() {
-            var wGameController = new GameController(341);
+            var wGameController = new GameController(100, 100);
             Type wType = wGameController.GetType();
 
             MethodInfo wMethodInfo = wType.GetMethod("IsBallCollidedLine", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -24,7 +26,7 @@ namespace UnitTest {
         }
         [Test]
         public void 弾と直線が当たるとTrueが返ること() {
-            var wGameController = new GameController(341);
+            var wGameController = new GameController(100, 100);
             Type wType = wGameController.GetType();
 
             MethodInfo wMethodInfo = wType.GetMethod("IsBallCollidedLine", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -32,7 +34,7 @@ namespace UnitTest {
             Assert.IsTrue(wBoolean);
         }
         //TODO:BarVsBall()メソッドのテスト
-
+        
         //TODO:BlockVsCircle()メソッドのテスト
     }
 }
