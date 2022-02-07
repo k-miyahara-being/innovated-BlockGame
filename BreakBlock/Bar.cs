@@ -34,14 +34,13 @@ namespace BreakBlock {
             //バーの幅の3分の1までは壁に入ることができる
             if (wRect.X + Define.C_BarWidth / 3 < 0) {
                 wRect.X = -1 * Define.C_BarWidth / 3;
-                return 0;
             } else if (wRect.X + 2 * Define.C_BarWidth / 3 > FBoxWidth) {
-                wRect.X = FBoxWidth - 2 * Define.C_BarWidth / 3;
-                return 0;
+                wRect.X = FBoxWidth - 2 * Define.C_BarWidth / 3;          
             }
+            int wMoveDistance = wRect.X - this.Rect.X;
             this.Rect = wRect;
 
-            return vMoveDistance;
+            return wMoveDistance;
         }
     }
 }
