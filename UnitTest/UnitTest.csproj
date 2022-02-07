@@ -56,7 +56,6 @@
     <Compile Include="BarTest.cs" />
     <Compile Include="GameControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTestDefine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
