@@ -58,4 +58,17 @@ namespace BreakBlock {
         GameOver,
         Clear
     }
+    public enum HitPointWall {
+        Top,
+        Bottom,
+        Left,
+        Right,
+    }
+    public enum HitPointBar {
+        First,
+        Second,
+        Third,
+        Fourth,
+        Fifth,
+    }
 }

@@ -17,7 +17,7 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() {
             this.InitializeComponent();
-            FGameController = new GameController(PictureBox1.Width);
+            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
         }
 
@@ -37,7 +37,7 @@ namespace BreakBlock {
 
         private void Timer_Tick(object sender, EventArgs e) {
             FGameController.Ball.Move();
-            FGameController.Bound(PictureBox1.Width,PictureBox1.Height);
+            FGameController.Bound();
             LabelScore.Text = FGameController.Score.ToString();
             switch (FGameController.Status) {
                 case Status.Playing:
@@ -163,7 +163,7 @@ namespace BreakBlock {
             }
             PictureBox1.Image = FCanvas;
             #region 画面の初期化
-            FGameController.Initialize(PictureBox1.Width);
+            FGameController.Initialize();
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
