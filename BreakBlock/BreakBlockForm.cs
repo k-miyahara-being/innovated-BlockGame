@@ -17,7 +17,7 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() {
             this.InitializeComponent();
-            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height);
+            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
         }
 
@@ -163,7 +163,7 @@ namespace BreakBlock {
             }
             PictureBox1.Image = FCanvas;
             #region 画面の初期化
-            FGameController.Initialize();
+            FGameController.Initialize(Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum);
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;

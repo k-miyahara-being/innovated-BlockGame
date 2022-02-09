@@ -5,7 +5,21 @@ using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace BreakBlock {
-    public class Ball {
+    public interface IBall {
+        Vector Position { get; set; }
+        Vector Speed { get; set; }
+        int Radius { get; set; }
+        void Move();
+        void Move(Vector vDistance);
+        void Reverse(Orientation vOrientation);
+        void ChangeDirection(int vAngle);
+        void Accelerate();
+        HitPointBar? VsBar(Bar vBar);
+        HitPointWall? VsWall(int vWidth, int vHeight);
+        Orientation? VsBlock(Rectangle vBlock);
+
+    }
+    public class Ball : IBall{
         /// <summary>
         /// x,y座標
         /// </summary>
@@ -23,6 +37,7 @@ namespace BreakBlock {
         // そのため、単一のオブジェクトを使いまわしています。
         private static Random G_Rnd = new Random();
         private int FAccelerationCounter = 0;
+
         /// <summary>
         /// 弾のコンストラクタ
         /// </summary>       

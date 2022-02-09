@@ -5,12 +5,12 @@ namespace BreakBlock {
     /// バークラス
     /// </summary>
     public class Bar {
-        private int FBoxWidth;
         /// <summary>
         /// バーの実体
         /// </summary>
         public Rectangle Rect { get; set; }
 
+        private readonly int FBoxWidth;
         /// <summary>
         /// コンストラクタ
         /// </summary>

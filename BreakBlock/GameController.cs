@@ -21,52 +21,47 @@ namespace BreakBlock {
         /// <summary>
         /// 弾
         /// </summary>
-        public Ball Ball { get; set; }
+        public IBall Ball { get; set; }
         /// <summary>
-        /// ボールのコレクション
+        /// 弾の数
         /// </summary>
-        private Stack<Ball> Balls { get; set; }
+        public int BallCount => FBalls.Count; 
         /// <summary>
-        /// ボール数
+        /// ブロックのリスト
         /// </summary>
-        public int BallCount  => this.Balls.Count; 
-        
-        /// <summary>
-        /// ブロック
-        /// </summary>
-        //public Block Block { get; set; }
         public List<Rectangle> Blocks { get; set; }
         /// <summary>
         /// バー
         /// </summary>
         public Bar Bar { get; set; }
 
+        private Stack<IBall> FBalls;
         private readonly int FScreenWidth;
         private readonly int FScreenHeight;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GameController(int vScreenWidth, int vScreenHeight) {
+        public GameController(int vScreenWidth, int vScreenHeight, int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum) {
             FScreenWidth = vScreenWidth;
             FScreenHeight = vScreenHeight;
-            this.Initialize();
+            this.Initialize(vInitialBallNum, vInitialBlockRowNum, vInitialBlockColumnNum);
         }
         /// <summary>
         /// コントローラの初期化
         /// </summary>
-        public void Initialize() {
+        public void Initialize(int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum) {
             this.Score = 0;
 
-            this.Balls = new Stack<Ball>();
-            for (int i = 0; i < Define.C_BallNum; i++) {
-                this.Balls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - Define.C_BallRadius, Define.C_BallRadius, new Vector(0, Define.C_LaunchVelocity)));
+            FBalls = new Stack<IBall>();
+            for (int i = 0; i < vInitialBallNum; i++) {
+                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - Define.C_BallRadius, Define.C_BallRadius, new Vector(0, Define.C_LaunchVelocity)));
             }
-            this.PopBall();
+            this.Ball = FBalls.Pop();
 
             this.Blocks = new List<Rectangle>();
-            for (int i = 0; i < Define.C_BlockRowNum; i++) {
-                for (int j = 0; j < Define.C_BlockColumnNum; j++) {
+            for (int i = 0; i < vInitialBlockRowNum; i++) {
+                for (int j = 0; j < vInitialBlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (Define.C_BlockWidth + Define.C_BlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (Define.C_BlockHeight + Define.C_BlockGap);
                     var wBlock = new Rectangle(wX, wY, Define.C_BlockWidth, Define.C_BlockHeight);
@@ -75,13 +70,6 @@ namespace BreakBlock {
             }
 
             this.Bar = new Bar((FScreenWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, FScreenWidth);
-        }
-
-        /// <summary>
-        /// 残弾をポップする
-        /// </summary>
-        private void PopBall() {
-            this.Ball = this.Balls.Pop();
         }
 
         /// <summary>
@@ -100,12 +88,12 @@ namespace BreakBlock {
                     this.Ball.Reverse(Orientation.Vertical);
                     return;
                 case HitPointWall.Bottom:
-                    if (this.Balls.Count == 0) {
+                    if (this.BallCount == 0) {
                         this.Status = Status.GameOver;
                         return;
                     }
                     this.Status = Status.Ready;
-                    this.PopBall();
+                    this.Ball = FBalls.Pop();
                     return;
             }
 
