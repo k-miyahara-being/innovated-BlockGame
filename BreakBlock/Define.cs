@@ -8,7 +8,7 @@ namespace BreakBlock {
         public static readonly double C_Acceleration = 1.05;
         public static readonly int C_LaunchAngleMin = 20;
         public static readonly int C_LaunchAngleMax = 71;
-        public static readonly int C_LaunchVelocity = -5;
+        public static readonly int C_LaunchVelocity = -3;
         public static readonly int C_FirstLeftAngle = -70;
         public static readonly int C_SecondLeftAngle = -35;
         public static readonly int C_CenterAngle = -10;
