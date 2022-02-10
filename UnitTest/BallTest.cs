@@ -10,16 +10,14 @@ namespace UnitTest {
     class BallTest {
         //Reverse()のテスト
         [Test]
-        public void 水平方向の時にSpeedのxが反転すること() {
-            var wBall = new Ball(0, 0, 0, new Vector(1, 1));
+        public void Speedのxとyが反転すること() {
+            var wBall = new Ball(0, 0, 0, new Vector(0, 0));
+            wBall.Speed = new Vector(1, 1);
+            var wOldBallSpeed = new Vector(1, 1);
             wBall.Reverse(Orientation.Horizontal);
-            Assert.AreEqual(-1, wBall.Speed.X);
-        }
-        [Test]
-        public void 水平方向の時にSpeedのyが反転すること() {
-            var wBall = new Ball(0, 0, 0, new Vector(1, 1));
             wBall.Reverse(Orientation.Vertical);
-            Assert.AreEqual(-1, wBall.Speed.Y);
+            Assert.IsTrue(Math.Sign(wOldBallSpeed.X) != Math.Sign(wBall.Speed.X));
+            Assert.IsTrue(Math.Sign(wOldBallSpeed.Y) != Math.Sign(wBall.Speed.Y));
         }
 
         //VsWall()のテスト
