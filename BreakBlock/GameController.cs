@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace BreakBlock {
     /// <summary>
@@ -53,9 +54,20 @@ namespace BreakBlock {
         public void Initialize(int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum) {
             this.Score = 0;
 
+            var wRandom = new Random();
+            var wMatrixAffine = new Matrix();
+            var wLaunchVelocity = new Vector(0, Define.C_LaunchVelocity);
             FBalls = new Stack<IBall>();
             for (int i = 0; i < vInitialBallNum; i++) {
-                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - Define.C_BallRadius, Define.C_BallRadius, new Vector(0, Define.C_LaunchVelocity)));
+                float wAngle = wRandom.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
+                if (wRandom.Next() % 2 == 0) {
+                    wAngle *= -1;
+                } else {
+                    wAngle *= 1;
+                }
+                wMatrixAffine.Rotate(wAngle);
+                wLaunchVelocity = Vector.Multiply(wLaunchVelocity, wMatrixAffine);
+                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - Define.C_BallRadius, Define.C_BallRadius, wLaunchVelocity));
             }
             this.Ball = FBalls.Pop();
 

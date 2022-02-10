@@ -19,7 +19,7 @@ namespace BreakBlock {
         Orientation? VsBlock(Rectangle vBlock);
 
     }
-    public class Ball : IBall{
+    public class Ball : IBall {
         /// <summary>
         /// x,y座標
         /// </summary>
@@ -44,16 +44,7 @@ namespace BreakBlock {
         public Ball(int vX, int vY, int vRadius, Vector vLaunchSpeed) {
             this.Radius = vRadius;
             this.Position = new Vector(vX, vY);
-            float wAngle = G_Rnd.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
-            if (G_Rnd.Next() % 2 == 0) {
-                wAngle *= -1;
-            } else {
-                wAngle *= 1;
-            }
             this.Speed = vLaunchSpeed;
-            var wMatrixAffine = new Matrix();
-            wMatrixAffine.Rotate(wAngle);
-            this.Speed = Vector.Multiply(this.Speed, wMatrixAffine);
         }
 
         /// <summary>
