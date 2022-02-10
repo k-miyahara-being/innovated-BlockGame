@@ -19,12 +19,15 @@ namespace BreakBlock {
             this.InitializeComponent();
             FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+            //デフォルトで難易度Normalを選択
+            DifficultyBox.SelectedIndex = 1;
         }
 
         private void ButtonStart_Click(object sender, EventArgs e) {
             #region プレイ画面へ遷移
             FGameController.Status = Status.Ready;
             ButtonStart.Visible = false;
+            DifficultyBox.Visible = false;
             TextScore.Visible = true;
             LabelScore.Text = FGameController.Score.ToString();
             LabelScore.Visible = true;
@@ -173,6 +176,7 @@ namespace BreakBlock {
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();
+            DifficultyBox.Visible = true;
             # endregion 画面の初期化
         }
     }

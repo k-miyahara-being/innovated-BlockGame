@@ -44,12 +44,14 @@ namespace BreakBlock
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
+            this.DifficultyBox = new System.Windows.Forms.ComboBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.DifficultyBox);
             this.panel2.Controls.Add(this.remainingBallNum);
             this.panel2.Controls.Add(this.label);
             this.panel2.Controls.Add(this.LabelGameover);
@@ -63,7 +65,7 @@ namespace BreakBlock
             this.panel2.Controls.Add(this.PictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(458, 512);
             this.panel2.TabIndex = 1;
@@ -167,7 +169,7 @@ namespace BreakBlock
             this.ButtonContinue.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ButtonContinue.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ButtonContinue.Location = new System.Drawing.Point(148, 392);
-            this.ButtonContinue.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ButtonContinue.Margin = new System.Windows.Forms.Padding(2);
             this.ButtonContinue.Name = "ButtonContinue";
             this.ButtonContinue.Size = new System.Drawing.Size(168, 58);
             this.ButtonContinue.TabIndex = 2;
@@ -181,7 +183,7 @@ namespace BreakBlock
             this.ButtonStart.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ButtonStart.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ButtonStart.Location = new System.Drawing.Point(156, 214);
-            this.ButtonStart.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ButtonStart.Margin = new System.Windows.Forms.Padding(2);
             this.ButtonStart.Name = "ButtonStart";
             this.ButtonStart.Size = new System.Drawing.Size(160, 58);
             this.ButtonStart.TabIndex = 1;
@@ -225,6 +227,20 @@ namespace BreakBlock
             // 
             this.AnimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
             // 
+            // DifficultyBox
+            // 
+            this.DifficultyBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DifficultyBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DifficultyBox.FormattingEnabled = true;
+            this.DifficultyBox.Items.AddRange(new object[] {
+            "Easy",
+            "Normal",
+            "Hard"});
+            this.DifficultyBox.Location = new System.Drawing.Point(166, 335);
+            this.DifficultyBox.Name = "DifficultyBox";
+            this.DifficultyBox.Size = new System.Drawing.Size(141, 35);
+            this.DifficultyBox.TabIndex = 9;
+            // 
             // BreakBlockForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -235,7 +251,7 @@ namespace BreakBlock
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(476, 659);
             this.MinimizeBox = false;
@@ -268,6 +284,7 @@ namespace BreakBlock
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label remainingBallNum;
         private System.Windows.Forms.Timer AnimationTimer;
+        private System.Windows.Forms.ComboBox DifficultyBox;
     }
 }
 
