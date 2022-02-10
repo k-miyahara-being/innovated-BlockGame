@@ -43,21 +43,21 @@ namespace BreakBlock {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GameController(int vScreenWidth, int vScreenHeight, int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum) {
+        public GameController(int vScreenWidth, int vScreenHeight, int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum, int vBarWidth, int vBarHeight) {
             FScreenWidth = vScreenWidth;
             FScreenHeight = vScreenHeight;
-            this.Initialize(vInitialBallNum, vInitialBlockRowNum, vInitialBlockColumnNum);
+            this.Initialize(vInitialBallNum, vInitialBlockRowNum, vInitialBlockColumnNum, vBarWidth, vBarHeight);
         }
         /// <summary>
         /// コントローラの初期化
         /// </summary>
-        public void Initialize(int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum) {
+        public void Initialize(int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum, int vBarWidth, int vBarHeight) {
             this.Score = 0;
 
             this.Blocks = new List<Rectangle>();
-            int wBlockHeight = (Define.C_BlockDrawingAreaHeight / Define.C_BlockRowNum) * 93 / 100;
-            int wBlockWidth = (Define.C_BlockDrawingAreaWidth / Define.C_BlockColumnNum) * 93 / 100;
-            int wBlockGap = (Define.C_BlockDrawingAreaWidth / Define.C_BlockColumnNum) / 10;
+            int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vInitialBlockRowNum) * 93 / 100;
+            int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vInitialBlockColumnNum) * 93 / 100;
+            int wBlockGap = (Define.C_BlockDrawingAreaWidth / vInitialBlockColumnNum) / 10;
             for (int i = 0; i < vInitialBlockRowNum; i++) {
                 for (int j = 0; j < vInitialBlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
@@ -85,7 +85,7 @@ namespace BreakBlock {
             }
             this.Ball = FBalls.Pop();
 
-            this.Bar = new Bar((FScreenWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, FScreenWidth);
+            this.Bar = new Bar((FScreenWidth - vBarWidth) / 2, Define.C_BarPositionY, vBarWidth, vBarHeight, FScreenWidth);
         }
 
         /// <summary>
@@ -104,6 +104,7 @@ namespace BreakBlock {
                     this.Ball.Reverse(Orientation.Vertical);
                     return;
                 case HitPointWall.Bottom:
+                    this.Score -= Define.C_ScoreSubtraction;
                     if (this.BallCount == 0) {
                         this.Status = Status.GameOver;
                         return;
@@ -148,6 +149,7 @@ namespace BreakBlock {
             }
             if (!this.Blocks.Any()) {
                 this.Status = Status.Clear;
+                this.Score += this.BallCount * Define.C_ScoreBonus;
                 return;
             }
         }

@@ -20,8 +20,8 @@ namespace BreakBlock {
 
         //バー関連
         public static readonly int C_BarPositionY = 350;
-        public static readonly int C_BarWidth = 90;
-        public static readonly int C_BarHeight = 8;
+        public static readonly int C_BarWidth = 110;
+        public static readonly int C_BarHeight = 15;
         public static readonly int C_BarMoveDistance = 20;
 
         //ブロック関連
@@ -29,13 +29,15 @@ namespace BreakBlock {
         public static readonly int C_BlockDrawingAreaHeight = 100;
         public static readonly int C_BlockFirstPositionX = 10;
         public static readonly int C_BlockFirstPositionY = 20;
-        public static readonly int C_BlockRowNum = 6;
-        public static readonly int C_BlockColumnNum = 8;
+        public static readonly int C_BlockRowNum = 3;
+        public static readonly int C_BlockColumnNum = 4;
 
-        //加点
+        //スコア関連
         public static readonly int C_ScoreAddition = 10;
+        public static readonly int C_ScoreSubtraction = 20;
+        public static readonly int C_ScoreBonus = 30;
 
-        //アニメーションカラー
+        //アニメーションの色
         public static readonly Brush[] GameOverColors = new Brush[] {
             Brushes.Navy,
             Brushes.DarkBlue,

@@ -16,7 +16,7 @@ namespace UnitTest {
             wMock.Setup(m => m.VsWall(It.IsAny<int>(), It.IsAny<int>())).Returns(vHitPointWall);
             wMock.Setup(m => m.VsBlock(It.IsAny<Rectangle>())).Returns(vHitPointBlock);
 
-            var wGameController = new GameController(100, 100, vBallCount, 1, vBlockCount);
+            var wGameController = new GameController(100, 100, vBallCount, 1, vBlockCount, 10, 10);
             wGameController.Status = Status.Playing;
             wGameController.Ball = wMock.Object;
             wGameController.Bound();

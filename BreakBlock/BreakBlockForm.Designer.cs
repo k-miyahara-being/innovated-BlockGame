@@ -31,6 +31,7 @@ namespace BreakBlock
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.DifficultyBox = new System.Windows.Forms.ComboBox();
             this.remainingBallNum = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
             this.LabelGameover = new System.Windows.Forms.Label();
@@ -44,13 +45,16 @@ namespace BreakBlock
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
-            this.DifficultyBox = new System.Windows.Forms.ComboBox();
+            this.TextScoreBonus = new System.Windows.Forms.Label();
+            this.LabelScoreBonus = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.LabelScoreBonus);
+            this.panel2.Controls.Add(this.TextScoreBonus);
             this.panel2.Controls.Add(this.DifficultyBox);
             this.panel2.Controls.Add(this.remainingBallNum);
             this.panel2.Controls.Add(this.label);
@@ -69,6 +73,20 @@ namespace BreakBlock
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(458, 512);
             this.panel2.TabIndex = 1;
+            // 
+            // DifficultyBox
+            // 
+            this.DifficultyBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DifficultyBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DifficultyBox.FormattingEnabled = true;
+            this.DifficultyBox.Items.AddRange(new object[] {
+            "Easy",
+            "Normal",
+            "Hard"});
+            this.DifficultyBox.Location = new System.Drawing.Point(166, 335);
+            this.DifficultyBox.Name = "DifficultyBox";
+            this.DifficultyBox.Size = new System.Drawing.Size(141, 35);
+            this.DifficultyBox.TabIndex = 9;
             // 
             // remainingBallNum
             // 
@@ -115,12 +133,12 @@ namespace BreakBlock
             // ResultLabelScore
             // 
             this.ResultLabelScore.AutoSize = true;
-            this.ResultLabelScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.ResultLabelScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ResultLabelScore.ForeColor = System.Drawing.Color.White;
-            this.ResultLabelScore.Location = new System.Drawing.Point(258, 287);
+            this.ResultLabelScore.Location = new System.Drawing.Point(271, 279);
             this.ResultLabelScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ResultLabelScore.Name = "ResultLabelScore";
-            this.ResultLabelScore.Size = new System.Drawing.Size(28, 29);
+            this.ResultLabelScore.Size = new System.Drawing.Size(36, 38);
             this.ResultLabelScore.TabIndex = 6;
             this.ResultLabelScore.Text = "0";
             this.ResultLabelScore.Visible = false;
@@ -128,12 +146,12 @@ namespace BreakBlock
             // ResultTextScore
             // 
             this.ResultTextScore.AutoSize = true;
-            this.ResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.ResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ResultTextScore.ForeColor = System.Drawing.Color.White;
-            this.ResultTextScore.Location = new System.Drawing.Point(161, 284);
+            this.ResultTextScore.Location = new System.Drawing.Point(121, 279);
             this.ResultTextScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ResultTextScore.Name = "ResultTextScore";
-            this.ResultTextScore.Size = new System.Drawing.Size(96, 29);
+            this.ResultTextScore.Size = new System.Drawing.Size(124, 38);
             this.ResultTextScore.TabIndex = 5;
             this.ResultTextScore.Text = "score：";
             this.ResultTextScore.Visible = false;
@@ -227,19 +245,29 @@ namespace BreakBlock
             // 
             this.AnimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
             // 
-            // DifficultyBox
+            // TextScoreBonus
             // 
-            this.DifficultyBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DifficultyBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DifficultyBox.FormattingEnabled = true;
-            this.DifficultyBox.Items.AddRange(new object[] {
-            "Easy",
-            "Normal",
-            "Hard"});
-            this.DifficultyBox.Location = new System.Drawing.Point(166, 335);
-            this.DifficultyBox.Name = "DifficultyBox";
-            this.DifficultyBox.Size = new System.Drawing.Size(141, 35);
-            this.DifficultyBox.TabIndex = 9;
+            this.TextScoreBonus.AutoSize = true;
+            this.TextScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.TextScoreBonus.ForeColor = System.Drawing.Color.White;
+            this.TextScoreBonus.Location = new System.Drawing.Point(123, 331);
+            this.TextScoreBonus.Name = "TextScoreBonus";
+            this.TextScoreBonus.Size = new System.Drawing.Size(118, 30);
+            this.TextScoreBonus.TabIndex = 10;
+            this.TextScoreBonus.Text = "( Bonus ";
+            this.TextScoreBonus.Visible = false;
+            // 
+            // LabelScoreBonus
+            // 
+            this.LabelScoreBonus.AutoSize = true;
+            this.LabelScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LabelScoreBonus.ForeColor = System.Drawing.Color.White;
+            this.LabelScoreBonus.Location = new System.Drawing.Point(270, 331);
+            this.LabelScoreBonus.Name = "LabelScoreBonus";
+            this.LabelScoreBonus.Size = new System.Drawing.Size(46, 30);
+            this.LabelScoreBonus.TabIndex = 11;
+            this.LabelScoreBonus.Text = "0 )";
+            this.LabelScoreBonus.Visible = false;
             // 
             // BreakBlockForm
             // 
@@ -285,6 +313,8 @@ namespace BreakBlock
         private System.Windows.Forms.Label remainingBallNum;
         private System.Windows.Forms.Timer AnimationTimer;
         private System.Windows.Forms.ComboBox DifficultyBox;
+        private System.Windows.Forms.Label TextScoreBonus;
+        private System.Windows.Forms.Label LabelScoreBonus;
     }
 }
 

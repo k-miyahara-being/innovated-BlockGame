@@ -17,7 +17,7 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() {
             this.InitializeComponent();
-            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum);
+            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BarWidth, Define.C_BarHeight);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
             //デフォルトで難易度Normalを選択
             DifficultyBox.SelectedIndex = 1;
@@ -143,6 +143,9 @@ namespace BreakBlock {
             ResultLabelScore.Text = FGameController.Score.ToString();
             ResultTextScore.Visible = true;
             ResultLabelScore.Visible = true;
+            LabelScoreBonus.Text = $"+{FGameController.BallCount * Define.C_ScoreBonus} )";
+            LabelScoreBonus.Visible = true;
+            TextScoreBonus.Visible = true;
             ButtonContinue.Visible = true;
             ButtonContinue.Focus();
             #endregion
@@ -166,7 +169,7 @@ namespace BreakBlock {
             }
             PictureBox1.Image = FCanvas;
             #region 画面の初期化
-            FGameController.Initialize(Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum);
+            FGameController.Initialize(Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BarWidth, Define.C_BarHeight);
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
