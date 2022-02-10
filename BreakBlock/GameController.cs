@@ -54,9 +54,23 @@ namespace BreakBlock {
         public void Initialize(int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum) {
             this.Score = 0;
 
+            this.Blocks = new List<Rectangle>();
+            int wBlockHeight = (Define.C_BlockDrawingAreaHeight / Define.C_BlockRowNum) * 93 / 100;
+            int wBlockWidth = (Define.C_BlockDrawingAreaWidth / Define.C_BlockColumnNum) * 93 / 100;
+            int wBlockGap = (Define.C_BlockDrawingAreaWidth / Define.C_BlockColumnNum) / 10;
+            for (int i = 0; i < vInitialBlockRowNum; i++) {
+                for (int j = 0; j < vInitialBlockColumnNum; j++) {
+                    int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
+                    int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
+                    var wBlock = new Rectangle(wX, wY, wBlockWidth, wBlockHeight);
+                    this.Blocks.Add(wBlock);
+                }
+            }
+
             var wRandom = new Random();
             var wMatrixAffine = new Matrix();
             var wLaunchVelocity = new Vector(0, Define.C_LaunchVelocity);
+            int wBallRadius = wBlockHeight * 40 / 100;
             FBalls = new Stack<IBall>();
             for (int i = 0; i < vInitialBallNum; i++) {
                 float wAngle = wRandom.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
@@ -67,19 +81,9 @@ namespace BreakBlock {
                 }
                 wMatrixAffine.Rotate(wAngle);
                 wLaunchVelocity = Vector.Multiply(wLaunchVelocity, wMatrixAffine);
-                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - Define.C_BallRadius, Define.C_BallRadius, wLaunchVelocity));
+                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - wBallRadius, wBallRadius, wLaunchVelocity));
             }
             this.Ball = FBalls.Pop();
-
-            this.Blocks = new List<Rectangle>();
-            for (int i = 0; i < vInitialBlockRowNum; i++) {
-                for (int j = 0; j < vInitialBlockColumnNum; j++) {
-                    int wX = Define.C_BlockFirstPositionX + j * (Define.C_BlockWidth + Define.C_BlockGap);
-                    int wY = Define.C_BlockFirstPositionY + i * (Define.C_BlockHeight + Define.C_BlockGap);
-                    var wBlock = new Rectangle(wX, wY, Define.C_BlockWidth, Define.C_BlockHeight);
-                    this.Blocks.Add(wBlock);
-                }
-            }
 
             this.Bar = new Bar((FScreenWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, FScreenWidth);
         }
