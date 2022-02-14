@@ -59,33 +59,27 @@ namespace BreakBlock {
             int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vSetting.BlockRowNum) * 93 / 100;
             int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) * 93 / 100;
             int wBlockGap = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) / 10;
-
+            //メタルブロックの位置をランダム生成
             var wRandomForBlock = new Random();
             var wMetalIndexList = new List<int>();
             for (int i = 0; i < 4; i++) {
                 wMetalIndexList.Add(wRandomForBlock.Next(0, vSetting.BlockRowNum * vSetting.BlockColumnNum));
             }
-            int count = 0;
+            int wCount = 0;
             for (int i = 0; i < vSetting.BlockRowNum; i++) {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
                     IBlock wBlock;
-                    if (wMetalIndexList.Exists(x => x == count)) {
+                    if (wMetalIndexList.Exists(x => x == wCount)) {
                         wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, Brushes.Red, vSetting.BlockEndurance);
                     } else {
                         wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue);
                     }
                     this.Blocks.Add(wBlock);
-                    count++;
+                    wCount++;
                 }
             }
-            //var wRandomForBlock = new Random();
-            //for (int i = 0; i < 4/*←Settingの数値にする*/; i++) {
-            //    Block wMetalBlock = this.Blocks[wRandomForBlock.Next(0, this.Blocks.Count)];
-            //    wMetalBlock.Color = Brushes.Red;
-            //    wMetalBlock.Endurance = 2/*←Settingの数値にする*/ ;
-            //}
 
             var wRandomForBall = new Random();
             var wMatrixAffine = new Matrix();
@@ -156,18 +150,25 @@ namespace BreakBlock {
             }
 
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
-            for (int i = 0; i < this.Blocks.Count; i++) {
-                Orientation? wCollision = this.Ball.VsBlock(this.Blocks[i].Rect);
+            foreach (var wBlock in this.Blocks) {
+                Orientation? wCollision = this.Ball.VsBlock(wBlock.Rect);
                 if (wCollision != null) {
                     this.Ball.Reverse(wCollision.Value);
                     this.Ball.Accelerate();
-                    if (this.Blocks[i].Endurance != 0) {
-                        this.Blocks[i].Endurance--;
-                    } else {
-                        this.Blocks.RemoveAt(i);
+                    if (wBlock.GetType() != typeof(MetalBlock)) {
+                        this.Blocks.Remove(wBlock);
                         this.Score += Define.C_ScoreAddition;
+                    } else {
+                        MetalBlock wMetalBlock = (MetalBlock)wBlock;
+                        if (wMetalBlock.Endurance != 0) {
+                            wMetalBlock.Endurance--;
+                        } else {
+                            this.Blocks.Remove(wBlock);
+                            this.Score += 2 * Define.C_ScoreAddition;
+                        }
                     }
                     break;
+
                 }
             }
             if (!this.Blocks.Any()) {
