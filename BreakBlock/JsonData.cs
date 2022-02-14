@@ -10,7 +10,7 @@ namespace BreakBlock {
         /// 残弾数
         /// </summary>
         [DataMember]
-        public int BallNum { get; set; }
+        public int BallRadius { get; set; }
         /// <summary>
         /// ブロックの縦の数
         /// </summary>

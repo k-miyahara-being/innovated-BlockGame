@@ -1,7 +1,7 @@
 {
-    "BallNum": 3,
+    "BallRadius": 8,
     "BlockRowNum": 4,
     "BlockColumnNum": 6,
     "BarWidth": 90,
-    "BarHeight":  8
+    "BarHeight": 8
 }

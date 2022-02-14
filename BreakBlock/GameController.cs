@@ -72,9 +72,8 @@ namespace BreakBlock {
             var wRandom = new Random();
             var wMatrixAffine = new Matrix();
             var wLaunchVelocity = new Vector(0, Define.C_LaunchVelocity);
-            int wBallRadius = wBlockHeight * 40 / 100;
             FBalls = new Stack<IBall>();
-            for (int i = 0; i < vSetting.BallNum; i++) {
+            for (int i = 0; i < Define.C_BallNum; i++) {
                 float wAngle = wRandom.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
                 if (wRandom.Next() % 2 == 0) {
                     wAngle *= -1;
@@ -83,7 +82,7 @@ namespace BreakBlock {
                 }
                 wMatrixAffine.Rotate(wAngle);
                 wLaunchVelocity = Vector.Multiply(wLaunchVelocity, wMatrixAffine);
-                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - wBallRadius, wBallRadius, wLaunchVelocity));
+                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - vSetting.BallRadius, vSetting.BallRadius, wLaunchVelocity));
             }
             this.Ball = FBalls.Pop();
 
