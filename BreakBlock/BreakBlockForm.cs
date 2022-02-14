@@ -74,6 +74,10 @@ namespace BreakBlock {
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             e.Handled = true;
             switch (e.KeyData) {
+                case Keys.F4:
+                    if (FGameController.Status != Status.Start) break;
+                    DifficultyBox.DroppedDown = true;
+                    break;
                 case Keys.Space:
                     if (FGameController.Status != Status.Ready) break;
                     FGameController.Status = Status.Playing;
@@ -128,7 +132,7 @@ namespace BreakBlock {
                 g.FillEllipse(Brushes.Red, (float)(FGameController.Ball.Position.X - FGameController.Ball.Radius), (float)(FGameController.Ball.Position.Y - FGameController.Ball.Radius), FGameController.Ball.Radius * 2, FGameController.Ball.Radius * 2);
                 g.FillEllipse(Brushes.Red, Define.C_SmallBallX, Define.C_SmallBallY, Define.C_SmallBallRadius * 2, Define.C_SmallBallRadius * 2);
                 for (int i = 0; i < FGameController.Blocks.Count; i++) {
-                    g.FillRectangle(Brushes.LightBlue, FGameController.Blocks[i]);
+                    g.FillRectangle(Brushes.LightBlue, FGameController.Blocks[i].Rect);
                 }
                 g.FillRectangle(Brushes.Yellow, FGameController.Bar.Rect);
             }
@@ -192,8 +196,6 @@ namespace BreakBlock {
             ButtonStart.Visible = true;
             ButtonStart.Focus();
             DifficultyBox.Visible = true;
-            //デフォルトで難易度Normalを選択
-            DifficultyBox.SelectedIndex = 1;
             # endregion 画面の初期化
         }
     }

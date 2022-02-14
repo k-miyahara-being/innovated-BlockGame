@@ -139,7 +139,7 @@ namespace BreakBlock {
 
             //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
             for (int i = 0; i < this.Blocks.Count; i++) {
-                Orientation? wCollision = this.Ball.VsBlock(this.Blocks[i]);
+                Orientation? wCollision = this.Ball.VsBlock(this.Blocks[i].Rect);
                 if (wCollision != null) {
                     this.Ball.Reverse(wCollision.Value);
                     this.Ball.Accelerate();

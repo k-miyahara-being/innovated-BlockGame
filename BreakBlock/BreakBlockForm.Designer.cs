@@ -110,7 +110,7 @@ namespace BreakBlock
             "Normal",
             "Hard"});
             this.DifficultyBox.Location = new System.Drawing.Point(138, 313);
-            this.DifficultyBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DifficultyBox.Margin = new System.Windows.Forms.Padding(4);
             this.DifficultyBox.Name = "DifficultyBox";
             this.DifficultyBox.Size = new System.Drawing.Size(187, 35);
             this.DifficultyBox.TabIndex = 9;
