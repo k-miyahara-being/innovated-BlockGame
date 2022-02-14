@@ -95,7 +95,7 @@ namespace BreakBlock {
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e) {
             if (FGameController.Status == Status.Ready || FGameController.Status == Status.Playing) {
-                int wMoveDistance = e.X - FGameController.Bar.Rect.X - Define.C_BarWidth / 2;
+                int wMoveDistance = e.X - FGameController.Bar.Rect.X - FGameController.Bar.Rect.Width / 2;
                 MoveBarAndBall(wMoveDistance);
             }
         }
