@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -29,7 +26,7 @@ namespace BreakBlock {
         /// <summary>
         /// 弾の数
         /// </summary>
-        public int BallCount => FBalls.Count; 
+        public int BallCount => FBalls.Count;
         /// <summary>
         /// ブロックのリスト
         /// </summary>
@@ -46,14 +43,16 @@ namespace BreakBlock {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GameController(int vScreenWidth, int vScreenHeight, JsonData vSetting) {
+        public GameController(int vScreenWidth, int vScreenHeight) {
             FScreenWidth = vScreenWidth;
             FScreenHeight = vScreenHeight;
-            this.Initialize(vSetting);
         }
+
+
         /// <summary>
         /// コントローラの初期化
         /// </summary>
+        /// <param name="vSetting">ゲーム設定</param>
         public void Initialize(JsonData vSetting) {
             this.Score = 0;
 

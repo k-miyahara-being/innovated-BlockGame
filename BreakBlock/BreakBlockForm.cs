@@ -19,19 +19,21 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() {
             this.InitializeComponent();
-            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, this.GetSettings());
+            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
             //デフォルトで難易度Normalを選択
             DifficultyBox.SelectedIndex = 1;
         }
+
         private JsonData GetSettings() {
-            using (var wStream = new FileStream(@"../../NormalSettings.json", FileMode.Open, FileAccess.Read)) {
+            using (var wStream = new FileStream($@"../../{DifficultyBox.Text}Settings.json", FileMode.Open, FileAccess.Read)) {
                 var wSerializer = new DataContractJsonSerializer(typeof(JsonData));
                 return wSerializer.ReadObject(wStream) as JsonData;
             }
         }
 
-            private void ButtonStart_Click(object sender, EventArgs e) {
+        private void ButtonStart_Click(object sender, EventArgs e) {
+            FGameController.Initialize(this.GetSettings());
             #region プレイ画面へ遷移
             FGameController.Status = Status.Ready;
             ButtonStart.Visible = false;
@@ -190,6 +192,8 @@ namespace BreakBlock {
             ButtonStart.Visible = true;
             ButtonStart.Focus();
             DifficultyBox.Visible = true;
+            //デフォルトで難易度Normalを選択
+            DifficultyBox.SelectedIndex = 1;
             # endregion 画面の初期化
         }
     }
