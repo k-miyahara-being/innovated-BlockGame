@@ -64,18 +64,24 @@ namespace BreakBlock {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
-                    var wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue, vSetting.BlockEndurance);
+                    var wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue, 0);
                     this.Blocks.Add(wBlock);
                 }
             }
+            var wRandomForBlock = new Random();
+            for (int i = 0; i < 4/*←Settingの数値にする*/; i++) {
+                Block wMetalBlock = this.Blocks[wRandomForBlock.Next(0, this.Blocks.Count)];
+                wMetalBlock.Color = Brushes.Red;
+                wMetalBlock.Endurance = 2/*←Settingの数値にする*/ ;
+            }
 
-            var wRandom = new Random();
+            var wRandomForBall = new Random();
             var wMatrixAffine = new Matrix();
             var wLaunchVelocity = new Vector(0, Define.C_LaunchVelocity);
             FBalls = new Stack<IBall>();
             for (int i = 0; i < Define.C_BallNum; i++) {
-                float wAngle = wRandom.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
-                if (wRandom.Next() % 2 == 0) {
+                float wAngle = wRandomForBall.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
+                if (wRandomForBall.Next() % 2 == 0) {
                     wAngle *= -1;
                 } else {
                     wAngle *= 1;

@@ -131,8 +131,8 @@ namespace BreakBlock {
                 //弾をbrushColorで指定された色で描く
                 g.FillEllipse(Brushes.Red, (float)(FGameController.Ball.Position.X - FGameController.Ball.Radius), (float)(FGameController.Ball.Position.Y - FGameController.Ball.Radius), FGameController.Ball.Radius * 2, FGameController.Ball.Radius * 2);
                 g.FillEllipse(Brushes.Red, Define.C_SmallBallX, Define.C_SmallBallY, Define.C_SmallBallRadius * 2, Define.C_SmallBallRadius * 2);
-                for (int i = 0; i < FGameController.Blocks.Count; i++) {
-                    g.FillRectangle(Brushes.LightBlue, FGameController.Blocks[i].Rect);
+                foreach (Block wBlock in FGameController.Blocks) {
+                    g.FillRectangle(wBlock.Color, wBlock.Rect);
                 }
                 g.FillRectangle(Brushes.Yellow, FGameController.Bar.Rect);
             }
