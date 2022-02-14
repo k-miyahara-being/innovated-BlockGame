@@ -30,7 +30,7 @@ namespace BreakBlock {
         /// <summary>
         /// ブロックのリスト
         /// </summary>
-        public List<Rectangle> Blocks { get; set; }
+        public List<Block> Blocks { get; set; }
         /// <summary>
         /// バー
         /// </summary>
@@ -56,7 +56,7 @@ namespace BreakBlock {
         public void Initialize(GameSetting vSetting) {
             this.Score = 0;
 
-            this.Blocks = new List<Rectangle>();
+            this.Blocks = new List<Block>();
             int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vSetting.BlockRowNum) * 93 / 100;
             int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) * 93 / 100;
             int wBlockGap = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) / 10;
@@ -64,8 +64,8 @@ namespace BreakBlock {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
-                    var wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue, 5);
-                    this.Blocks.Add(wBlock.Rect);
+                    var wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue, vSetting.BlockEndurance);
+                    this.Blocks.Add(wBlock);
                 }
             }
 

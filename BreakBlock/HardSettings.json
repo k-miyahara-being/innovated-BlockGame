@@ -2,6 +2,7 @@
     "BallRadius": 5,
     "BlockRowNum": 6,
     "BlockColumnNum": 8,
+    "BlockEndurance": 3,
     "BarWidth": 50,
     "BarHeight": 5
 }
