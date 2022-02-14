@@ -64,8 +64,8 @@ namespace BreakBlock {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
-                    var wBlock = new Rectangle(wX, wY, wBlockWidth, wBlockHeight);
-                    this.Blocks.Add(wBlock);
+                    var wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue, 5);
+                    this.Blocks.Add(wBlock.Rect);
                 }
             }
 
