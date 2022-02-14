@@ -143,8 +143,12 @@ namespace BreakBlock {
                 if (wCollision != null) {
                     this.Ball.Reverse(wCollision.Value);
                     this.Ball.Accelerate();
-                    this.Blocks.RemoveAt(i);
-                    this.Score += Define.C_ScoreAddition;
+                    if (this.Blocks[i].Endurance != 0) {
+                        this.Blocks[i].Endurance--;
+                    } else {
+                        this.Blocks.RemoveAt(i);
+                        this.Score += Define.C_ScoreAddition;
+                    }
                     break;
                 }
             }
