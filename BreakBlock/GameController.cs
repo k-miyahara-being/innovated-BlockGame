@@ -30,7 +30,7 @@ namespace BreakBlock {
         /// <summary>
         /// ブロックのリスト
         /// </summary>
-        public List<Block> Blocks { get; set; }
+        public List<IBlock> Blocks { get; set; }
         /// <summary>
         /// バー
         /// </summary>
@@ -48,7 +48,6 @@ namespace BreakBlock {
             FScreenHeight = vScreenHeight;
         }
 
-
         /// <summary>
         /// コントローラの初期化
         /// </summary>
@@ -56,24 +55,37 @@ namespace BreakBlock {
         public void Initialize(GameSetting vSetting) {
             this.Score = 0;
 
-            this.Blocks = new List<Block>();
+            this.Blocks = new List<IBlock>();
             int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vSetting.BlockRowNum) * 93 / 100;
             int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) * 93 / 100;
             int wBlockGap = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) / 10;
+
+            var wRandomForBlock = new Random();
+            var wMetalIndexList = new List<int>();
+            for (int i = 0; i < 4; i++) {
+                wMetalIndexList.Add(wRandomForBlock.Next(0, vSetting.BlockRowNum * vSetting.BlockColumnNum));
+            }
+            int count = 0;
             for (int i = 0; i < vSetting.BlockRowNum; i++) {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
-                    var wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue, 0);
+                    IBlock wBlock;
+                    if (wMetalIndexList.Exists(x => x == count)) {
+                        wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, Brushes.Red, vSetting.BlockEndurance);
+                    } else {
+                        wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue);
+                    }
                     this.Blocks.Add(wBlock);
+                    count++;
                 }
             }
-            var wRandomForBlock = new Random();
-            for (int i = 0; i < 4/*←Settingの数値にする*/; i++) {
-                Block wMetalBlock = this.Blocks[wRandomForBlock.Next(0, this.Blocks.Count)];
-                wMetalBlock.Color = Brushes.Red;
-                wMetalBlock.Endurance = 2/*←Settingの数値にする*/ ;
-            }
+            //var wRandomForBlock = new Random();
+            //for (int i = 0; i < 4/*←Settingの数値にする*/; i++) {
+            //    Block wMetalBlock = this.Blocks[wRandomForBlock.Next(0, this.Blocks.Count)];
+            //    wMetalBlock.Color = Brushes.Red;
+            //    wMetalBlock.Endurance = 2/*←Settingの数値にする*/ ;
+            //}
 
             var wRandomForBall = new Random();
             var wMatrixAffine = new Matrix();

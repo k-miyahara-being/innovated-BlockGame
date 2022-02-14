@@ -78,6 +78,8 @@
       <DependentUpon>BreakBlockForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GameSetting.cs" />
+    <Compile Include="IBall.cs" />
+    <Compile Include="IBlock.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="GameController.cs" />
