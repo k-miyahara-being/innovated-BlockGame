@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -43,23 +46,23 @@ namespace BreakBlock {
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public GameController(int vScreenWidth, int vScreenHeight, int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum, int vBarWidth, int vBarHeight) {
+        public GameController(int vScreenWidth, int vScreenHeight, JsonData vSetting) {
             FScreenWidth = vScreenWidth;
             FScreenHeight = vScreenHeight;
-            this.Initialize(vInitialBallNum, vInitialBlockRowNum, vInitialBlockColumnNum, vBarWidth, vBarHeight);
+            this.Initialize(vSetting);
         }
         /// <summary>
         /// コントローラの初期化
         /// </summary>
-        public void Initialize(int vInitialBallNum, int vInitialBlockRowNum, int vInitialBlockColumnNum, int vBarWidth, int vBarHeight) {
+        public void Initialize(JsonData vSetting) {
             this.Score = 0;
 
             this.Blocks = new List<Rectangle>();
-            int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vInitialBlockRowNum) * 93 / 100;
-            int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vInitialBlockColumnNum) * 93 / 100;
-            int wBlockGap = (Define.C_BlockDrawingAreaWidth / vInitialBlockColumnNum) / 10;
-            for (int i = 0; i < vInitialBlockRowNum; i++) {
-                for (int j = 0; j < vInitialBlockColumnNum; j++) {
+            int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vSetting.BlockRowNum) * 93 / 100;
+            int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) * 93 / 100;
+            int wBlockGap = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) / 10;
+            for (int i = 0; i < vSetting.BlockRowNum; i++) {
+                for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
                     var wBlock = new Rectangle(wX, wY, wBlockWidth, wBlockHeight);
@@ -72,7 +75,7 @@ namespace BreakBlock {
             var wLaunchVelocity = new Vector(0, Define.C_LaunchVelocity);
             int wBallRadius = wBlockHeight * 40 / 100;
             FBalls = new Stack<IBall>();
-            for (int i = 0; i < vInitialBallNum; i++) {
+            for (int i = 0; i < vSetting.BallNum; i++) {
                 float wAngle = wRandom.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
                 if (wRandom.Next() % 2 == 0) {
                     wAngle *= -1;
@@ -85,7 +88,7 @@ namespace BreakBlock {
             }
             this.Ball = FBalls.Pop();
 
-            this.Bar = new Bar((FScreenWidth - vBarWidth) / 2, Define.C_BarPositionY, vBarWidth, vBarHeight, FScreenWidth);
+            this.Bar = new Bar((FScreenWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, FScreenWidth);
         }
 
         /// <summary>

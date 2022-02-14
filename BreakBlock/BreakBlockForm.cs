@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Runtime.Serialization.Json;
 using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
@@ -17,13 +19,19 @@ namespace BreakBlock {
         /// </summary>
         public BreakBlockForm() {
             this.InitializeComponent();
-            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BarWidth, Define.C_BarHeight);
+            FGameController = new GameController(PictureBox1.Width, PictureBox1.Height, this.GetSettings());
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
             //デフォルトで難易度Normalを選択
             DifficultyBox.SelectedIndex = 1;
         }
+        private JsonData GetSettings() {
+            using (var wStream = new FileStream(@"../../NormalSettings.json", FileMode.Open, FileAccess.Read)) {
+                var wSerializer = new DataContractJsonSerializer(typeof(JsonData));
+                return wSerializer.ReadObject(wStream) as JsonData;
+            }
+        }
 
-        private void ButtonStart_Click(object sender, EventArgs e) {
+            private void ButtonStart_Click(object sender, EventArgs e) {
             #region プレイ画面へ遷移
             FGameController.Status = Status.Ready;
             ButtonStart.Visible = false;
@@ -169,13 +177,15 @@ namespace BreakBlock {
             }
             PictureBox1.Image = FCanvas;
             #region 画面の初期化
-            FGameController.Initialize(Define.C_BallNum, Define.C_BlockRowNum, Define.C_BlockColumnNum, Define.C_BarWidth, Define.C_BarHeight);
+            FGameController.Initialize(this.GetSettings());
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
 
             ResultTextScore.Visible = false;
             ResultLabelScore.Visible = false;
+            LabelScoreBonus.Visible = false;
+            TextScoreBonus.Visible = false;
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();

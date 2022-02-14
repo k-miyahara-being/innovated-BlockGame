@@ -31,6 +31,8 @@ namespace BreakBlock
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.LabelScoreBonus = new System.Windows.Forms.Label();
+            this.TextScoreBonus = new System.Windows.Forms.Label();
             this.DifficultyBox = new System.Windows.Forms.ComboBox();
             this.remainingBallNum = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
@@ -45,8 +47,6 @@ namespace BreakBlock
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
-            this.TextScoreBonus = new System.Windows.Forms.Label();
-            this.LabelScoreBonus = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -69,10 +69,36 @@ namespace BreakBlock
             this.panel2.Controls.Add(this.PictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(458, 512);
+            this.panel2.Size = new System.Drawing.Size(457, 520);
             this.panel2.TabIndex = 1;
+            // 
+            // LabelScoreBonus
+            // 
+            this.LabelScoreBonus.AutoSize = true;
+            this.LabelScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LabelScoreBonus.ForeColor = System.Drawing.Color.White;
+            this.LabelScoreBonus.Location = new System.Drawing.Point(292, 339);
+            this.LabelScoreBonus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelScoreBonus.Name = "LabelScoreBonus";
+            this.LabelScoreBonus.Size = new System.Drawing.Size(46, 30);
+            this.LabelScoreBonus.TabIndex = 11;
+            this.LabelScoreBonus.Text = "0 )";
+            this.LabelScoreBonus.Visible = false;
+            // 
+            // TextScoreBonus
+            // 
+            this.TextScoreBonus.AutoSize = true;
+            this.TextScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.TextScoreBonus.ForeColor = System.Drawing.Color.White;
+            this.TextScoreBonus.Location = new System.Drawing.Point(133, 339);
+            this.TextScoreBonus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.TextScoreBonus.Name = "TextScoreBonus";
+            this.TextScoreBonus.Size = new System.Drawing.Size(118, 30);
+            this.TextScoreBonus.TabIndex = 10;
+            this.TextScoreBonus.Text = "( Bonus ";
+            this.TextScoreBonus.Visible = false;
             // 
             // DifficultyBox
             // 
@@ -83,9 +109,10 @@ namespace BreakBlock
             "Easy",
             "Normal",
             "Hard"});
-            this.DifficultyBox.Location = new System.Drawing.Point(166, 335);
+            this.DifficultyBox.Location = new System.Drawing.Point(138, 313);
+            this.DifficultyBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DifficultyBox.Name = "DifficultyBox";
-            this.DifficultyBox.Size = new System.Drawing.Size(141, 35);
+            this.DifficultyBox.Size = new System.Drawing.Size(187, 35);
             this.DifficultyBox.TabIndex = 9;
             // 
             // remainingBallNum
@@ -94,9 +121,8 @@ namespace BreakBlock
             this.remainingBallNum.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.remainingBallNum.ForeColor = System.Drawing.Color.White;
             this.remainingBallNum.Location = new System.Drawing.Point(69, 470);
-            this.remainingBallNum.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.remainingBallNum.Name = "remainingBallNum";
-            this.remainingBallNum.Size = new System.Drawing.Size(26, 28);
+            this.remainingBallNum.Size = new System.Drawing.Size(27, 28);
             this.remainingBallNum.TabIndex = 8;
             this.remainingBallNum.Text = "2";
             this.remainingBallNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -123,7 +149,6 @@ namespace BreakBlock
             this.LabelGameover.Font = new System.Drawing.Font("MS UI Gothic", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.LabelGameover.ForeColor = System.Drawing.Color.LightSteelBlue;
             this.LabelGameover.Location = new System.Drawing.Point(107, 175);
-            this.LabelGameover.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelGameover.Name = "LabelGameover";
             this.LabelGameover.Size = new System.Drawing.Size(217, 37);
             this.LabelGameover.TabIndex = 4;
@@ -135,8 +160,7 @@ namespace BreakBlock
             this.ResultLabelScore.AutoSize = true;
             this.ResultLabelScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ResultLabelScore.ForeColor = System.Drawing.Color.White;
-            this.ResultLabelScore.Location = new System.Drawing.Point(271, 279);
-            this.ResultLabelScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ResultLabelScore.Location = new System.Drawing.Point(302, 290);
             this.ResultLabelScore.Name = "ResultLabelScore";
             this.ResultLabelScore.Size = new System.Drawing.Size(36, 38);
             this.ResultLabelScore.TabIndex = 6;
@@ -148,8 +172,7 @@ namespace BreakBlock
             this.ResultTextScore.AutoSize = true;
             this.ResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ResultTextScore.ForeColor = System.Drawing.Color.White;
-            this.ResultTextScore.Location = new System.Drawing.Point(121, 279);
-            this.ResultTextScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ResultTextScore.Location = new System.Drawing.Point(107, 290);
             this.ResultTextScore.Name = "ResultTextScore";
             this.ResultTextScore.Size = new System.Drawing.Size(124, 38);
             this.ResultTextScore.TabIndex = 5;
@@ -161,8 +184,7 @@ namespace BreakBlock
             this.LabelScore.AutoSize = true;
             this.LabelScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.LabelScore.ForeColor = System.Drawing.Color.White;
-            this.LabelScore.Location = new System.Drawing.Point(402, 468);
-            this.LabelScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LabelScore.Location = new System.Drawing.Point(403, 468);
             this.LabelScore.Name = "LabelScore";
             this.LabelScore.Size = new System.Drawing.Size(28, 29);
             this.LabelScore.TabIndex = 4;
@@ -175,7 +197,6 @@ namespace BreakBlock
             this.TextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
             this.TextScore.ForeColor = System.Drawing.Color.White;
             this.TextScore.Location = new System.Drawing.Point(304, 465);
-            this.TextScore.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TextScore.Name = "TextScore";
             this.TextScore.Size = new System.Drawing.Size(96, 29);
             this.TextScore.TabIndex = 3;
@@ -187,7 +208,7 @@ namespace BreakBlock
             this.ButtonContinue.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ButtonContinue.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ButtonContinue.Location = new System.Drawing.Point(148, 392);
-            this.ButtonContinue.Margin = new System.Windows.Forms.Padding(2);
+            this.ButtonContinue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ButtonContinue.Name = "ButtonContinue";
             this.ButtonContinue.Size = new System.Drawing.Size(168, 58);
             this.ButtonContinue.TabIndex = 2;
@@ -201,7 +222,7 @@ namespace BreakBlock
             this.ButtonStart.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ButtonStart.Font = new System.Drawing.Font("MS UI Gothic", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ButtonStart.Location = new System.Drawing.Point(156, 214);
-            this.ButtonStart.Margin = new System.Windows.Forms.Padding(2);
+            this.ButtonStart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ButtonStart.Name = "ButtonStart";
             this.ButtonStart.Size = new System.Drawing.Size(160, 58);
             this.ButtonStart.TabIndex = 1;
@@ -216,7 +237,6 @@ namespace BreakBlock
             this.LabelClear.Font = new System.Drawing.Font("MS UI Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.LabelClear.ForeColor = System.Drawing.Color.Yellow;
             this.LabelClear.Location = new System.Drawing.Point(156, 171);
-            this.LabelClear.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.LabelClear.Name = "LabelClear";
             this.LabelClear.Size = new System.Drawing.Size(139, 40);
             this.LabelClear.TabIndex = 3;
@@ -228,9 +248,9 @@ namespace BreakBlock
             this.PictureBox1.BackColor = System.Drawing.Color.Black;
             this.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.PictureBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.PictureBox1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.PictureBox1.Name = "PictureBox1";
-            this.PictureBox1.Size = new System.Drawing.Size(458, 512);
+            this.PictureBox1.Size = new System.Drawing.Size(457, 520);
             this.PictureBox1.TabIndex = 0;
             this.PictureBox1.TabStop = false;
             this.PictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseDown);
@@ -245,45 +265,21 @@ namespace BreakBlock
             // 
             this.AnimationTimer.Tick += new System.EventHandler(this.AnimationTimer_Tick);
             // 
-            // TextScoreBonus
-            // 
-            this.TextScoreBonus.AutoSize = true;
-            this.TextScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TextScoreBonus.ForeColor = System.Drawing.Color.White;
-            this.TextScoreBonus.Location = new System.Drawing.Point(123, 331);
-            this.TextScoreBonus.Name = "TextScoreBonus";
-            this.TextScoreBonus.Size = new System.Drawing.Size(118, 30);
-            this.TextScoreBonus.TabIndex = 10;
-            this.TextScoreBonus.Text = "( Bonus ";
-            this.TextScoreBonus.Visible = false;
-            // 
-            // LabelScoreBonus
-            // 
-            this.LabelScoreBonus.AutoSize = true;
-            this.LabelScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.LabelScoreBonus.ForeColor = System.Drawing.Color.White;
-            this.LabelScoreBonus.Location = new System.Drawing.Point(270, 331);
-            this.LabelScoreBonus.Name = "LabelScoreBonus";
-            this.LabelScoreBonus.Size = new System.Drawing.Size(46, 30);
-            this.LabelScoreBonus.TabIndex = 11;
-            this.LabelScoreBonus.Text = "0 )";
-            this.LabelScoreBonus.Visible = false;
-            // 
             // BreakBlockForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(458, 512);
+            this.ClientSize = new System.Drawing.Size(457, 520);
             this.Controls.Add(this.panel2);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(476, 659);
+            this.MaximumSize = new System.Drawing.Size(475, 657);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(476, 559);
+            this.MinimumSize = new System.Drawing.Size(475, 557);
             this.Name = "BreakBlockForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ブロック崩し";

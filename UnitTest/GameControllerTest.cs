@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace UnitTest {
-    [TestFixture]
+    /*[TestFixture]
     class GameControllerTest {
         [TestCase(3, HitPointWall.Bottom, 1, null, Status.Ready, TestName = "残弾ありで下壁にあたるとReadyになる")]
         [TestCase(1, HitPointWall.Bottom, 1, null, Status.GameOver, TestName = "残弾なしで下壁にあたるとGameOverになる")]
@@ -23,5 +23,5 @@ namespace UnitTest {
 
             Assert.AreEqual(vResult, wGameController.Status);
         }
-    }
+    }*/
 }
