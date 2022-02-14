@@ -76,7 +76,7 @@
     <Compile Include="BreakBlockForm.Designer.cs">
       <DependentUpon>BreakBlockForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="JsonData.cs" />
+    <Compile Include="GameSetting.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="GameController.cs" />
@@ -125,4 +125,5 @@
     <Error Condition="!Exists('..\packages\NUnit3TestAdapter.4.2.1\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.4.2.1\build\net35\NUnit3TestAdapter.props'))" />
     <Error Condition="!Exists('..\packages\NUnit.3.13.2\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.2\build\NUnit.props'))" />
   </Target>
+  <ProjectExtensions />
 </Project>

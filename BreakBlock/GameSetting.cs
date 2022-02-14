@@ -5,7 +5,7 @@ namespace BreakBlock {
     /// ゲーム設定クラス
     /// </summary>
     [DataContract]
-    public class JsonData {
+    public class GameSetting {
         /// <summary>
         /// 残弾数
         /// </summary>

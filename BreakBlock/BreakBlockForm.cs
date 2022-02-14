@@ -25,10 +25,10 @@ namespace BreakBlock {
             DifficultyBox.SelectedIndex = 1;
         }
 
-        private JsonData GetSettings() {
+        private GameSetting GetSettings() {
             using (var wStream = new FileStream($@"../../{DifficultyBox.Text}Settings.json", FileMode.Open, FileAccess.Read)) {
-                var wSerializer = new DataContractJsonSerializer(typeof(JsonData));
-                return wSerializer.ReadObject(wStream) as JsonData;
+                var wSerializer = new DataContractJsonSerializer(typeof(GameSetting));
+                return wSerializer.ReadObject(wStream) as GameSetting;
             }
         }
 

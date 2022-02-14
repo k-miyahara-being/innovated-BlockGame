@@ -53,7 +53,7 @@ namespace BreakBlock {
         /// コントローラの初期化
         /// </summary>
         /// <param name="vSetting">ゲーム設定</param>
-        public void Initialize(JsonData vSetting) {
+        public void Initialize(GameSetting vSetting) {
             this.Score = 0;
 
             this.Blocks = new List<Rectangle>();
