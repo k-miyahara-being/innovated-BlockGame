@@ -10,10 +10,14 @@ namespace BreakBlock {
     [DataContract]
     public class JsonData {
         [DataMember]
+        public int BallNum { get; set; }
+        [DataMember]
         public int BlockRowNum { get; set; }
         [DataMember]
         public int BlockColumnNum { get; set; }
         [DataMember]
-        public int BallNum { get; set; }
+        public int BarWidth { get; set; }
+        [DataMember]
+        public int BarHeight { get; set; }
     }
 }

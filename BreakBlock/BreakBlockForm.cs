@@ -56,7 +56,7 @@ namespace BreakBlock {
                     break;
                 case Status.Ready:
                     Timer.Stop();
-                    FGameController.Bar = new Bar((PictureBox1.Width - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, PictureBox1.Width);
+                    FGameController.Bar = new Bar((PictureBox1.Width - FGameController.Bar.Rect.Width) / 2, Define.C_BarPositionY, FGameController.Bar.Rect.Width, FGameController.Bar.Rect.Height, PictureBox1.Width);
                     remainingBallNum.Text = FGameController.BallCount.ToString();
                     this.Draw();
                     break;

@@ -88,7 +88,7 @@ namespace BreakBlock {
             }
             this.Ball = FBalls.Pop();
 
-            this.Bar = new Bar((FScreenWidth - Define.C_BarWidth) / 2, Define.C_BarPositionY, Define.C_BarWidth, Define.C_BarHeight, FScreenWidth);
+            this.Bar = new Bar((FScreenWidth - vSetting.BarWidth) / 2, Define.C_BarPositionY, vSetting.BarWidth, vSetting.BarHeight, FScreenWidth);
         }
 
         /// <summary>

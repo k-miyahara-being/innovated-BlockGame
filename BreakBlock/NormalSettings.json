@@ -1,5 +1,7 @@
 {
+    "BallNum": 3,
     "BlockRowNum": 4,
-    "BlockColumnNum": 5,
-    "BallNum": 3
+    "BlockColumnNum": 6,
+    "BarWidth": 90,
+    "BarHeight":  8
 }
