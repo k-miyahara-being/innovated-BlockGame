@@ -2,7 +2,8 @@
     "BallRadius": 15,
     "BlockRowNum": 3,
     "BlockColumnNum": 4,
-    "BlockEndurance":  1,
+    "MetalBlockNum": 4,
+    "BlockEndurance": 1,
     "BarWidth": 110,
     "BarHeight": 15
 }

@@ -22,6 +22,11 @@ namespace BreakBlock {
         [DataMember]
         public int BlockColumnNum { get; set; }
         /// <summary>
+        /// メタルブロックの個数
+        /// </summary>
+        [DataMember]
+        public int MetalBlockNum { get; set; }
+        /// <summary>
         /// ブロックの耐久力
         /// </summary>
         [DataMember]
