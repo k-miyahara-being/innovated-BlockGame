@@ -17,7 +17,7 @@ namespace BreakBlock {
         /// <summary>
         /// 耐久力
         /// </summary>
-        public int Endurance { get; set; } = 3;
+        public override int Endurance { get; set; } = 3;
         /// <summary>
         /// メタルブロックの加算スコア
         /// </summary>

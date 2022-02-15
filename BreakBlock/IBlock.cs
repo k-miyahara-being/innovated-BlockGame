@@ -7,5 +7,6 @@ namespace BreakBlock {
     public interface IBlock {
         Rectangle Rect { get; }
         Brush Color { get; }
+        int Endurance { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace BreakBlock {
         /// </summary>
         public override Brush Color => Brushes.LightBlue;
 
-        public int Endurance => 0;
+        public override int Endurance { get; set; } = 0;
         /// <summary>
         /// コンストラクタ
         /// </summary>
