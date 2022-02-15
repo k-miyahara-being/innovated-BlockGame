@@ -16,7 +16,7 @@ namespace BreakBlock {
         /// <summary>
         /// メタルブロックの加算スコア
         /// </summary>
-        public override int ScoreAddition => 2 * Define.C_ScoreAddition;
+        public override int ScoreAddition => 2 * base.ScoreAddition;
 
         public MetalBlock(int vPositionX, int vPositionY, int vWidth, int vHeight, int vEndurance) : base(vPositionX, vPositionY, vWidth, vHeight) {
             this.Endurance = vEndurance;

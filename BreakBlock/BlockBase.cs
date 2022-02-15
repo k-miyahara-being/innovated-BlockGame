@@ -17,7 +17,7 @@ namespace BreakBlock {
         /// <summary>
         /// 加算スコア
         /// </summary>
-        public abstract int ScoreAddition { get; }
+        public virtual int ScoreAddition { get; } = 10;
         /// <summary>
         /// コンストラクタ
         /// </summary>
