@@ -105,10 +105,6 @@ namespace BreakBlock
             this.DifficultyBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DifficultyBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DifficultyBox.FormattingEnabled = true;
-            this.DifficultyBox.Items.AddRange(new object[] {
-            "Easy",
-            "Normal",
-            "Hard"});
             this.DifficultyBox.Location = new System.Drawing.Point(138, 313);
             this.DifficultyBox.Margin = new System.Windows.Forms.Padding(4);
             this.DifficultyBox.Name = "DifficultyBox";

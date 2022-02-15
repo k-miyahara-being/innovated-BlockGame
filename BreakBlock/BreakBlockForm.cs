@@ -21,12 +21,27 @@ namespace BreakBlock {
             this.InitializeComponent();
             FGameController = new GameController(PictureBox1.Width, PictureBox1.Height);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
+            SetComboBox();
+        }
+
+        #region コンボボックスのセット
+        private void SetComboBox() {
+            var wEasySetting = new DifficultyItem("Easy", "Easy");
+            var wNormalSetting = new DifficultyItem("Normal", "Normal");
+            var wHardSetting = new DifficultyItem("Hard", "Hard");
+
+            DifficultyBox.Items.Add(wEasySetting);
+            DifficultyBox.Items.Add(wNormalSetting);
+            DifficultyBox.Items.Add(wHardSetting);
+
             //デフォルトで難易度Normalを選択
             DifficultyBox.SelectedIndex = 1;
         }
+        #endregion
 
         private GameSetting GetSettings() {
-            using (var wStream = new FileStream($@"../../{DifficultyBox.Text}Settings.json", FileMode.Open, FileAccess.Read)) {
+            var wSelectedItem = (DifficultyItem)DifficultyBox.SelectedItem;
+            using (var wStream = new FileStream($@"../../{wSelectedItem.Value}Settings.json", FileMode.Open, FileAccess.Read)) {
                 var wSerializer = new DataContractJsonSerializer(typeof(GameSetting));
                 return wSerializer.ReadObject(wStream) as GameSetting;
             }
@@ -70,6 +85,7 @@ namespace BreakBlock {
                     break;
             }
         }
+
         #region キー操作
         private void FormBreakBlock_KeyDown(object sender, KeyEventArgs e) {
             e.Handled = true;
@@ -77,6 +93,22 @@ namespace BreakBlock {
                 case Keys.F4:
                     if (FGameController.Status != Status.Start) break;
                     DifficultyBox.DroppedDown = true;
+                    break;
+                case Keys.Down:
+                    if (FGameController.Status != Status.Start) break;
+                    if (DifficultyBox.SelectedIndex + 1 == DifficultyBox.Items.Count){
+                        DifficultyBox.SelectedIndex = 0;
+                        break;
+                    }
+                    DifficultyBox.SelectedIndex++;
+                    break;
+                case Keys.Up:
+                    if (FGameController.Status != Status.Start) break;
+                    if (DifficultyBox.SelectedIndex == 0) {
+                        DifficultyBox.SelectedIndex = DifficultyBox.Items.Count - 1;
+                        break;
+                    }
+                    DifficultyBox.SelectedIndex--;
                     break;
                 case Keys.Space:
                     if (FGameController.Status != Status.Ready) break;
@@ -97,12 +129,20 @@ namespace BreakBlock {
         }
         #endregion
 
+        #region マウス操作
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e) {
             if (FGameController.Status == Status.Ready || FGameController.Status == Status.Playing) {
                 int wMoveDistance = e.X - FGameController.Bar.Rect.X - FGameController.Bar.Rect.Width / 2;
                 MoveBarAndBall(wMoveDistance);
             }
         }
+
+        private void PictureBox1_MouseDown(object sender, MouseEventArgs e) {
+            if (FGameController.Status != Status.Ready) return;
+            FGameController.Status = Status.Playing;
+            Timer.Start();
+        }
+        #endregion
 
         private void MoveBarAndBall(int vMoveDistance) {
             switch (FGameController.Status) {
@@ -115,12 +155,6 @@ namespace BreakBlock {
                     Draw();
                     break;
             }
-        }
-
-        private void PictureBox1_MouseDown(object sender, MouseEventArgs e) {
-            if (FGameController.Status != Status.Ready) return;
-            FGameController.Status = Status.Playing;
-            Timer.Start();
         }
 
         private void Draw() {
