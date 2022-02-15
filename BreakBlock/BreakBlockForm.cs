@@ -21,38 +21,30 @@ namespace BreakBlock {
             this.InitializeComponent();
             FGameController = new GameController(PictureBox1.Width, PictureBox1.Height);
             FCanvas = new Bitmap(PictureBox1.Width, PictureBox1.Height);
-            SetComboBox();
-        }
-
-        #region コンボボックスのセット
-        private void SetComboBox() {
-            var wEasySetting = new DifficultyItem("Easy", "Easy");
-            var wNormalSetting = new DifficultyItem("Normal", "Normal");
-            var wHardSetting = new DifficultyItem("Hard", "Hard");
-
-            DifficultyBox.Items.Add(wEasySetting);
-            DifficultyBox.Items.Add(wNormalSetting);
-            DifficultyBox.Items.Add(wHardSetting);
-
+            #region コンボボックスのセット
+            DifficultyComboBox.Items.Add(new DifficultyItem("Easy", GetSetting(@"../../EasySettings.json")));
+            DifficultyComboBox.Items.Add(new DifficultyItem("Normal", GetSetting(@"../../NormalSettings.json")));
+            DifficultyComboBox.Items.Add(new DifficultyItem("Hard", GetSetting(@"../../HardSettings.json")));
             //デフォルトで難易度Normalを選択
-            DifficultyBox.SelectedIndex = 1;
+            DifficultyComboBox.SelectedIndex = 1;
+            #endregion
         }
-        #endregion
 
-        private GameSetting GetSettings() {
-            var wSelectedItem = (DifficultyItem)DifficultyBox.SelectedItem;
-            using (var wStream = new FileStream($@"../../{wSelectedItem.Value}Settings.json", FileMode.Open, FileAccess.Read)) {
+        private GameSetting GetSetting(string vPath) {
+            using (var wStream = new FileStream(vPath, FileMode.Open, FileAccess.Read)) {
                 var wSerializer = new DataContractJsonSerializer(typeof(GameSetting));
-                return wSerializer.ReadObject(wStream) as GameSetting;
+                return (GameSetting)wSerializer.ReadObject(wStream);
             }
         }
 
         private void ButtonStart_Click(object sender, EventArgs e) {
-            FGameController.Initialize(this.GetSettings());
+            if(DifficultyComboBox.DroppedDown) return;
+            if(!(DifficultyComboBox.SelectedItem is DifficultyItem wItem)) return;
+            FGameController.Initialize(wItem.Value);
             #region プレイ画面へ遷移
             FGameController.Status = Status.Ready;
             ButtonStart.Visible = false;
-            DifficultyBox.Visible = false;
+            DifficultyComboBox.Visible = false;
             TextScore.Visible = true;
             LabelScore.Text = FGameController.Score.ToString();
             LabelScore.Visible = true;
@@ -92,23 +84,23 @@ namespace BreakBlock {
             switch (e.KeyData) {
                 case Keys.F4:
                     if (FGameController.Status != Status.Start) break;
-                    DifficultyBox.DroppedDown = true;
+                    DifficultyComboBox.DroppedDown = !DifficultyComboBox.DroppedDown;
                     break;
                 case Keys.Down:
                     if (FGameController.Status != Status.Start) break;
-                    if (DifficultyBox.SelectedIndex + 1 == DifficultyBox.Items.Count){
-                        DifficultyBox.SelectedIndex = 0;
+                    if (DifficultyComboBox.SelectedIndex + 1 == DifficultyComboBox.Items.Count){
+                        DifficultyComboBox.SelectedIndex = 0;
                         break;
                     }
-                    DifficultyBox.SelectedIndex++;
+                    DifficultyComboBox.SelectedIndex++;
                     break;
                 case Keys.Up:
                     if (FGameController.Status != Status.Start) break;
-                    if (DifficultyBox.SelectedIndex == 0) {
-                        DifficultyBox.SelectedIndex = DifficultyBox.Items.Count - 1;
+                    if (DifficultyComboBox.SelectedIndex == 0) {
+                        DifficultyComboBox.SelectedIndex = DifficultyComboBox.Items.Count - 1;
                         break;
                     }
-                    DifficultyBox.SelectedIndex--;
+                    DifficultyComboBox.SelectedIndex--;
                     break;
                 case Keys.Space:
                     if (FGameController.Status != Status.Ready) break;
@@ -217,7 +209,8 @@ namespace BreakBlock {
             }
             PictureBox1.Image = FCanvas;
             #region 画面の初期化
-            FGameController.Initialize(this.GetSettings());
+            if (!(DifficultyComboBox.SelectedItem is DifficultyItem wItem)) return;
+            FGameController.Initialize(wItem.Value);
             LabelClear.Visible = false;
             LabelGameover.Visible = false;
             ButtonContinue.Visible = false;
@@ -229,7 +222,7 @@ namespace BreakBlock {
 
             ButtonStart.Visible = true;
             ButtonStart.Focus();
-            DifficultyBox.Visible = true;
+            DifficultyComboBox.Visible = true;
             # endregion 画面の初期化
         }
     }

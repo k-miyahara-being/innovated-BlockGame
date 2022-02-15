@@ -10,14 +10,14 @@
         /// <summary>
         /// プログラムで扱う文字列
         /// </summary>
-        public string Value { get; set; }
+        public GameSetting Value { get; set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="vText"></param>
         /// <param name="vValue"></param>
-        public DifficultyItem(string vText, string vValue) {
+        public DifficultyItem(string vText, GameSetting vValue) {
             this.Text = vText;
             this.Value = vValue;
         }

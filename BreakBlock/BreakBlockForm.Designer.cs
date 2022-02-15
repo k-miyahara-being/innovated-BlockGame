@@ -33,7 +33,7 @@ namespace BreakBlock
             this.panel2 = new System.Windows.Forms.Panel();
             this.LabelScoreBonus = new System.Windows.Forms.Label();
             this.TextScoreBonus = new System.Windows.Forms.Label();
-            this.DifficultyBox = new System.Windows.Forms.ComboBox();
+            this.DifficultyComboBox = new System.Windows.Forms.ComboBox();
             this.remainingBallNum = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
             this.LabelGameover = new System.Windows.Forms.Label();
@@ -55,7 +55,7 @@ namespace BreakBlock
             // 
             this.panel2.Controls.Add(this.LabelScoreBonus);
             this.panel2.Controls.Add(this.TextScoreBonus);
-            this.panel2.Controls.Add(this.DifficultyBox);
+            this.panel2.Controls.Add(this.DifficultyComboBox);
             this.panel2.Controls.Add(this.remainingBallNum);
             this.panel2.Controls.Add(this.label);
             this.panel2.Controls.Add(this.LabelGameover);
@@ -100,16 +100,16 @@ namespace BreakBlock
             this.TextScoreBonus.Text = "( Bonus ";
             this.TextScoreBonus.Visible = false;
             // 
-            // DifficultyBox
+            // DifficultyComboBox
             // 
-            this.DifficultyBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DifficultyBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DifficultyBox.FormattingEnabled = true;
-            this.DifficultyBox.Location = new System.Drawing.Point(138, 313);
-            this.DifficultyBox.Margin = new System.Windows.Forms.Padding(4);
-            this.DifficultyBox.Name = "DifficultyBox";
-            this.DifficultyBox.Size = new System.Drawing.Size(187, 35);
-            this.DifficultyBox.TabIndex = 9;
+            this.DifficultyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DifficultyComboBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DifficultyComboBox.FormattingEnabled = true;
+            this.DifficultyComboBox.Location = new System.Drawing.Point(138, 313);
+            this.DifficultyComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.DifficultyComboBox.Name = "DifficultyComboBox";
+            this.DifficultyComboBox.Size = new System.Drawing.Size(187, 35);
+            this.DifficultyComboBox.TabIndex = 9;
             // 
             // remainingBallNum
             // 
@@ -304,7 +304,7 @@ namespace BreakBlock
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label remainingBallNum;
         private System.Windows.Forms.Timer AnimationTimer;
-        private System.Windows.Forms.ComboBox DifficultyBox;
+        private System.Windows.Forms.ComboBox DifficultyComboBox;
         private System.Windows.Forms.Label TextScoreBonus;
         private System.Windows.Forms.Label LabelScoreBonus;
     }
