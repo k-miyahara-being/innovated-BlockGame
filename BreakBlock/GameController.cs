@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -67,7 +66,7 @@ namespace BreakBlock {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
-                    BlockBase wBlock;
+                    IBlock wBlock;
                     if (wMetalIndexList.Exists(x => x == wCount)) {
                         wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, wRandomForMetalBlock.Next(1, 4));
                     } else {
@@ -143,22 +142,16 @@ namespace BreakBlock {
             }
 
             //ブロックでの跳ね返り
-            foreach (var wBlock in this.Blocks) {
+            foreach (IBlock wBlock in this.Blocks) {
                 Orientation? wCollision = this.Ball.VsBlock(wBlock.Rect);
                 if (wCollision != null) {
                     this.Ball.Reverse(wCollision.Value);
                     this.Ball.Accelerate();
-                    if (wBlock.GetType() != typeof(MetalBlock)) {
+                    if (wBlock.Endurance > 0) {
+                        wBlock.Endurance--;
+                    }else if(wBlock.Endurance == 0) {
                         this.Blocks.Remove(wBlock);
-                        this.Score += Define.C_ScoreAddition;
-                    } else {
-                        MetalBlock wMetalBlock = (MetalBlock)wBlock;
-                        if (wMetalBlock.Endurance != 0) {
-                            wMetalBlock.Endurance--;
-                        } else {
-                            this.Blocks.Remove(wBlock);
-                            this.Score += wMetalBlock.ScoreAddition;
-                        }
+                        this.Score += wBlock.ScoreAddition;
                     }
                     break;
                 }

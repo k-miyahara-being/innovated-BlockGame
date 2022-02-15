@@ -6,19 +6,17 @@ namespace BreakBlock {
     /// </summary>
     public class NormalBlock : BlockBase {
         /// <summary>
-        /// 色
+        /// ノーマルブロックの色
         /// </summary>
         public override Brush Color => Brushes.LightBlue;
-
+        /// <summary>
+        /// ノーマルブロックの耐久性(メタルブロックと差別化するため-1に設定している)
+        /// </summary>
         public override int Endurance { get; set; } = 0;
         /// <summary>
-        /// コンストラクタ
+        /// ノーマルブロックの加算スコア
         /// </summary>
-        /// <param name="vPositionX">X座標</param>
-        /// <param name="vPositionY">Y座標</param>
-        /// <param name="vWidth">幅</param>
-        /// <param name="vHeight">高さ</param>
-        /// <param name="vColor">色</param>
+        public override int ScoreAddition => Define.C_ScoreAddition;
         public NormalBlock(int vPositionX, int vPositionY, int vWidth, int vHeight) : base(vPositionX, vPositionY, vWidth, vHeight) {
         }
     }
