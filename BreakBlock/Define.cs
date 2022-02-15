@@ -22,6 +22,12 @@ namespace BreakBlock {
         public const int C_BlockDrawingAreaHeight = 100;
         public const int C_BlockFirstPositionX = 10;
         public const int C_BlockFirstPositionY = 20;
+        public static readonly Brush[] BlockColors = new Brush[] {
+            Brushes.LightBlue,
+            Brushes.CadetBlue,
+            Brushes.SteelBlue,
+            Brushes.RoyalBlue,
+        };
 
         //スコア関連
         public const int C_ScoreAddition = 10;

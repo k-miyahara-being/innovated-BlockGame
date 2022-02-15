@@ -62,13 +62,14 @@ namespace BreakBlock {
             //メタルブロックの位置をランダム生成
             var wMetalIndexList = Enumerable.Range(0, vSetting.BlockRowNum * vSetting.BlockColumnNum).OrderBy(x => Guid.NewGuid()).Take(vSetting.MetalBlockNum).ToList();
             int wCount = 0;
+            var wRandomForMetalBlock = new Random();
             for (int i = 0; i < vSetting.BlockRowNum; i++) {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
                     BlockBase wBlock;
                     if (wMetalIndexList.Exists(x => x == wCount)) {
-                        wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight);
+                        wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, wRandomForMetalBlock.Next(1, 4));
                     } else {
                         wBlock = new NormalBlock(wX, wY, wBlockWidth, wBlockHeight);
                     }
@@ -83,11 +84,7 @@ namespace BreakBlock {
             FBalls = new Stack<IBall>();
             for (int i = 0; i < Define.C_BallNum; i++) {
                 float wAngle = wRandomForBall.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
-                if (wRandomForBall.Next() % 2 == 0) {
-                    wAngle *= -1;
-                } else {
-                    wAngle *= 1;
-                }
+                if (wRandomForBall.Next() % 2 == 0) wAngle *= -1;
                 wMatrixAffine.Rotate(wAngle);
                 wLaunchVelocity = Vector.Multiply(wLaunchVelocity, wMatrixAffine);
                 FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - vSetting.BallRadius, vSetting.BallRadius, wLaunchVelocity));

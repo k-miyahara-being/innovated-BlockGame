@@ -13,11 +13,11 @@ namespace BreakBlock {
         /// <summary>
         /// 色
         /// </summary>
-        public override Brush Color => Brushes.Red;
+        public override Brush Color => Define.BlockColors[this.Endurance];
         /// <summary>
         /// 耐久力
         /// </summary>
-        public override int Endurance { get; set; } = 3;
+        public override int Endurance { get; set; }
         /// <summary>
         /// メタルブロックの加算スコア
         /// </summary>
@@ -31,8 +31,9 @@ namespace BreakBlock {
         /// <param name="vHeight">高さ</param>
         /// <param name="vColor">色</param>
         /// <param name="vEndurance">耐久力</param>
-        public MetalBlock(int vPositionX, int vPositionY, int vWidth, int vHeight) : base(vPositionX, vPositionY, vWidth, vHeight) {
+        public MetalBlock(int vPositionX, int vPositionY, int vWidth, int vHeight, int vEndurance) : base(vPositionX, vPositionY, vWidth, vHeight) {
             this.Rect = new Rectangle(vPositionX, vPositionY, vWidth, vHeight);
+            this.Endurance = vEndurance;
         }
     }
 }
