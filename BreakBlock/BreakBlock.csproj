@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="Ball.cs" />
     <Compile Include="Bar.cs" />
-    <Compile Include="Block.cs" />
+    <Compile Include="NormalBlock.cs" />
     <Compile Include="BreakBlockForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,9 +78,11 @@
       <DependentUpon>BreakBlockForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DifficultyItem.cs" />
+    <Compile Include="BlockBase.cs" />
     <Compile Include="GameSetting.cs" />
     <Compile Include="IBall.cs" />
     <Compile Include="IBlock.cs" />
+    <Compile Include="MetalBlock.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Define.cs" />
     <Compile Include="GameController.cs" />

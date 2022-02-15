@@ -66,11 +66,11 @@ namespace BreakBlock {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
-                    IBlock wBlock;
+                    BlockBase wBlock;
                     if (wMetalIndexList.Exists(x => x == wCount)) {
-                        wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, Brushes.CadetBlue, vSetting.BlockEndurance);
+                        wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight);
                     } else {
-                        wBlock = new Block(wX, wY, wBlockWidth, wBlockHeight, Brushes.LightBlue);
+                        wBlock = new NormalBlock(wX, wY, wBlockWidth, wBlockHeight);
                     }
                     this.Blocks.Add(wBlock);
                     wCount++;
@@ -98,7 +98,7 @@ namespace BreakBlock {
         }
 
         /// <summary>
-        /// 弾の当たり判定
+        /// 跳ね返り処理
         /// </summary>
         public void Bound() {
             //壁での跳ね返り
@@ -145,7 +145,7 @@ namespace BreakBlock {
                     return;
             }
 
-            //ブロックに当たった際の跳ね返り・加速とブロックを消す処理
+            //ブロックでの跳ね返り
             foreach (var wBlock in this.Blocks) {
                 Orientation? wCollision = this.Ball.VsBlock(wBlock.Rect);
                 if (wCollision != null) {
@@ -160,7 +160,7 @@ namespace BreakBlock {
                             wMetalBlock.Endurance--;
                         } else {
                             this.Blocks.Remove(wBlock);
-                            this.Score += 2 * Define.C_ScoreAddition;
+                            this.Score += wMetalBlock.ScoreAddition;
                         }
                     }
                     break;
@@ -169,7 +169,6 @@ namespace BreakBlock {
             if (!this.Blocks.Any()) {
                 this.Status = Status.Clear;
                 this.Score += this.BallCount * Define.C_ScoreBonus;
-                return;
             }
         }
     }

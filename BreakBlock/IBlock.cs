@@ -5,7 +5,7 @@ namespace BreakBlock {
     /// ブロックインターフェース
     /// </summary>
     public interface IBlock {
-        Rectangle Rect { get; set; }
-        Brush Color { get; set; }
+        Rectangle Rect { get; }
+        Brush Color { get; }
     }
 }
