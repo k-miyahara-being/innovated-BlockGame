@@ -4,8 +4,17 @@ using System.Windows.Forms;
 
 namespace BreakBlock {
     public interface IBall {
+        /// <summary>
+        /// 座標
+        /// </summary>
         Vector Position { get; set; }
+        /// <summary>
+        /// 移動量
+        /// </summary>
         Vector Speed { get; set; }
+        /// <summary>
+        /// 半径
+        /// </summary>
         int Radius { get; set; }
 
         void Move();

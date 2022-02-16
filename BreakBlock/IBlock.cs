@@ -14,7 +14,7 @@ namespace BreakBlock {
         /// </summary>
         Brush Color { get; }
         /// <summary>
-        /// 耐久性
+        /// 耐久力
         /// </summary>
         int Endurance { get; set; }
         /// <summary>

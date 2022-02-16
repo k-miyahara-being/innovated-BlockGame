@@ -11,7 +11,7 @@ namespace BreakBlock {
         /// </summary>
         public Vector Position { get; set; }
         /// <summary>
-        /// スピード
+        /// 移動量
         /// </summary>
         public Vector Speed { get; set; }
         /// <summary>
@@ -19,14 +19,15 @@ namespace BreakBlock {
         /// </summary>
         public int Radius { get; set; }
 
-        // 短時間でRandomのインスタンスを複数生成すると同一の乱数セットが生成され、弾が同じ方向に飛びます。
-        // そのため、単一のオブジェクトを使いまわしています。
-        private static Random G_Rnd = new Random();
         private int FAccelerationCounter = 0;
 
         /// <summary>
-        /// 弾のコンストラクタ
-        /// </summary>       
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="vX">X座標</param>
+        /// <param name="vY">Y座標</param>
+        /// <param name="vRadius">半径</param>
+        /// <param name="vLaunchSpeed">初速度</param>
         public Ball(int vX, int vY, int vRadius, Vector vLaunchSpeed) {
             this.Radius = vRadius;
             this.Position = new Vector(vX, vY);
@@ -45,9 +46,9 @@ namespace BreakBlock {
         public void Move(Vector vDistance) => this.Position += vDistance;
 
         /// <summary>
-        /// 衝突時の弾を反転させる
+        /// 弾を反転させる
         /// </summary>
-        /// <param name="vDirection">弾の当たった方向</param>
+        /// <param name="vOrientation">当たった方向</param>
         public void Reverse(Orientation vOrientation) {
             //構造体のプロパティの値を変更しようとすると、コンパイルエラーになりました
             //そのため、構造体のコピーを作り、そのコピーのプロパティの値を変更しコピー元に再代入しています
@@ -68,12 +69,11 @@ namespace BreakBlock {
         /// <summary>
         /// 跳ね返る角度を変える
         /// </summary>
-        /// <param name="vAngle"></param>
+        /// <param name="vAngle">角度</param>
         public void ChangeDirection(int vAngle) {
             var wMatrixAffine = new Matrix();
             wMatrixAffine.Rotate(vAngle);
-            var wSpeed = new Vector(0, Define.C_LaunchVelocity);
-            this.Speed = Vector.Multiply(wSpeed, wMatrixAffine);
+            this.Speed = Vector.Multiply(new Vector(0, Define.C_LaunchVelocity), wMatrixAffine);
             //弾の速度を維持するための処理
             this.Speed *= Math.Pow(Define.C_Acceleration, FAccelerationCounter);
         }
