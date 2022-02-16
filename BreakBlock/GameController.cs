@@ -79,14 +79,14 @@ namespace BreakBlock {
 
             var wRandomForBall = new Random();
             var wMatrixAffine = new Matrix();
-            var wLaunchVelocity = new Vector(0, Define.C_LaunchVelocity);
+            var wLaunchSpeed = new Vector(0, Define.C_LaunchVelocity);
             FBalls = new Stack<IBall>();
-            for (int i = 0; i < Define.C_BallNum; i++) {
+            for (int i = 0; i < vSetting.BallNum; i++) {
                 float wAngle = wRandomForBall.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
                 if (wRandomForBall.Next() % 2 == 0) wAngle *= -1;
                 wMatrixAffine.Rotate(wAngle);
-                wLaunchVelocity = Vector.Multiply(wLaunchVelocity, wMatrixAffine);
-                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - vSetting.BallRadius, vSetting.BallRadius, wLaunchVelocity));
+                wLaunchSpeed = Vector.Multiply(wLaunchSpeed, wMatrixAffine);
+                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - vSetting.BallRadius, vSetting.BallRadius, wLaunchSpeed));
             }
             this.Ball = FBalls.Pop();
 

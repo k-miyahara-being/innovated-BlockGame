@@ -3,7 +3,6 @@
 namespace BreakBlock {
     public static class Define {
         //弾関連
-        public const int C_BallNum = 3;
         public const double C_Acceleration = 1.05;
         public const int C_LaunchAngleMin = 20;
         public const int C_LaunchAngleMax = 71;

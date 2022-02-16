@@ -10,6 +10,11 @@ namespace BreakBlock {
         /// 残弾数
         /// </summary>
         [DataMember]
+        public int BallNum { get; set; }
+        /// <summary>
+        /// 弾の半径
+        /// </summary>
+        [DataMember]
         public int BallRadius { get; set; }
         /// <summary>
         /// ブロックの縦の数
@@ -26,11 +31,6 @@ namespace BreakBlock {
         /// </summary>
         [DataMember]
         public int MetalBlockNum { get; set; }
-        /// <summary>
-        /// ブロックの耐久力
-        /// </summary>
-        [DataMember]
-        public int BlockEndurance { get; set; }
         /// <summary>
         /// バーの幅
         /// </summary>

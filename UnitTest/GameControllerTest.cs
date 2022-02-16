@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace UnitTest {
-    /*[TestFixture]
+    [TestFixture]
     class GameControllerTest {
         [TestCase(3, HitPointWall.Bottom, 1, null, Status.Ready, TestName = "残弾ありで下壁にあたるとReadyになる")]
         [TestCase(1, HitPointWall.Bottom, 1, null, Status.GameOver, TestName = "残弾なしで下壁にあたるとGameOverになる")]
@@ -16,12 +16,19 @@ namespace UnitTest {
             wMock.Setup(m => m.VsWall(It.IsAny<int>(), It.IsAny<int>())).Returns(vHitPointWall);
             wMock.Setup(m => m.VsBlock(It.IsAny<Rectangle>())).Returns(vHitPointBlock);
 
-            var wGameController = new GameController(100, 100, vBallCount, 1, vBlockCount, 10, 10);
+            var wGameSetting = new GameSetting();
+            wGameSetting.BallNum = vBallCount;
+            wGameSetting.BallRadius = 5;
+            wGameSetting.BlockRowNum = 1;
+            wGameSetting.BlockColumnNum = vBlockCount;
+
+            var wGameController = new GameController(100, 100);
+            wGameController.Initialize(wGameSetting);
             wGameController.Status = Status.Playing;
             wGameController.Ball = wMock.Object;
             wGameController.Bound();
 
             Assert.AreEqual(vResult, wGameController.Status);
         }
-    }*/
+    }
 }
