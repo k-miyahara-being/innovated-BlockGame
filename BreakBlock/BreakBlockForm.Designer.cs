@@ -32,41 +32,41 @@ namespace BreakBlock
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LabelScoreBonus = new System.Windows.Forms.Label();
-            this.TextScoreBonus = new System.Windows.Forms.Label();
-            this.DifficultyComboBox = new System.Windows.Forms.ComboBox();
-            this.remainingBallNum = new System.Windows.Forms.Label();
-            this.label = new System.Windows.Forms.Label();
+            this.LabelTextScoreBonus = new System.Windows.Forms.Label();
+            this.ComboBoxDifficulty = new System.Windows.Forms.ComboBox();
+            this.LabelBallNum = new System.Windows.Forms.Label();
+            this.LabelX = new System.Windows.Forms.Label();
             this.LabelGameover = new System.Windows.Forms.Label();
-            this.ResultLabelScore = new System.Windows.Forms.Label();
-            this.ResultTextScore = new System.Windows.Forms.Label();
+            this.LabelResultScore = new System.Windows.Forms.Label();
+            this.LabelResultTextScore = new System.Windows.Forms.Label();
             this.LabelScore = new System.Windows.Forms.Label();
-            this.TextScore = new System.Windows.Forms.Label();
+            this.LabelTextScore = new System.Windows.Forms.Label();
             this.ButtonContinue = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
             this.LabelClear = new System.Windows.Forms.Label();
-            this.PictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PictureBox = new System.Windows.Forms.PictureBox();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.AnimationTimer = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.LabelScoreBonus);
-            this.panel2.Controls.Add(this.TextScoreBonus);
-            this.panel2.Controls.Add(this.DifficultyComboBox);
-            this.panel2.Controls.Add(this.remainingBallNum);
-            this.panel2.Controls.Add(this.label);
+            this.panel2.Controls.Add(this.LabelTextScoreBonus);
+            this.panel2.Controls.Add(this.ComboBoxDifficulty);
+            this.panel2.Controls.Add(this.LabelBallNum);
+            this.panel2.Controls.Add(this.LabelX);
             this.panel2.Controls.Add(this.LabelGameover);
-            this.panel2.Controls.Add(this.ResultLabelScore);
-            this.panel2.Controls.Add(this.ResultTextScore);
+            this.panel2.Controls.Add(this.LabelResultScore);
+            this.panel2.Controls.Add(this.LabelResultTextScore);
             this.panel2.Controls.Add(this.LabelScore);
-            this.panel2.Controls.Add(this.TextScore);
+            this.panel2.Controls.Add(this.LabelTextScore);
             this.panel2.Controls.Add(this.ButtonContinue);
             this.panel2.Controls.Add(this.ButtonStart);
             this.panel2.Controls.Add(this.LabelClear);
-            this.panel2.Controls.Add(this.PictureBox1);
+            this.panel2.Controls.Add(this.PictureBox);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -87,56 +87,56 @@ namespace BreakBlock
             this.LabelScoreBonus.Text = "0 )";
             this.LabelScoreBonus.Visible = false;
             // 
-            // TextScoreBonus
+            // LabelTextScoreBonus
             // 
-            this.TextScoreBonus.AutoSize = true;
-            this.TextScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TextScoreBonus.ForeColor = System.Drawing.Color.White;
-            this.TextScoreBonus.Location = new System.Drawing.Point(133, 339);
-            this.TextScoreBonus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.TextScoreBonus.Name = "TextScoreBonus";
-            this.TextScoreBonus.Size = new System.Drawing.Size(118, 30);
-            this.TextScoreBonus.TabIndex = 10;
-            this.TextScoreBonus.Text = "( Bonus ";
-            this.TextScoreBonus.Visible = false;
+            this.LabelTextScoreBonus.AutoSize = true;
+            this.LabelTextScoreBonus.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LabelTextScoreBonus.ForeColor = System.Drawing.Color.White;
+            this.LabelTextScoreBonus.Location = new System.Drawing.Point(133, 339);
+            this.LabelTextScoreBonus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelTextScoreBonus.Name = "LabelTextScoreBonus";
+            this.LabelTextScoreBonus.Size = new System.Drawing.Size(118, 30);
+            this.LabelTextScoreBonus.TabIndex = 10;
+            this.LabelTextScoreBonus.Text = "( Bonus ";
+            this.LabelTextScoreBonus.Visible = false;
             // 
-            // DifficultyComboBox
+            // ComboBoxDifficulty
             // 
-            this.DifficultyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.DifficultyComboBox.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DifficultyComboBox.FormattingEnabled = true;
-            this.DifficultyComboBox.Location = new System.Drawing.Point(138, 313);
-            this.DifficultyComboBox.Margin = new System.Windows.Forms.Padding(4);
-            this.DifficultyComboBox.Name = "DifficultyComboBox";
-            this.DifficultyComboBox.Size = new System.Drawing.Size(187, 35);
-            this.DifficultyComboBox.TabIndex = 9;
+            this.ComboBoxDifficulty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboBoxDifficulty.Font = new System.Drawing.Font("メイリオ", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ComboBoxDifficulty.FormattingEnabled = true;
+            this.ComboBoxDifficulty.Location = new System.Drawing.Point(138, 313);
+            this.ComboBoxDifficulty.Margin = new System.Windows.Forms.Padding(4);
+            this.ComboBoxDifficulty.Name = "ComboBoxDifficulty";
+            this.ComboBoxDifficulty.Size = new System.Drawing.Size(187, 35);
+            this.ComboBoxDifficulty.TabIndex = 9;
             // 
-            // remainingBallNum
+            // LabelBallNum
             // 
-            this.remainingBallNum.BackColor = System.Drawing.Color.Transparent;
-            this.remainingBallNum.Font = new System.Drawing.Font("MS UI Gothic", 17F);
-            this.remainingBallNum.ForeColor = System.Drawing.Color.White;
-            this.remainingBallNum.Location = new System.Drawing.Point(69, 470);
-            this.remainingBallNum.Name = "remainingBallNum";
-            this.remainingBallNum.Size = new System.Drawing.Size(27, 28);
-            this.remainingBallNum.TabIndex = 8;
-            this.remainingBallNum.Text = "2";
-            this.remainingBallNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.remainingBallNum.Visible = false;
+            this.LabelBallNum.BackColor = System.Drawing.Color.Transparent;
+            this.LabelBallNum.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.LabelBallNum.ForeColor = System.Drawing.Color.White;
+            this.LabelBallNum.Location = new System.Drawing.Point(69, 470);
+            this.LabelBallNum.Name = "LabelBallNum";
+            this.LabelBallNum.Size = new System.Drawing.Size(27, 28);
+            this.LabelBallNum.TabIndex = 8;
+            this.LabelBallNum.Text = "2";
+            this.LabelBallNum.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelBallNum.Visible = false;
             // 
-            // label
+            // LabelX
             // 
-            this.label.AutoSize = true;
-            this.label.BackColor = System.Drawing.Color.Transparent;
-            this.label.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-            this.label.ForeColor = System.Drawing.Color.White;
-            this.label.Location = new System.Drawing.Point(48, 480);
-            this.label.Margin = new System.Windows.Forms.Padding(0);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(22, 15);
-            this.label.TabIndex = 7;
-            this.label.Text = "×";
-            this.label.Visible = false;
+            this.LabelX.AutoSize = true;
+            this.LabelX.BackColor = System.Drawing.Color.Transparent;
+            this.LabelX.Font = new System.Drawing.Font("MS UI Gothic", 9F);
+            this.LabelX.ForeColor = System.Drawing.Color.White;
+            this.LabelX.Location = new System.Drawing.Point(48, 480);
+            this.LabelX.Margin = new System.Windows.Forms.Padding(0);
+            this.LabelX.Name = "LabelX";
+            this.LabelX.Size = new System.Drawing.Size(22, 15);
+            this.LabelX.TabIndex = 7;
+            this.LabelX.Text = "×";
+            this.LabelX.Visible = false;
             // 
             // LabelGameover
             // 
@@ -151,29 +151,29 @@ namespace BreakBlock
             this.LabelGameover.Text = "GAME OVER";
             this.LabelGameover.Visible = false;
             // 
-            // ResultLabelScore
+            // LabelResultScore
             // 
-            this.ResultLabelScore.AutoSize = true;
-            this.ResultLabelScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ResultLabelScore.ForeColor = System.Drawing.Color.White;
-            this.ResultLabelScore.Location = new System.Drawing.Point(302, 290);
-            this.ResultLabelScore.Name = "ResultLabelScore";
-            this.ResultLabelScore.Size = new System.Drawing.Size(36, 38);
-            this.ResultLabelScore.TabIndex = 6;
-            this.ResultLabelScore.Text = "0";
-            this.ResultLabelScore.Visible = false;
+            this.LabelResultScore.AutoSize = true;
+            this.LabelResultScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LabelResultScore.ForeColor = System.Drawing.Color.White;
+            this.LabelResultScore.Location = new System.Drawing.Point(302, 290);
+            this.LabelResultScore.Name = "LabelResultScore";
+            this.LabelResultScore.Size = new System.Drawing.Size(36, 38);
+            this.LabelResultScore.TabIndex = 6;
+            this.LabelResultScore.Text = "0";
+            this.LabelResultScore.Visible = false;
             // 
-            // ResultTextScore
+            // LabelResultTextScore
             // 
-            this.ResultTextScore.AutoSize = true;
-            this.ResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.ResultTextScore.ForeColor = System.Drawing.Color.White;
-            this.ResultTextScore.Location = new System.Drawing.Point(107, 290);
-            this.ResultTextScore.Name = "ResultTextScore";
-            this.ResultTextScore.Size = new System.Drawing.Size(124, 38);
-            this.ResultTextScore.TabIndex = 5;
-            this.ResultTextScore.Text = "score：";
-            this.ResultTextScore.Visible = false;
+            this.LabelResultTextScore.AutoSize = true;
+            this.LabelResultTextScore.Font = new System.Drawing.Font("MS UI Gothic", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.LabelResultTextScore.ForeColor = System.Drawing.Color.White;
+            this.LabelResultTextScore.Location = new System.Drawing.Point(107, 290);
+            this.LabelResultTextScore.Name = "LabelResultTextScore";
+            this.LabelResultTextScore.Size = new System.Drawing.Size(124, 38);
+            this.LabelResultTextScore.TabIndex = 5;
+            this.LabelResultTextScore.Text = "score：";
+            this.LabelResultTextScore.Visible = false;
             // 
             // LabelScore
             // 
@@ -187,17 +187,17 @@ namespace BreakBlock
             this.LabelScore.Text = "0";
             this.LabelScore.Visible = false;
             // 
-            // TextScore
+            // LabelTextScore
             // 
-            this.TextScore.AutoSize = true;
-            this.TextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
-            this.TextScore.ForeColor = System.Drawing.Color.White;
-            this.TextScore.Location = new System.Drawing.Point(304, 465);
-            this.TextScore.Name = "TextScore";
-            this.TextScore.Size = new System.Drawing.Size(96, 29);
-            this.TextScore.TabIndex = 3;
-            this.TextScore.Text = "score：";
-            this.TextScore.Visible = false;
+            this.LabelTextScore.AutoSize = true;
+            this.LabelTextScore.Font = new System.Drawing.Font("MS UI Gothic", 17F);
+            this.LabelTextScore.ForeColor = System.Drawing.Color.White;
+            this.LabelTextScore.Location = new System.Drawing.Point(304, 465);
+            this.LabelTextScore.Name = "LabelTextScore";
+            this.LabelTextScore.Size = new System.Drawing.Size(96, 29);
+            this.LabelTextScore.TabIndex = 3;
+            this.LabelTextScore.Text = "score：";
+            this.LabelTextScore.Visible = false;
             // 
             // ButtonContinue
             // 
@@ -239,18 +239,18 @@ namespace BreakBlock
             this.LabelClear.Text = "CLEAR";
             this.LabelClear.Visible = false;
             // 
-            // PictureBox1
+            // PictureBox
             // 
-            this.PictureBox1.BackColor = System.Drawing.Color.Black;
-            this.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.PictureBox1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.PictureBox1.Name = "PictureBox1";
-            this.PictureBox1.Size = new System.Drawing.Size(457, 520);
-            this.PictureBox1.TabIndex = 0;
-            this.PictureBox1.TabStop = false;
-            this.PictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseDown);
-            this.PictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseMove);
+            this.PictureBox.BackColor = System.Drawing.Color.Black;
+            this.PictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PictureBox.Location = new System.Drawing.Point(0, 0);
+            this.PictureBox.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.PictureBox.Name = "PictureBox";
+            this.PictureBox.Size = new System.Drawing.Size(457, 520);
+            this.PictureBox.TabIndex = 0;
+            this.PictureBox.TabStop = false;
+            this.PictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseDown);
+            this.PictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseMove);
             // 
             // Timer
             // 
@@ -283,7 +283,7 @@ namespace BreakBlock
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormBreakBlock_KeyDown);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -292,20 +292,20 @@ namespace BreakBlock
         private System.Windows.Forms.Panel panel2;
 
         private System.Windows.Forms.Timer Timer;
-        private System.Windows.Forms.PictureBox PictureBox1;
+        private System.Windows.Forms.PictureBox PictureBox;
         private System.Windows.Forms.Button ButtonStart;
         private System.Windows.Forms.Button ButtonContinue;
         private System.Windows.Forms.Label LabelClear;
         private System.Windows.Forms.Label LabelGameover;
-        private System.Windows.Forms.Label TextScore;
+        private System.Windows.Forms.Label LabelTextScore;
         private System.Windows.Forms.Label LabelScore;
-        private System.Windows.Forms.Label ResultLabelScore;
-        private System.Windows.Forms.Label ResultTextScore;
-        private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Label remainingBallNum;
+        private System.Windows.Forms.Label LabelResultScore;
+        private System.Windows.Forms.Label LabelResultTextScore;
+        private System.Windows.Forms.Label LabelX;
+        private System.Windows.Forms.Label LabelBallNum;
         private System.Windows.Forms.Timer AnimationTimer;
-        private System.Windows.Forms.ComboBox DifficultyComboBox;
-        private System.Windows.Forms.Label TextScoreBonus;
+        private System.Windows.Forms.ComboBox ComboBoxDifficulty;
+        private System.Windows.Forms.Label LabelTextScoreBonus;
         private System.Windows.Forms.Label LabelScoreBonus;
     }
 }

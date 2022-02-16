@@ -60,20 +60,18 @@ namespace BreakBlock {
             int wBlockGap = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) / 10;
             //メタルブロックの位置をランダム生成
             var wMetalIndexList = Enumerable.Range(0, vSetting.BlockRowNum * vSetting.BlockColumnNum).OrderBy(x => Guid.NewGuid()).Take(vSetting.MetalBlockNum).ToList();
-            int wCount = 0;
             var wRandomForMetalBlock = new Random();
             for (int i = 0; i < vSetting.BlockRowNum; i++) {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
                     int wY = Define.C_BlockFirstPositionY + i * (wBlockHeight + wBlockGap);
                     IBlock wBlock;
-                    if (wMetalIndexList.Exists(x => x == wCount)) {
+                    if (wMetalIndexList.Exists(x => x == this.Blocks.Count)) {
                         wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, wRandomForMetalBlock.Next(1, 4));
                     } else {
                         wBlock = new NormalBlock(wX, wY, wBlockWidth, wBlockHeight);
                     }
                     this.Blocks.Add(wBlock);
-                    wCount++;
                 }
             }
 
