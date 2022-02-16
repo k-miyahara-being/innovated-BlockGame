@@ -5,7 +5,7 @@ namespace BreakBlock {
         /// <summary>
         /// 四角形
         /// </summary>
-        public Rectangle Rect { get; set; }
+        public Rectangle Rect { get; }
         /// <summary>
         /// 色
         /// </summary>

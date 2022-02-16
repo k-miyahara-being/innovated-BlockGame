@@ -10,7 +10,7 @@ namespace BreakBlock {
         /// </summary>
         public override Brush Color => Brushes.LightBlue;
         /// <summary>
-        /// ノーマルブロックの耐久性(メタルブロックと差別化するため-1に設定している)
+        /// ノーマルブロックの耐久性
         /// </summary>
         public override int Endurance { get; set; } = 0;
        
