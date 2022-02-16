@@ -26,8 +26,6 @@
         /// コンボボックスに文字列を表示する
         /// </summary>
         /// <returns></returns>
-        public override string ToString() {
-            return this.Text;
-        }
+        public override string ToString() => this.Text;
     }
 }
