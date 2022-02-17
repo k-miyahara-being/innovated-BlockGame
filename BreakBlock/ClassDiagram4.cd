@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BreakBlock.Ball" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="0.5" Width="2" />
+    <Members>
+      <Field Name="FAccelerationCounter" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAIAEAAAIAAAAAgAAAAAAABCAAAACIAAAASAAABAAA=</HashCode>
+      <FileName>Ball.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="1.503" />
+  </Class>
+  <Class Name="BreakBlock.Bar">
+    <Position X="8.25" Y="4" Width="2" />
+    <Members>
+      <Field Name="FBoxWidth" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAACAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Bar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.BlockBase">
+    <Position X="10.75" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAACAAAAAAAAAAgAEAAAA=</HashCode>
+      <FileName>BlockBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="1.258" Collapsed="true" />
+  </Class>
+  <Class Name="BreakBlock.BreakBlockForm">
+    <Position X="2.75" Y="0.5" Width="2.5" />
+    <Members>
+      <Field Name="AnimationTimer" Hidden="true" />
+      <Field Name="ButtonContinue" Hidden="true" />
+      <Field Name="ButtonStart" Hidden="true" />
+      <Field Name="ComboBoxDifficulty" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="FCanvas" Hidden="true" />
+      <Field Name="FColorIndex" Hidden="true" />
+      <Field Name="FColors" Hidden="true" />
+      <Field Name="FGameController" Hidden="true" />
+      <Field Name="LabelBallNum" Hidden="true" />
+      <Field Name="LabelClear" Hidden="true" />
+      <Field Name="LabelGameover" Hidden="true" />
+      <Field Name="LabelResultScore" Hidden="true" />
+      <Field Name="LabelResultTextScore" Hidden="true" />
+      <Field Name="LabelScore" Hidden="true" />
+      <Field Name="LabelScoreBonus" Hidden="true" />
+      <Field Name="LabelTextScore" Hidden="true" />
+      <Field Name="LabelTextScoreBonus" Hidden="true" />
+      <Field Name="LabelX" Hidden="true" />
+      <Field Name="panel2" Hidden="true" />
+      <Field Name="PictureBox" Hidden="true" />
+      <Field Name="Timer" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ACBCAAAAFmIAAhxADACAAQACACAgFAAkAwcAgQAECAA=</HashCode>
+      <FileName>BreakBlockForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.Define">
+    <Position X="4.75" Y="5" Width="1.5" />
+    <Members>
+      <Field Name="BlockColors" Hidden="true" />
+      <Field Name="C_Acceleration" Hidden="true" />
+      <Field Name="C_BarMoveDistance" Hidden="true" />
+      <Field Name="C_BarPositionY" Hidden="true" />
+      <Field Name="C_BlockDrawingAreaHeight" Hidden="true" />
+      <Field Name="C_BlockDrawingAreaWidth" Hidden="true" />
+      <Field Name="C_BlockFirstPositionX" Hidden="true" />
+      <Field Name="C_BlockFirstPositionY" Hidden="true" />
+      <Field Name="C_LaunchAngleMax" Hidden="true" />
+      <Field Name="C_LaunchAngleMin" Hidden="true" />
+      <Field Name="C_LaunchVelocity" Hidden="true" />
+      <Field Name="C_ScoreAddition" Hidden="true" />
+      <Field Name="C_ScoreBonus" Hidden="true" />
+      <Field Name="C_ScoreSubtraction" Hidden="true" />
+      <Field Name="C_SmallBallRadius" Hidden="true" />
+      <Field Name="C_SmallBallX" Hidden="true" />
+      <Field Name="C_SmallBallY" Hidden="true" />
+      <Field Name="ClearColors" Hidden="true" />
+      <Field Name="GameOverColors" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>IAAAAIgBAABARQBIAAGQAAAAAAAAAgAAAQAAAABAAAA=</HashCode>
+      <FileName>Define.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.DifficultyItem">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgCAAAAAA=</HashCode>
+      <FileName>DifficultyItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.GameController">
+    <Position X="6" Y="1.25" Width="1.75" />
+    <Members>
+      <Field Name="FBalls" Hidden="true" />
+      <Field Name="FScreenHeight" Hidden="true" />
+      <Field Name="FScreenWidth" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAEAAgACQgAAAAgAAAABABAAAAAAAAAAAAAAoA=</HashCode>
+      <FileName>GameController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.GameSetting">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAAAAIAAAAAABAAIAAAAAAAAAAAAAAAAAEAAAEAA=</HashCode>
+      <FileName>GameSetting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.MetalBlock">
+    <Position X="13.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAgAEAAAA=</HashCode>
+      <FileName>MetalBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.NormalBlock">
+    <Position X="13.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>NormalBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakBlock.Utils">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="BreakBlock.IBall">
+    <Position X="8.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIAEAAAIAAAAAgAAAAAAABCAAAACIAAAASAAAAAAA=</HashCode>
+      <FileName>IBall.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="BreakBlock.IBlock">
+    <Position X="8.25" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAACAAAAAAAAAAgAEAAAA=</HashCode>
+      <FileName>IBlock.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Yu Gothic UI" Size="9" />
+</ClassDiagram>
