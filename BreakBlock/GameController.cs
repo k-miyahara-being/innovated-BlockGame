@@ -76,10 +76,10 @@ namespace BreakBlock {
             }
 
             var wRandomForBall = new Random();
-            var wMatrixAffine = new Matrix();
-            var wLaunchSpeed = new Vector(0, Define.C_LaunchVelocity);
             FBalls = new Stack<IBall>();
             for (int i = 0; i < vSetting.BallNum; i++) {
+                var wLaunchSpeed = new Vector(0, Define.C_LaunchVelocity);
+                var wMatrixAffine = new Matrix();
                 float wAngle = wRandomForBall.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
                 if (wRandomForBall.Next() % 2 == 0) wAngle *= -1;
                 wMatrixAffine.Rotate(wAngle);
@@ -118,25 +118,27 @@ namespace BreakBlock {
             }
 
             //バーでの跳ね返り
-            var wRandomAngle = new Random();
-            switch (this.Ball.VsBar(this.Bar)) {
-                case null:
-                    break;
-                case HitPointBar.First:
-                    this.Ball.ChangeDirection(wRandomAngle.Next(-70, -59));
-                    return;
-                case HitPointBar.Second:
-                    this.Ball.ChangeDirection(wRandomAngle.Next(-35, -29));
-                    return;
-                case HitPointBar.Third:
-                    this.Ball.ChangeDirection(wRandomAngle.Next(-10, 11));
-                    return;
-                case HitPointBar.Fourth:
-                    this.Ball.ChangeDirection(wRandomAngle.Next(30, 36));
-                    return;
-                case HitPointBar.Fifth:
-                    this.Ball.ChangeDirection(wRandomAngle.Next(60, 71));
-                    return;
+            if (this.Ball.Speed.Y >= 0) {
+                var wRandomAngle = new Random();
+                switch (this.Ball.VsBar(this.Bar)) {
+                    case null:
+                        break;
+                    case HitPointBar.First:
+                        this.Ball.ChangeDirection(wRandomAngle.Next(-70, -59));
+                        return;
+                    case HitPointBar.Second:
+                        this.Ball.ChangeDirection(wRandomAngle.Next(-35, -29));
+                        return;
+                    case HitPointBar.Third:
+                        this.Ball.ChangeDirection(wRandomAngle.Next(-10, 11));
+                        return;
+                    case HitPointBar.Fourth:
+                        this.Ball.ChangeDirection(wRandomAngle.Next(30, 36));
+                        return;
+                    case HitPointBar.Fifth:
+                        this.Ball.ChangeDirection(wRandomAngle.Next(60, 71));
+                        return;
+                }
             }
 
             //ブロックでの跳ね返り
@@ -147,7 +149,7 @@ namespace BreakBlock {
                     this.Ball.Accelerate();
                     if (wBlock.Endurance > 0) {
                         wBlock.Endurance--;
-                    }else if(wBlock.Endurance == 0) {
+                    } else if (wBlock.Endurance == 0) {
                         this.Blocks.Remove(wBlock);
                         this.Score += wBlock.ScoreAddition;
                     }
