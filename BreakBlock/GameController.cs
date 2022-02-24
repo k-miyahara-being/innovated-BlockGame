@@ -59,7 +59,9 @@ namespace BreakBlock {
             int wBlockWidth = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) * 93 / 100;
             int wBlockGap = (Define.C_BlockDrawingAreaWidth / vSetting.BlockColumnNum) / 10;
             //メタルブロックの位置をランダム生成
-            var wMetalIndexList = Enumerable.Range(0, vSetting.BlockRowNum * vSetting.BlockColumnNum).OrderBy(x => Guid.NewGuid()).Take(vSetting.MetalBlockNum).ToList();
+            var wRandomIndex = Enumerable.Range(0, vSetting.BlockRowNum * vSetting.BlockColumnNum).OrderBy(x => Guid.NewGuid()).ToList();
+            var wMetalIndexList = wRandomIndex.Take(vSetting.MetalBlockNum).ToList();
+            var wItemIndexList = wRandomIndex.Skip(vSetting.MetalBlockNum).Take(2).ToList();
             var wRandomForMetalBlock = new Random();
             for (int i = 0; i < vSetting.BlockRowNum; i++) {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
@@ -68,6 +70,8 @@ namespace BreakBlock {
                     IBlock wBlock;
                     if (wMetalIndexList.Exists(x => x == this.Blocks.Count)) {
                         wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, wRandomForMetalBlock.Next(1, 4));
+                    } else if (wItemIndexList.Exists(x => x == this.Blocks.Count)) {
+                        wBlock = new ItemBlock(wX, wY, wBlockWidth, wBlockHeight);
                     } else {
                         wBlock = new NormalBlock(wX, wY, wBlockWidth, wBlockHeight);
                     }

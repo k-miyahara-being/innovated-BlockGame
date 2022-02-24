@@ -68,8 +68,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionBallItem.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Bar.cs" />
+    <Compile Include="IItem.cs" />
+    <Compile Include="ItemBase.cs" />
+    <Compile Include="ItemBlock.cs" />
+    <Compile Include="LongBarItem.cs" />
     <Compile Include="NormalBlock.cs" />
     <Compile Include="BreakBlockForm.cs">
       <SubType>Form</SubType>
