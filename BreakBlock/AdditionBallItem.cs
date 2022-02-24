@@ -9,6 +9,10 @@ namespace BreakBlock {
 
         }
 
+        public override Rectangle RunBar(Rectangle vBar) {
+            throw new System.NotImplementedException();
+        }
+
         //TODO 増やす処理
         //private int AddRemainingBall(int vBallNum) {
 

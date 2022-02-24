@@ -156,6 +156,7 @@ namespace BreakBlock {
                     } else if (wBlock.Endurance == 0) {
                         this.Blocks.Remove(wBlock);
                         this.Score += wBlock.ScoreAddition;
+                        this.Bar.Rect = wBlock.Item?.RunBar(this.Bar.Rect) ?? this.Bar.Rect;
                     }
                     break;
                 }

@@ -21,5 +21,9 @@ namespace BreakBlock {
         /// 加算スコア
         /// </summary>
         int ScoreAddition { get; }
+        /// <summary>
+        /// アイテム
+        /// </summary>
+        ItemBase Item { get; set; }
     }
 }

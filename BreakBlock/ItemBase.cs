@@ -14,6 +14,6 @@ namespace BreakBlock {
         /// </summary>
         public Rectangle Rect => new Rectangle(100, 380, 110, 30);
 
-        public ItemBase() { }
+        public abstract Rectangle RunBar(Rectangle vBarRect);
     }
 }

@@ -4,11 +4,13 @@ namespace BreakBlock {
     public class LongBarItem : ItemBase {
         public override Image ItemImage => Image.FromFile("");
 
-        public LongBarItem() : base() {
+        /// <summary>
+        /// バーの幅を2倍にする
+        /// </summary>
+        /// <param name="vBar">バーオブジェクトのRectプロパティ</param>
+        /// <returns>Rectの値</returns>
+        public override Rectangle RunBar(Rectangle vBarRect) {
+            return new Rectangle(vBarRect.X, vBarRect.Y, vBarRect.Width * 2, vBarRect.Height);
         }
-
-        //TODO 伸ばす処理
-        //private int ExtendBar(int vBarWidth) {
-        //}
     }
 }
