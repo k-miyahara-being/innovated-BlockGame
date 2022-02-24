@@ -58,6 +58,7 @@ namespace BreakBlock {
             FGameController.Ball.Move();
             FGameController.Bound();
             LabelScore.Text = FGameController.Score.ToString();
+            LabelBallNum.Text = FGameController.BallCount.ToString();
             switch (FGameController.Status) {
                 case Status.Playing:
                     this.Draw();
@@ -65,7 +66,6 @@ namespace BreakBlock {
                 case Status.Ready:
                     Timer.Stop();
                     FGameController.Bar = new Bar((PictureBox.Width - FGameController.Bar.Rect.Width) / 2, Define.C_BarPositionY, FGameController.Bar.Rect.Width, FGameController.Bar.Rect.Height, PictureBox.Width);
-                    LabelBallNum.Text = FGameController.BallCount.ToString();
                     this.Draw();
                     break;
                 case Status.GameOver:

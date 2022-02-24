@@ -63,6 +63,7 @@ namespace BreakBlock {
             var wMetalIndexList = wRandomIndex.Take(vSetting.MetalBlockNum).ToList();
             var wItemIndexList = wRandomIndex.Skip(vSetting.MetalBlockNum).Take(2).ToList();
             var wRandomForMetalBlock = new Random();
+            var wRandomForItemBlock = new Random();
             for (int i = 0; i < vSetting.BlockRowNum; i++) {
                 for (int j = 0; j < vSetting.BlockColumnNum; j++) {
                     int wX = Define.C_BlockFirstPositionX + j * (wBlockWidth + wBlockGap);
@@ -71,7 +72,7 @@ namespace BreakBlock {
                     if (wMetalIndexList.Exists(x => x == this.Blocks.Count)) {
                         wBlock = new MetalBlock(wX, wY, wBlockWidth, wBlockHeight, wRandomForMetalBlock.Next(1, 4));
                     } else if (wItemIndexList.Exists(x => x == this.Blocks.Count)) {
-                        wBlock = new ItemBlock(wX, wY, wBlockWidth, wBlockHeight);
+                        wBlock = new ItemBlock(wX, wY, wBlockWidth, wBlockHeight, wRandomForItemBlock.Next() % 2);
                     } else {
                         wBlock = new NormalBlock(wX, wY, wBlockWidth, wBlockHeight);
                     }
@@ -79,20 +80,24 @@ namespace BreakBlock {
                 }
             }
 
-            var wRandomForBall = new Random();
             FBalls = new Stack<IBall>();
             for (int i = 0; i < vSetting.BallNum; i++) {
-                var wLaunchSpeed = new Vector(0, Define.C_LaunchVelocity);
-                var wMatrixAffine = new Matrix();
-                float wAngle = wRandomForBall.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
-                if (wRandomForBall.Next() % 2 == 0) wAngle *= -1;
-                wMatrixAffine.Rotate(wAngle);
-                wLaunchSpeed = Vector.Multiply(wLaunchSpeed, wMatrixAffine);
-                FBalls.Push(new Ball(FScreenWidth / 2, Define.C_BarPositionY - vSetting.BallRadius, vSetting.BallRadius, wLaunchSpeed));
+                FBalls.Push(MakeBall(vSetting.BallRadius));
             }
             this.Ball = FBalls.Pop();
 
             this.Bar = new Bar((FScreenWidth - vSetting.BarWidth) / 2, Define.C_BarPositionY, vSetting.BarWidth, vSetting.BarHeight, FScreenWidth);
+        }
+
+        private Ball MakeBall(int vBallRadius) {
+            var wRandomForBall = new Random();
+            var wLaunchSpeed = new Vector(0, Define.C_LaunchVelocity);
+            var wMatrixAffine = new Matrix();
+            float wAngle = wRandomForBall.Next(Define.C_LaunchAngleMin, Define.C_LaunchAngleMax);
+            if (wRandomForBall.Next() % 2 == 0) wAngle *= -1;
+            wMatrixAffine.Rotate(wAngle);
+            wLaunchSpeed = Vector.Multiply(wLaunchSpeed, wMatrixAffine);
+            return new Ball(FScreenWidth / 2, Define.C_BarPositionY - vBallRadius, vBallRadius, wLaunchSpeed);
         }
 
         /// <summary>
@@ -157,6 +162,7 @@ namespace BreakBlock {
                         this.Blocks.Remove(wBlock);
                         this.Score += wBlock.ScoreAddition;
                         this.Bar.Rect = wBlock.Item?.RunBar(this.Bar.Rect) ?? this.Bar.Rect;
+                        this.FBalls = wBlock.Item?.RunBall(FBalls, MakeBall(12)) ?? this.FBalls;
                     }
                     break;
                 }

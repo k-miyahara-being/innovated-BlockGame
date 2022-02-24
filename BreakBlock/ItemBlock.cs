@@ -18,8 +18,15 @@ namespace BreakBlock {
         /// <param name="vPositionY">Y座標</param>
         /// <param name="vWidth">幅</param>
         /// <param name="vHeight">高さ</param>
-        public ItemBlock(int vPositionX, int vPositionY, int vWidth, int vHeight) : base(vPositionX, vPositionY, vWidth, vHeight) {
-            this.Item = new LongBarItem();
+        public ItemBlock(int vPositionX, int vPositionY, int vWidth, int vHeight, int vSelecter) : base(vPositionX, vPositionY, vWidth, vHeight) {
+            switch (vSelecter) {
+                case 0:
+                    this.Item = new LongBarItem();
+                    break;
+                case 1:
+                    this.Item = new AdditionBallItem();
+                    break;
+            }
         }
     }
 }
