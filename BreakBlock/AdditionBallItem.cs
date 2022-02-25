@@ -3,11 +3,7 @@ using System.Drawing;
 
 namespace BreakBlock {
     public class AdditionBallItem : ItemBase {
-        /// <summary>
-        /// 残弾追加アイコン
-        /// </summary>
-        public override Image ItemImage => Image.FromFile("");
-
+        public override Image ItemImage => Image.FromFile("../../Img/ItemImage.jpg");
         /// <summary>
         /// 残弾数を1つ増やす
         /// </summary>

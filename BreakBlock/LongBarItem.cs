@@ -5,8 +5,7 @@ namespace BreakBlock {
         /// <summary>
         /// バー拡大アイコン
         /// </summary>
-        public override Image ItemImage => Image.FromFile("");
-
+        public override Image ItemImage => Image.FromFile("../../Img/ItemImage.jpg");
         /// <summary>
         /// バーの幅を1.5倍にする
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 
 namespace BreakBlock {
-    class ItemBlock : BlockBase {
+    public class ItemBlock : BlockBase {
         /// <summary>
         /// 色
         /// </summary>

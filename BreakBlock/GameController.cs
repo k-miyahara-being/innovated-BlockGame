@@ -34,6 +34,7 @@ namespace BreakBlock {
         /// バー
         /// </summary>
         public Bar Bar { get; set; }
+        public List<IItem> Items { get; set; }
 
         private Stack<IBall> FBalls;
         private readonly int FScreenWidth;
@@ -53,6 +54,7 @@ namespace BreakBlock {
         /// <param name="vSetting">ゲーム設定</param>
         public void Initialize(GameSetting vSetting) {
             this.Score = 0;
+            this.Items = new List<IItem>();
 
             this.Blocks = new List<IBlock>();
             int wBlockHeight = (Define.C_BlockDrawingAreaHeight / vSetting.BlockRowNum) * 93 / 100;
@@ -163,6 +165,9 @@ namespace BreakBlock {
                         this.Score += wBlock.ScoreAddition;
                         this.Bar.Rect = wBlock.Item?.RunBar(this.Bar.Rect) ?? this.Bar.Rect;
                         this.FBalls = wBlock.Item?.RunBall(FBalls, MakeBall(12)) ?? this.FBalls;
+                        if (wBlock.Item != null) {
+                            this.Items.Add(wBlock.Item);
+                        }
                     }
                     break;
                 }

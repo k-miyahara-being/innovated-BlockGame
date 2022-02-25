@@ -160,6 +160,9 @@ namespace BreakBlock {
                     g.FillRectangle(wBlock.Color, wBlock.Rect);
                 }
                 g.FillRectangle(Brushes.Yellow, FGameController.Bar.Rect);
+                foreach (IItem wItem in FGameController.Items) {
+                    ItemPictureBox.Image = wItem?.ItemImage;
+                }
             }
             PictureBox.Image = FCanvas;
         }
